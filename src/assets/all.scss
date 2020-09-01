@@ -1,3 +1,74 @@
 @import "~bootstrap/scss/functions"; // 載入 bootstrap 套用變數的方法
 @import "./helpers/variables";  //自定義的變數
 @import "~bootstrap/scss/bootstrap";
+
+
+@font-face {
+  font-family: FakePearl-Regular;
+  src: url(https://cdn.jsdelivr.net/gh/max32002/FakePearl@1.1/webfont/FakePearl-Regular.woff2) format("woff2")
+  , url(https://cdn.jsdelivr.net/gh/max32002/FakePearl@1.1/webfont/FakePearl-Regular.woff) format("woff");
+}
+
+//通用設定
+body{
+  color:#585851;
+  font-family: 'FakePearl-Regular', serif;
+}
+main{
+min-height: calc(100vh - 120px) ;
+flex: 1;
+}
+
+//nav
+a.nav-link.active {
+  background-color: #ecf3e2;
+}
+
+//table
+table{
+  color:#585851 !important;
+}
+
+.bg-cover{
+  background-position: center;
+  background-size: cover;
+}
+.radius-2{
+  border-radius: 0.75rem !important;
+}
+.radius-3{
+  border-radius: 1rem !important;
+}
+.radius-4{
+  border-radius: 1.5rem !important;
+}
+
+.navbar.bg-white-opacity-7{
+background-color:rgba(255,255,255,0.7)!important
+
+}
+
+.rating>.checked {
+  color:orange;
+}
+
+
+table.table-radius {
+
+  border: 1px solid #c3c3c3;
+  border-radius: 10px;
+
+  border-spacing: 0px;
+  border-collapse: separate;
+  th:first-child {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+  }
+  th:last-child {
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+  th,td{
+    vertical-align: middle;
+  }
+}
