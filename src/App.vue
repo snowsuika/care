@@ -5,10 +5,12 @@
       <router-link to="/about">About</router-link>
     </div>
     <router-view />
+    <a name="" id="" class="btn btn-primary" href="#" role="button">123</a>
   </div>
 </template>
 
 <style lang="scss">
+@import './assets/all.scss';
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
