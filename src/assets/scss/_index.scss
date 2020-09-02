@@ -1,0 +1,19 @@
+//客戶評價
+.clientEvaluation .col-md-3 {
+  margin-left: -4px;
+}
+
+.clientEvaluation {
+  .carousel-indicators {
+    bottom: 0;
+
+    li {
+      background-color: #fae56d;
+    }
+  }
+
+  .carousel-control-prev-icon,
+  .carousel-control-next-icon {
+    background-color: #fae56d;
+  }
+}
