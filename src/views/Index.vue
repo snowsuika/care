@@ -30,6 +30,9 @@ import ModalRegister from '@/components/ModalRegister.vue';
 import ModalLogin from '@/components/ModalLogin.vue';
 
 export default {
+  data() {
+    return {};
+  },
   components: {
     Navbar,
     FooterBar,
