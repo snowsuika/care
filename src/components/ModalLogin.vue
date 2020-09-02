@@ -3,7 +3,7 @@
     <!-- 註冊 -->
     <div
       class="modal fade"
-      id="register"
+      id="login"
       data-backdrop="static"
       data-keyboard="false"
       tabindex="-1"
@@ -21,7 +21,7 @@
             >
               <span aria-hidden="true">&times;</span>
             </button>
-            <h2 class="font-weight-bold my-3 text-center">註冊會員</h2>
+            <h2 class="font-weight-bold my-3 text-center">會員登入</h2>
             <ul
               class="nav nav-pills d-flex justify-content-center bg-white mb-3"
               id="pills-tab"
@@ -57,35 +57,26 @@
 
             <form>
               <div class="form-group">
-                <label for="registerEmail">電子信箱：</label>
+                <label for="loginEmail">電子信箱：</label>
                 <input
                   type="email"
                   class="form-control"
                   value=""
                   v-model="email"
                   placeholder="請輸入電子信箱"
-                  id="registerEmail"
+                  id="loginEmail"
                   aria-describedby="emailHelp"
                 />
               </div>
+
               <div class="form-group">
-                <label for="registerPassword">請輸入密碼：</label>
+                <label for="loginPassword">會員密碼：</label>
                 <input
                   type="password"
                   class="form-control"
                   v-model="password"
-                  placeholder="請輸入密碼"
-                  id="registerPassword"
-                />
-              </div>
-              <div class="form-group">
-                <label for="registerPasswordAgain">請再次輸入密碼：</label>
-                <input
-                  type="password"
-                  class="form-control"
-                  v-model="passwordAgain"
-                  placeholder="請再次輸入密碼"
-                  id="registerPasswordAgain"
+                  placeholder="請輸入會員密碼"
+                  id="loginPassword"
                 />
               </div>
               <div class="text-center mt-5">
@@ -95,7 +86,7 @@
                   data-dismiss="modal"
                   @click="sendData()"
                 >
-                  註冊(家屬)
+                  登入(家屬)
                 </button>
                 <button
                   class="btn btn-primary w-25"
@@ -103,7 +94,7 @@
                   data-dismiss="modal"
                   @click="sendData()"
                 >
-                  註冊(照服員)
+                  登入(照服員)
                 </button>
               </div>
             </form>
@@ -120,8 +111,7 @@ export default {
     return {
       identity: 'family',
       email: '',
-      password: '',
-      passwordAgain: ''
+      password: ''
     };
   },
   methods: {

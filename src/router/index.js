@@ -12,18 +12,22 @@ const routes = [
   },
   {
     path: '/',
-    name: 'Index',
+    // name: 'Index',
     component: () => import('../views/Index.vue'),
     children: [
       {
         path: '/',
-        name: 'home',
+        // name: 'home',
         component: () => import('../views/Home.vue')
       },
       {
-        path: '/findCare',
-        name: 'FindCare',
-        component: () => import('../views/FindCare.vue')
+        path: '/searchCares',
+        // name: 'FindCare',
+        component: () => import('../views/SearchCares.vue')
+      },
+      {
+        path: '/carePage/:id', //冒號後面是可以自定義的
+        component: () => import('../views/CarerPage.vue')
       }
     ]
   }
