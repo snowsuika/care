@@ -1,6 +1,6 @@
 import Vue from 'vue';
-// import axios from 'axios';
-// import VueAxios from 'vue-axios';
+import axios from 'axios';
+import VueAxios from 'vue-axios';
 import jquery from 'jquery';
 import 'bootstrap';
 
@@ -14,7 +14,7 @@ window.$ = jquery;
 Vue.use(VueFormWizard);
 
 Vue.config.productionTip = false;
-// Vue.use(VueAxios, axios);
+Vue.use(VueAxios, axios);
 new Vue({
   router,
   render: h => h(App)

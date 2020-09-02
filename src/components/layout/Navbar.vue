@@ -85,20 +85,7 @@
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      token: '',
-      checkSuccess: false // 驗證登入狀態
-    };
-  },
-  created() {
-    this.token = document.cookie.replace(
-      /(?:(?:^|.*;\s*)token\s*=\s*([^;]*).*$)|^.*$/,
-      '$1'
-    );
-  }
-};
+export default {};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

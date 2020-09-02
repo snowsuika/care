@@ -119,9 +119,11 @@ export default {
   data() {
     return {
       identity: 'family',
-      email: '',
-      password: '',
-      passwordAgain: ''
+      user: {
+        email: '',
+        password: '',
+        passwordAgain: ''
+      }
     };
   },
   methods: {
@@ -129,12 +131,30 @@ export default {
       this.identity = identity;
     },
     sendData() {
-      var dataa = {
-        email: this.email,
-        password: this.password,
-        passwordAgain: this.passwordAgain
-      };
-      console.log(dataa);
+      //       this.token = document.cookie.replace(
+      //   /(?:(?:^|.*;\s*)token\s*=\s*([^;]*).*$)|^.*$/,
+      //   "$1"
+      // );
+      // this.$http.defaults.headers.common.Authorization = `Bearer ${this.token}`;
+
+      const api = `http://careup.rocket-coding.com/AttendantRegister`;
+
+      this.$http
+        .post(api, this.user)
+        .then(res => {
+          console.log(res);
+          // const token = res.data.token;
+          // const expired = res.data.expired;
+          // //把token 存進 cookie
+          // document.cookie = `token=${token};expires=${new Date(
+          //   expired * 1000
+          // )}`;
+          // //登入成功的話轉換頁面
+          // this.$router.push("/admin");
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
   }
 };
