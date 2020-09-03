@@ -119,11 +119,9 @@ export default {
   data() {
     return {
       identity: 'family',
-      user: {
-        email: '',
-        password: '',
-        passwordAgain: ''
-      }
+      email: '',
+      password: '',
+      passwordAgain: ''
     };
   },
   methods: {
@@ -137,10 +135,16 @@ export default {
       // );
       // this.$http.defaults.headers.common.Authorization = `Bearer ${this.token}`;
 
-      const api = `http://careup.rocket-coding.com/AttendantRegister`;
-
+      const api = `http://careup.rocket-coding.com/MemberLogin`;
+      console.log({
+        email: this.email,
+        password: this.password
+      });
       this.$http
-        .post(api, this.user)
+        .post(api, {
+          email: this.email,
+          password: this.password
+        })
         .then(res => {
           console.log(res);
           // const token = res.data.token;
