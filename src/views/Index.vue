@@ -14,49 +14,30 @@
       <main>
         <router-view></router-view>
       </main>
-
+      <footer-bar></footer-bar>
       <!-- <img alt="Vue logo" src="../assets/logo.png" />
     <HelloWorld msg="Welcome to Your Vue.js App" /> -->
       <modal-register></modal-register>
+      <modal-login></modal-login>
     </div>
   </div>
 </template>
 
 <script>
-import Navbar from '@/components/Navbar.vue';
+import Navbar from '@/components/layout/Navbar.vue';
+import FooterBar from '@/components/layout/Footer.vue';
 import ModalRegister from '@/components/ModalRegister.vue';
+import ModalLogin from '@/components/ModalLogin.vue';
 
 export default {
+  data() {
+    return {};
+  },
   components: {
     Navbar,
-    ModalRegister
+    FooterBar,
+    ModalRegister,
+    ModalLogin
   }
 };
 </script>
-
-<style lang="scss">
-.banner {
-  background-color: gray;
-  height: 570px;
-  /* background-image: url(images/2886653_s.jpg); */
-  background-position: center;
-  background-size: cover;
-}
-
-.客戶評價 .col-md-3 {
-  margin-left: -4px;
-}
-
-body .carousel-indicators li {
-  background-color: #fae56d;
-}
-
-body .carousel-indicators {
-  bottom: 0;
-}
-
-body .carousel-control-prev-icon,
-body .carousel-control-next-icon {
-  background-color: #fae56d;
-}
-</style>

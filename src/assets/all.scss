@@ -2,12 +2,14 @@
 @import "./helpers/variables";  //自定義的變數
 @import "~bootstrap/scss/bootstrap";
 
-
 @font-face {
   font-family: FakePearl-Regular;
   src: url(https://cdn.jsdelivr.net/gh/max32002/FakePearl@1.1/webfont/FakePearl-Regular.woff2) format("woff2")
   , url(https://cdn.jsdelivr.net/gh/max32002/FakePearl@1.1/webfont/FakePearl-Regular.woff) format("woff");
 }
+
+//page
+@import "./scss/index";
 
 //通用設定
 body{

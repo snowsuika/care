@@ -12,7 +12,7 @@
         </div>
       </div>
     </div>
-    <div class="平台流程 container my-4">
+    <div class="container my-4">
       <h2 class="text-center">平台流程</h2>
 
       <div class="row text-center">
@@ -98,7 +98,7 @@
         </div>
       </div>
     </div>
-    <div class="客戶評價 container-fluid bg-light">
+    <div class="clientEvaluation container-fluid bg-light">
       <div class="container">
         <h4 class="text-center text-primary py-1">顧客評價</h4>
         <div id="demo" class="carousel slide py-5" data-ride="carousel">
@@ -111,7 +111,7 @@
           <!-- The slideshow -->
           <div class="container carousel-inner no-padding">
             <div class="carousel-item active">
-              <div class="col-12 col-md-3 d-inline-block">
+              <div class="col-12 col-lg-4 mb-3 d-inline-block">
                 <div class="card">
                   <div class="card-body">
                     <blockquote class="blockquote mb-0">
@@ -127,7 +127,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-12 col-md-3 d-inline-block">
+              <div class="col-12 col-lg-4 mb-3 d-inline-block">
                 <div class="card">
                   <div class="card-body">
                     <blockquote class="blockquote mb-0">
@@ -143,23 +143,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-12 col-md-3 d-inline-block">
-                <div class="card">
-                  <div class="card-body">
-                    <blockquote class="blockquote mb-0">
-                      <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Integer posuere erat a ante.
-                      </p>
-                      <footer class="blockquote-footer">
-                        Someone famous in
-                        <cite title="Source Title">Source Title</cite>
-                      </footer>
-                    </blockquote>
-                  </div>
-                </div>
-              </div>
-              <div class="col-12 col-md-3 d-inline-block">
+              <div class="col-12 col-lg-4 mb-3 d-inline-block">
                 <div class="card">
                   <div class="card-body">
                     <blockquote class="blockquote mb-0">
@@ -177,7 +161,7 @@
               </div>
             </div>
             <div class="carousel-item">
-              <div class="col-12 col-md-3 d-inline-block">
+              <div class="col-12 col-lg-4 mb-3 d-inline-block">
                 <div class="card">
                   <div class="card-body">
                     <blockquote class="blockquote mb-0">
@@ -193,7 +177,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-12 col-md-3 d-inline-block">
+              <div class="col-12 col-lg-4 mb-3 d-inline-block">
                 <div class="card">
                   <div class="card-body">
                     <blockquote class="blockquote mb-0">
@@ -209,23 +193,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-12 col-md-3 d-inline-block">
-                <div class="card">
-                  <div class="card-body">
-                    <blockquote class="blockquote mb-0">
-                      <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Integer posuere erat a ante.
-                      </p>
-                      <footer class="blockquote-footer">
-                        Someone famous in
-                        <cite title="Source Title">Source Title</cite>
-                      </footer>
-                    </blockquote>
-                  </div>
-                </div>
-              </div>
-              <div class="col-12 col-md-3 d-inline-block">
+              <div class="col-12 col-lg-4 mb-3 d-inline-block">
                 <div class="card">
                   <div class="card-body">
                     <blockquote class="blockquote mb-0">
@@ -243,7 +211,7 @@
               </div>
             </div>
             <div class="carousel-item">
-              <div class="col-12 col-md-3 d-inline-block">
+              <div class="col-12 col-lg-4 mb-3 d-inline-block">
                 <div class="card">
                   <div class="card-body">
                     <blockquote class="blockquote mb-0">
@@ -259,7 +227,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-12 col-md-3 d-inline-block">
+              <div class="col-12 col-lg-4 mb-3 d-inline-block">
                 <div class="card">
                   <div class="card-body">
                     <blockquote class="blockquote mb-0">
@@ -275,23 +243,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-12 col-md-3 d-inline-block">
-                <div class="card">
-                  <div class="card-body">
-                    <blockquote class="blockquote mb-0">
-                      <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Integer posuere erat a ante.
-                      </p>
-                      <footer class="blockquote-footer">
-                        Someone famous in
-                        <cite title="Source Title">Source Title</cite>
-                      </footer>
-                    </blockquote>
-                  </div>
-                </div>
-              </div>
-              <div class="col-12 col-md-3 d-inline-block">
+              <div class="col-12 col-lg-4 mb-3 d-inline-block">
                 <div class="card">
                   <div class="card-body">
                     <blockquote class="blockquote mb-0">
@@ -320,7 +272,7 @@
         </div>
       </div>
     </div>
-    <div class="常見問與答 container my-4 mb-5" style="height:300px">
+    <div class="常見問與答 container my-4 mb-5">
       <h2 class="text-center">常見 Q&A</h2>
       <div class="container">
         <div class="cos bg-light p-5" style="border-radius: 10px;">
@@ -452,26 +404,8 @@
 .banner {
   background-color: gray;
   height: 570px;
-  /* background-image: url(images/2886653_s.jpg); */
   background-position: center;
   background-size: cover;
-}
-
-.客戶評價 .col-md-3 {
-  margin-left: -4px;
-}
-
-body .carousel-indicators li {
-  background-color: #fae56d;
-}
-
-body .carousel-indicators {
-  bottom: 0;
-}
-
-body .carousel-control-prev-icon,
-body .carousel-control-next-icon {
-  background-color: #fae56d;
 }
 </style>
 
