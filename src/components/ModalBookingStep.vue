@@ -11,17 +11,21 @@
     >
       <div class="modal-dialog modal-lg">
         <div class="modal-content radius-4">
-          <button
-            type="button"
-            class="close"
-            data-dismiss="modal"
-            aria-label="Close"
-          >
-            <span aria-hidden="true">&times;</span>
-          </button>
           <div class="modal-body">
+            <div style="padding-bottom:20px">
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+
             <div id="app">
               <form-wizard
+                shape="tab"
                 :title="title"
                 :subtitle="subtitle"
                 :color="color"
@@ -474,6 +478,7 @@
 </template>
 
 <script>
+/* global $ */
 export default {
   data() {
     return {
@@ -520,18 +525,7 @@ export default {
       type: String,
       default: '#6A9232'
     },
-    errorColor: {
-      type: String,
-      default: '#fff'
-    },
-    shape: {
-      type: String,
-      default: 'circle'
-    },
-    transition: {
-      type: String,
-      default: ''
-    },
+
     startIndex: {
       type: Number,
       default: 0
@@ -539,7 +533,28 @@ export default {
   },
   methods: {
     onComplete: function() {
-      alert('成功ㄌ');
+      this.$swal(
+        // '已成功預約日照服務！',
+        // '做得很好，您可以到 <b style="color:green;">我的訂單</b> 查看預約進度',
+        // 'success'
+        {
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 5000,
+          timerProgressBar: false,
+          onOpen: toast => {
+            toast.addEventListener('mouseenter', this.$swal.stopTimer);
+            toast.addEventListener('mouseleave', this.$swal.resumeTimer);
+          },
+          icon: 'success',
+          title:
+            '已成功預約日照服務！可以到 <b style="color:green;">我的訂單</b> 查看預約進度'
+        }
+      );
+      setTimeout(() => {
+        $('#bookingCareer').modal('hide');
+      }, 2000);
     }
   }
 };
