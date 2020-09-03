@@ -127,7 +127,13 @@
               <div class="form-row">
                 <div class="form-group col-12">
                   <label for="inputEmail4">預約服務期間</label>
-                  <v-date-picker mode="range" v-model="range" color="yellow" />
+                  <v-date-picker
+                    mode="range"
+                    :attributes="attributes"
+                    v-model="range"
+                    :popover="{ placement: 'bottom', visibility: 'click' }"
+                    color="yellow"
+                  />
                 </div>
               </div>
             </form>
