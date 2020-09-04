@@ -129,7 +129,6 @@
                   <label for="inputEmail4">預約服務期間</label>
                   <v-date-picker
                     mode="range"
-                    :attributes="attributes"
                     v-model="range"
                     :popover="{ placement: 'bottom', visibility: 'click' }"
                     color="yellow"
@@ -188,7 +187,8 @@ export default {
         ) + 1
       ); // 把相差的毫秒數轉換為天數;
     }
-  }
+  },
+  methods: {}
 };
 </script>
 

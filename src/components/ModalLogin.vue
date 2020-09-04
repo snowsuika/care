@@ -36,7 +36,7 @@
                   role="tab"
                   aria-controls="pills-home"
                   aria-selected="true"
-                  @click="changeButton('family')"
+                  @click="confirmIdentity('family')"
                   >我是家屬</a
                 >
               </li>
@@ -49,7 +49,7 @@
                   role="tab"
                   aria-controls="pills-profile"
                   aria-selected="false"
-                  @click="changeButton('attendant')"
+                  @click="confirmIdentity('attendant')"
                   >我是照服員</a
                 >
               </li>
@@ -82,19 +82,10 @@
               <div class="text-center mt-5">
                 <button
                   class="btn btn-primary w-25"
-                  v-if="identity == 'family'"
                   data-dismiss="modal"
-                  @click="sendData()"
+                  @click="login()"
                 >
-                  登入(家屬)
-                </button>
-                <button
-                  class="btn btn-primary w-25"
-                  v-if="identity == 'attendant'"
-                  data-dismiss="modal"
-                  @click="sendData()"
-                >
-                  登入(照服員)
+                  登入
                 </button>
               </div>
             </form>
@@ -114,17 +105,52 @@ export default {
       password: ''
     };
   },
+
   methods: {
-    changeButton(identity) {
+    confirmIdentity(identity) {
       this.identity = identity;
     },
-    sendData() {
-      var dataa = {
-        email: this.email,
-        password: this.password,
-        passwordAgain: this.passwordAgain
-      };
-      console.log(dataa);
+    login() {
+      const vm = this;
+      let identity =
+        this.identity == 'family' ? 'MemberLogin' : 'AttendantLogin';
+      const api = `http://careup.rocket-coding.com/${identity}`;
+      vm.$http
+        .post(api, {
+          email: vm.email,
+          password: vm.password
+        })
+        .then(res => {
+          if (res.status == '200') {
+            vm.$swal({
+              icon: 'success',
+              title: `${res.data.message}！已登入～`
+              // toast: true,
+              // position: 'top-end',
+              // showConfirmButton: false,
+              // timer: 3000,
+              // timerProgressBar: false,
+              // onOpen: toast => {
+              //   toast.addEventListener('mouseenter', vm.$swal.stopTimer);
+              //   toast.addEventListener('mouseleave', vm.$swal.resumeTimer);
+              // },
+              // icon: 'success',
+              // title: `${res.data.message}！已登入～`
+            });
+            this.$bus.$emit('checkLogin');
+
+            // console.log(res);
+          }
+          localStorage.setItem('token', `${res.data.token}`);
+          localStorage.setItem('userId', `${res.data.Id}`);
+          localStorage.setItem('userMail', `${res.data.Email}`);
+
+          vm.email = '';
+          vm.password = '';
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
   }
 };

@@ -36,7 +36,7 @@
                   role="tab"
                   aria-controls="pills-home"
                   aria-selected="true"
-                  @click="changeButton('family')"
+                  @click="confirmIdentity('family')"
                   >我是家屬</a
                 >
               </li>
@@ -49,7 +49,7 @@
                   role="tab"
                   aria-controls="pills-profile"
                   aria-selected="false"
-                  @click="changeButton('attendant')"
+                  @click="confirmIdentity('attendant')"
                   >我是照服員</a
                 >
               </li>
@@ -91,19 +91,10 @@
               <div class="text-center mt-5">
                 <button
                   class="btn btn-primary w-25"
-                  v-if="identity == 'family'"
                   data-dismiss="modal"
-                  @click="sendData()"
+                  @click="register()"
                 >
-                  註冊(家屬)
-                </button>
-                <button
-                  class="btn btn-primary w-25"
-                  v-if="identity == 'attendant'"
-                  data-dismiss="modal"
-                  @click="sendData()"
-                >
-                  註冊(照服員)
+                  註冊
                 </button>
               </div>
             </form>
@@ -124,37 +115,42 @@ export default {
       passwordAgain: ''
     };
   },
+
   methods: {
-    changeButton(identity) {
+    confirmIdentity(identity) {
       this.identity = identity;
     },
-    sendData() {
-      //       this.token = document.cookie.replace(
-      //   /(?:(?:^|.*;\s*)token\s*=\s*([^;]*).*$)|^.*$/,
-      //   "$1"
-      // );
-      // this.$http.defaults.headers.common.Authorization = `Bearer ${this.token}`;
+    register() {
+      const vm = this;
 
-      const api = `http://careup.rocket-coding.com/MemberLogin`;
-      console.log({
-        email: this.email,
-        password: this.password
-      });
-      this.$http
+      let identity =
+        this.identity == 'family' ? 'MemberRegister' : 'AttendantRegister';
+      const api = `${process.env.VUE_APP_APIPATH}${identity}`;
+
+      vm.$http
         .post(api, {
-          email: this.email,
-          password: this.password
+          email: vm.email,
+          password: vm.password
         })
         .then(res => {
           console.log(res);
-          // const token = res.data.token;
-          // const expired = res.data.expired;
-          // //把token 存進 cookie
-          // document.cookie = `token=${token};expires=${new Date(
-          //   expired * 1000
-          // )}`;
-          // //登入成功的話轉換頁面
-          // this.$router.push("/admin");
+          if (res.status == '200') {
+            vm.$swal({
+              toast: true,
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: false,
+              onOpen: toast => {
+                toast.addEventListener('mouseenter', vm.$swal.stopTimer);
+                toast.addEventListener('mouseleave', vm.$swal.resumeTimer);
+              },
+              icon: 'success',
+              title: '已成功註冊，請先登入'
+            });
+            vm.email = '';
+            vm.password = '';
+          }
         })
         .catch(err => {
           console.log(err);

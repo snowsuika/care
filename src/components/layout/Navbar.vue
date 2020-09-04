@@ -32,15 +32,16 @@
           <!-- <li class="nav-item">
           <router-link class="nav-link" to="/chat">訊息</router-link>
         </li> -->
-          <li class="nav-item">
+          <li class="nav-item" v-if="!userInfo.token">
+            <a class="nav-link" href="#login" data-toggle="modal">會員登入</a>
+          </li>
+          <li class="nav-item" v-if="!userInfo.token">
             <a class="nav-link" href="#register" data-toggle="modal"
               >註冊新帳號</a
             >
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#login" data-toggle="modal">會員登入</a>
-          </li>
-          <li class="nav-item dropdown">
+
+          <li class="nav-item dropdown" v-if="userInfo.token">
             <a
               class="nav-link dropdown-toggle"
               href="#"
@@ -50,7 +51,8 @@
               aria-haspopup="true"
               aria-expanded="false"
             >
-              <i class="fa fa-user" aria-hidden="true"></i>
+              <!-- <i class="fa fa-user" aria-hidden="true"></i> -->
+              {{ this.userInfo.mail }}
             </a>
             <div
               class="dropdown-menu dropdown-menu-right"
@@ -70,6 +72,7 @@
                 href="#"
                 data-toggle="modal"
                 data-target="#logoutModal"
+                @click.prevent="signOut()"
               >
                 <i
                   class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"
@@ -85,7 +88,56 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      userInfo: {
+        token: '',
+        mail: '',
+        userId: ''
+      }
+    };
+  },
+  created() {
+    const vm = this;
+    vm.checkAuth();
+    vm.$bus.$on('checkLogin', () => {
+      vm.checkAuth();
+    });
+  },
+  methods: {
+    checkAuth() {
+      const vm = this;
+      vm.$nextTick(() => {
+        const token = localStorage.getItem('token');
+        const mail = localStorage.getItem('userMail');
+        const userId = localStorage.getItem('userId');
+        vm.userInfo.token = token;
+        vm.userInfo.mail = mail;
+        vm.userInfo.userId = userId;
+      });
+    },
+    signOut() {
+      localStorage.clear();
+      this.userInfo.token = '';
+      this.userInfo.mail = '';
+      this.userInfo.userId = '';
+      this.$swal({
+        // toast: true,
+        // position: 'top-end',
+        // showConfirmButton: false,
+        // timer: 3000,
+        // timerProgressBar: false,
+        // onOpen: toast => {
+        //   toast.addEventListener('mouseenter', this.$swal.stopTimer);
+        //   toast.addEventListener('mouseleave', this.$swal.resumeTimer);
+        // },
+        icon: 'success',
+        title: '已登出'
+      });
+    }
+  }
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
