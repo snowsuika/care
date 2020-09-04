@@ -141,36 +141,52 @@ export default {
       let identity =
         this.identity == 'family' ? 'MemberRegister' : 'AttendantRegister';
       const api = `${process.env.VUE_APP_APIPATH}${identity}`;
-
-      vm.$http
-        .post(api, {
-          email: vm.email,
-          password: vm.password
-        })
-        .then(res => {
-          console.log(res);
-          if (res.status == '200') {
-            vm.$swal({
-              toast: true,
-              position: 'top-end',
-              showConfirmButton: false,
-              timer: 3000,
-              timerProgressBar: false,
-              onOpen: toast => {
-                toast.addEventListener('mouseenter', vm.$swal.stopTimer);
-                toast.addEventListener('mouseleave', vm.$swal.resumeTimer);
-              },
-              icon: 'success',
-              title: '已成功註冊，請先登入'
-            });
-            vm.email = '';
-            vm.password = '';
-            vm.passwordAgain = '';
-          }
-        })
-        .catch(err => {
-          console.log(err);
+      if (this.password !== this.passwordAgain) {
+        vm.$swal({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: false,
+          onOpen: toast => {
+            toast.addEventListener('mouseenter', vm.$swal.stopTimer);
+            toast.addEventListener('mouseleave', vm.$swal.resumeTimer);
+          },
+          icon: 'error',
+          title: '兩次密碼輸入不一致，請重新輸入'
         });
+        return false;
+      } else {
+        vm.$http
+          .post(api, {
+            email: vm.email,
+            password: vm.password
+          })
+          .then(res => {
+            console.log(res);
+            if (res.status == '200') {
+              vm.$swal({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: false,
+                onOpen: toast => {
+                  toast.addEventListener('mouseenter', vm.$swal.stopTimer);
+                  toast.addEventListener('mouseleave', vm.$swal.resumeTimer);
+                },
+                icon: 'success',
+                title: '已成功註冊，請先登入'
+              });
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      }
+      vm.email = '';
+      vm.password = '';
+      vm.passwordAgain = '';
     },
     login() {
       const vm = this;
