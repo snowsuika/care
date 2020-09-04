@@ -32,18 +32,20 @@
           <!-- <li class="nav-item">
           <router-link class="nav-link" to="/chat">訊息</router-link>
         </li> -->
+
           <li class="nav-item" v-if="!userInfo.token">
-            <a class="nav-link" href="#login" data-toggle="modal">會員登入</a>
-          </li>
-          <li class="nav-item" v-if="!userInfo.token">
-            <a class="nav-link" href="#register" data-toggle="modal"
+            <a class="nav-link" @click="RegisterLoginModal('register')"
               >註冊新帳號</a
             >
           </li>
-
+          <li class="nav-item" v-if="!userInfo.token">
+            <a class="nav-link" @click="RegisterLoginModal('login')"
+              ><i class="fas fa-user-circle"></i> 會員登入</a
+            >
+          </li>
           <li class="nav-item dropdown" v-if="userInfo.token">
             <a
-              class="nav-link dropdown-toggle"
+              class="nav-link dropdown-toggle poin"
               href="#"
               id="navbarDropdownMenuLink"
               role="button"
@@ -51,7 +53,7 @@
               aria-haspopup="true"
               aria-expanded="false"
             >
-              <!-- <i class="fa fa-user" aria-hidden="true"></i> -->
+              <i class="fas fa-user-circle"></i>
               {{ this.userInfo.mail }}
             </a>
             <div
@@ -88,6 +90,7 @@
 </template>
 
 <script>
+/* global $ */
 export default {
   data() {
     return {
@@ -106,6 +109,10 @@ export default {
     });
   },
   methods: {
+    RegisterLoginModal(action) {
+      $('#registerLogin').modal('show');
+      this.$parent.$data.navModalAction = action;
+    },
     checkAuth() {
       const vm = this;
       vm.$nextTick(() => {

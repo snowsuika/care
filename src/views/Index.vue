@@ -17,8 +17,7 @@
       <footer-bar></footer-bar>
       <!-- <img alt="Vue logo" src="../assets/logo.png" />
     <HelloWorld msg="Welcome to Your Vue.js App" /> -->
-      <modal-register></modal-register>
-      <modal-login></modal-login>
+      <modal-register-login :action="navModalAction"></modal-register-login>
     </div>
   </div>
 </template>
@@ -26,18 +25,18 @@
 <script>
 import Navbar from '@/components/layout/Navbar.vue';
 import FooterBar from '@/components/layout/Footer.vue';
-import ModalRegister from '@/components/ModalRegister.vue';
-import ModalLogin from '@/components/ModalLogin.vue';
+import ModalRegisterLogin from '@/components/ModalRegisterLogin.vue';
 
 export default {
   data() {
-    return {};
+    return {
+      navModalAction: ''
+    };
   },
   components: {
     Navbar,
     FooterBar,
-    ModalRegister,
-    ModalLogin
+    ModalRegisterLogin
   }
 };
 </script>
