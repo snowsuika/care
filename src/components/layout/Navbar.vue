@@ -62,14 +62,14 @@
             >
               <router-link
                 class="dropdown-item"
-                to="/memberAdmin"
+                to="/memberAdmin/order"
                 v-if="userInfo.identity == 'member'"
                 ><i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
                 我的訂單</router-link
               >
               <router-link
                 class="dropdown-item"
-                to="/attendantAdmin"
+                to="/attendantAdmin/order"
                 v-if="userInfo.identity == 'attendant'"
                 ><i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
                 我的訂單</router-link
@@ -161,7 +161,7 @@ export default {
         title: '已登出'
       });
       this.$parent.$data.isLogin = false;
-      this.$router.push('/');
+      this.$route.path !== '/' ? this.$router.push('/') : false;
     }
   }
 };

@@ -3,6 +3,7 @@ import axios from 'axios';
 import VueAxios from 'vue-axios';
 import jquery from 'jquery';
 import 'bootstrap';
+
 //FormWizard 套件
 import VueFormWizard from 'vue-form-wizard';
 import 'vue-form-wizard/dist/vue-form-wizard.min.css';
@@ -12,6 +13,9 @@ import 'sweetalert2/dist/sweetalert2.min.css';
 
 // Bus
 import './bus';
+// Loading 套件
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
 
 import App from './App.vue';
 import router from './router';
@@ -33,6 +37,10 @@ Vue.use(VueSweetalert2, options);
 Vue.use(VueFormWizard);
 
 Vue.config.productionTip = false;
+
+Vue.use(Loading);
+Vue.component('Loading', Loading);
+
 Vue.use(VueAxios, axios);
 new Vue({
   router,

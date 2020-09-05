@@ -13,40 +13,60 @@ const routes = [
   {
     path: '/',
     // name: 'Index',
-    component: () => import('../views/Index.vue'),
+    component: () => import('@/views/Index.vue'),
     children: [
       {
         path: '/',
         // name: 'home',
-        component: () => import('../views/Home.vue')
+        component: () => import('@/views/Home.vue')
       },
       {
         path: '/login',
         // name: 'login',
-        component: () => import('../views/Login.vue')
+        component: () => import('@/views/Login.vue')
       },
       {
         path: '/searchCares',
         // name: 'FindCare',
-        component: () => import('../views/SearchCares.vue')
+        component: () => import('@/views/SearchCares.vue')
       },
       {
         path: '/carePage/:id', //冒號後面是可以自定義的
-        component: () => import('../views/CarerPage.vue')
+        component: () => import('@/views/CarerPage.vue')
       }
     ]
   },
   {
     path: '/attendantAdmin',
-    name: '照服員管理頁面',
-    component: () => import('../views/backendAttendant/AttendantDashboard.vue'),
+    component: () => import('@/views/backendAttendant/AttendantDashboard.vue'),
     meta: { requiresAuth: true }
   },
   {
     path: '/memberAdmin',
-    name: '一般會員管理頁面',
-    component: () => import('../views/backendMember/MemberDashboard.vue'),
-    meta: { requiresAuth: true }
+    component: () => import('@/views/backendMember/MemberDashboard.vue'),
+    meta: { requiresAuth: true },
+    children: [
+      {
+        path: '',
+        component: () =>
+          import('@/views/backendMember/MemberDashboardOrder.vue')
+      },
+      {
+        path: 'order',
+        component: () =>
+          import('@/views/backendMember/MemberDashboardOrder.vue')
+      },
+      {
+        path: 'familyManage',
+        component: () =>
+          import('@/views/backendMember/MemberDashboardFamily.vue')
+      },
+      {
+        path: 'accountManage',
+        component: () =>
+          import('@/views/backendMember/MemberDashboardAccount.vue')
+      }
+    ]
   }
   // {
   //   path: '/about',
