@@ -39,7 +39,7 @@
                   role="tab"
                   aria-controls="pills-home"
                   aria-selected="true"
-                  @click="confirmIdentity('family')"
+                  @click="confirmIdentity('member')"
                   >我是家屬</a
                 >
               </li>
@@ -122,7 +122,7 @@
 export default {
   data() {
     return {
-      identity: 'family',
+      identity: 'member',
       email: '',
       password: '',
       passwordAgain: ''
@@ -139,7 +139,7 @@ export default {
       const vm = this;
 
       let identity =
-        this.identity == 'family' ? 'MemberRegister' : 'AttendantRegister';
+        this.identity == 'member' ? 'MemberRegister' : 'AttendantRegister';
       const api = `${process.env.VUE_APP_APIPATH}${identity}`;
       if (this.password !== this.passwordAgain) {
         vm.$swal({
@@ -164,7 +164,7 @@ export default {
           })
           .then(res => {
             console.log(res);
-            if (res.status == '200') {
+            if (res.data.result == '註冊成功') {
               vm.$swal({
                 toast: true,
                 position: 'top-end',
@@ -177,6 +177,11 @@ export default {
                 },
                 icon: 'success',
                 title: '已成功註冊，請先登入'
+              });
+            } else {
+              vm.$swal({
+                icon: 'warning',
+                title: `格式${res.data.result}，請重新輸入`
               });
             }
           })
@@ -191,7 +196,7 @@ export default {
     login() {
       const vm = this;
       let identity =
-        this.identity == 'family' ? 'MemberLogin' : 'AttendantLogin';
+        this.identity == 'member' ? 'MemberLogin' : 'AttendantLogin';
       const api = `${process.env.VUE_APP_APIPATH}${identity}`;
       vm.$http
         .post(api, {
@@ -219,6 +224,7 @@ export default {
             localStorage.setItem('token', `${res.data.token}`);
             localStorage.setItem('userId', `${res.data.Id}`);
             localStorage.setItem('userMail', `${res.data.Email}`);
+            localStorage.setItem('identity', this.identity);
             this.$bus.$emit('checkLogin');
           } else {
             console.log(res.data.message);

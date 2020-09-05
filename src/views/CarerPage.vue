@@ -146,8 +146,7 @@
             ></a>
             <button
               class="btn btn-primary btn-lg btn-block"
-              data-toggle="modal"
-              data-target="#bookingCareer"
+              @click="bookingCare()"
             >
               預約日照服務
             </button>
@@ -164,6 +163,7 @@
 
 <script>
 //global registration
+/* global $ */
 import ModalBookingStep from '@/components/ModalBookingStep.vue';
 export default {
   components: {
@@ -179,6 +179,7 @@ export default {
       }
     };
   },
+
   computed: {
     dateDiff: function() {
       return (
@@ -188,7 +189,27 @@ export default {
       ); // 把相差的毫秒數轉換為天數;
     }
   },
-  methods: {}
+  methods: {
+    bookingCare() {
+      if (this.$parent.isLogin) {
+        $('#bookingCareer').modal('show');
+      } else {
+        this.$swal({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: false,
+          onOpen: toast => {
+            toast.addEventListener('mouseenter', this.$swal.stopTimer);
+            toast.addEventListener('mouseleave', this.$swal.resumeTimer);
+          },
+          icon: 'warning',
+          title: '請先登入才能使用！'
+        });
+      }
+    }
+  }
 };
 </script>
 

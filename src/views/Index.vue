@@ -30,7 +30,8 @@ import ModalRegisterLogin from '@/components/ModalRegisterLogin.vue';
 export default {
   data() {
     return {
-      navModalAction: ''
+      navModalAction: '',
+      isLogin: false
     };
   },
   components: {

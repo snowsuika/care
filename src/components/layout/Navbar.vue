@@ -60,14 +60,25 @@
               class="dropdown-menu dropdown-menu-right"
               aria-labelledby="navbarDropdownMenuLink"
             >
-              <a class="dropdown-item" href="family_admin_order.html">
-                <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                我的訂單
-              </a>
+              <router-link
+                class="dropdown-item"
+                to="/memberAdmin"
+                v-if="userInfo.identity == 'member'"
+                ><i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                我的訂單</router-link
+              >
+              <router-link
+                class="dropdown-item"
+                to="/attendantAdmin"
+                v-if="userInfo.identity == 'attendant'"
+                ><i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                我的訂單</router-link
+              >
               <a class="dropdown-item" href="family_admin_account.html">
                 <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                 帳號管理
               </a>
+
               <div class="dropdown-divider"></div>
               <a
                 class="dropdown-item"
@@ -97,7 +108,8 @@ export default {
       userInfo: {
         token: '',
         mail: '',
-        userId: ''
+        userId: '',
+        identity: ''
       }
     };
   },
@@ -119,9 +131,14 @@ export default {
         const token = localStorage.getItem('token');
         const mail = localStorage.getItem('userMail');
         const userId = localStorage.getItem('userId');
+        const identity = localStorage.getItem('identity');
         vm.userInfo.token = token;
         vm.userInfo.mail = mail;
         vm.userInfo.userId = userId;
+        vm.userInfo.identity = identity;
+        if (vm.userInfo.token) {
+          this.$parent.$data.isLogin = true;
+        }
       });
     },
     signOut() {
@@ -129,6 +146,7 @@ export default {
       this.userInfo.token = '';
       this.userInfo.mail = '';
       this.userInfo.userId = '';
+      this.userInfo.identity = '';
       this.$swal({
         // toast: true,
         // position: 'top-end',
@@ -142,6 +160,8 @@ export default {
         icon: 'success',
         title: '已登出'
       });
+      this.$parent.$data.isLogin = false;
+      this.$router.push('/');
     }
   }
 };
