@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Loading :active.sync="isLoading" />
     <!-- 註冊 -->
     <div
       class="modal fade"
@@ -68,6 +69,7 @@
                   v-model="email"
                   placeholder="請輸入電子信箱"
                   id="loginEmail"
+                  autocomplete="on"
                   aria-describedby="emailHelp"
                 />
               </div>
@@ -78,6 +80,7 @@
                   type="password"
                   class="form-control"
                   v-model="password"
+                  autocomplete="on"
                   placeholder="請輸入會員密碼"
                   id="loginPassword"
                 />
@@ -88,6 +91,7 @@
                   type="password"
                   class="form-control"
                   v-model="passwordAgain"
+                  autocomplete="on"
                   placeholder="請再次輸入密碼"
                   id="registerPasswordAgain"
                 />
@@ -125,7 +129,8 @@ export default {
       identity: 'member',
       email: '',
       password: '',
-      passwordAgain: ''
+      passwordAgain: '',
+      isLoading: false
     };
   },
   props: {
@@ -137,11 +142,12 @@ export default {
     },
     register() {
       const vm = this;
-
+      vm.isLoading = true;
       let identity =
         this.identity == 'member' ? 'MemberRegister' : 'AttendantRegister';
       const api = `${process.env.VUE_APP_APIPATH}${identity}`;
       if (this.password !== this.passwordAgain) {
+        vm.isLoading = false;
         vm.$swal({
           toast: true,
           position: 'top-end',
@@ -164,6 +170,7 @@ export default {
           })
           .then(res => {
             console.log(res);
+
             if (res.data.result == '註冊成功') {
               vm.$swal({
                 toast: true,
@@ -178,11 +185,13 @@ export default {
                 icon: 'success',
                 title: '已成功註冊，請先登入'
               });
+              vm.isLoading = false;
             } else {
               vm.$swal({
                 icon: 'warning',
                 title: `格式${res.data.result}，請重新輸入`
               });
+              vm.isLoading = false;
             }
           })
           .catch(err => {
@@ -195,6 +204,7 @@ export default {
     },
     login() {
       const vm = this;
+      vm.isLoading = true;
       let identity =
         this.identity == 'member' ? 'MemberLogin' : 'AttendantLogin';
       const api = `${process.env.VUE_APP_APIPATH}${identity}`;
@@ -221,6 +231,7 @@ export default {
               // icon: 'success',
               // title: `${res.data.message}！已登入～`
             });
+            vm.isLoading = false;
             localStorage.setItem('token', `${res.data.token}`);
             localStorage.setItem('userId', `${res.data.Id}`);
             localStorage.setItem('userMail', `${res.data.Email}`);
@@ -241,6 +252,7 @@ export default {
               icon: 'error',
               title: `${res.data.message}，請重新登入`
             });
+            vm.isLoading = false;
           }
 
           vm.email = '';
