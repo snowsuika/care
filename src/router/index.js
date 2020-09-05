@@ -21,6 +21,11 @@ const routes = [
         component: () => import('../views/Home.vue')
       },
       {
+        path: '/login',
+        // name: 'login',
+        component: () => import('../views/Login.vue')
+      },
+      {
         path: '/searchCares',
         // name: 'FindCare',
         component: () => import('../views/SearchCares.vue')
@@ -30,8 +35,19 @@ const routes = [
         component: () => import('../views/CarerPage.vue')
       }
     ]
+  },
+  {
+    path: '/attendantAdmin',
+    name: '照服員管理頁面',
+    component: () => import('../views/backendAttendant/AttendantDashboard.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/memberAdmin',
+    name: '一般會員管理頁面',
+    component: () => import('../views/backendMember/MemberDashboard.vue'),
+    meta: { requiresAuth: true }
   }
-
   // {
   //   path: '/about',
   //   name: 'About',

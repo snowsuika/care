@@ -129,7 +129,6 @@
                   <label for="inputEmail4">預約服務期間</label>
                   <v-date-picker
                     mode="range"
-                    :attributes="attributes"
                     v-model="range"
                     :popover="{ placement: 'bottom', visibility: 'click' }"
                     color="yellow"
@@ -147,8 +146,7 @@
             ></a>
             <button
               class="btn btn-primary btn-lg btn-block"
-              data-toggle="modal"
-              data-target="#bookingCareer"
+              @click="bookingCare()"
             >
               預約日照服務
             </button>
@@ -165,6 +163,7 @@
 
 <script>
 //global registration
+/* global $ */
 import ModalBookingStep from '@/components/ModalBookingStep.vue';
 export default {
   components: {
@@ -180,6 +179,7 @@ export default {
       }
     };
   },
+
   computed: {
     dateDiff: function() {
       return (
@@ -187,6 +187,27 @@ export default {
           Math.abs(this.range.end - this.range.start) / 1000 / 60 / 60 / 24
         ) + 1
       ); // 把相差的毫秒數轉換為天數;
+    }
+  },
+  methods: {
+    bookingCare() {
+      if (this.$parent.isLogin) {
+        $('#bookingCareer').modal('show');
+      } else {
+        this.$swal({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: false,
+          onOpen: toast => {
+            toast.addEventListener('mouseenter', this.$swal.stopTimer);
+            toast.addEventListener('mouseleave', this.$swal.resumeTimer);
+          },
+          icon: 'warning',
+          title: '請先登入才能使用！'
+        });
+      }
     }
   }
 };

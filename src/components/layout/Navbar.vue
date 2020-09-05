@@ -32,17 +32,20 @@
           <!-- <li class="nav-item">
           <router-link class="nav-link" to="/chat">訊息</router-link>
         </li> -->
-          <li class="nav-item">
-            <a class="nav-link" href="#register" data-toggle="modal"
+
+          <li class="nav-item" v-if="!userInfo.token">
+            <a class="nav-link" @click="RegisterLoginModal('register')"
               >註冊新帳號</a
             >
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#login" data-toggle="modal">會員登入</a>
+          <li class="nav-item" v-if="!userInfo.token">
+            <a class="nav-link" @click="RegisterLoginModal('login')"
+              ><i class="fas fa-user-circle"></i> 會員登入</a
+            >
           </li>
-          <li class="nav-item dropdown">
+          <li class="nav-item dropdown" v-if="userInfo.token">
             <a
-              class="nav-link dropdown-toggle"
+              class="nav-link dropdown-toggle poin"
               href="#"
               id="navbarDropdownMenuLink"
               role="button"
@@ -50,26 +53,39 @@
               aria-haspopup="true"
               aria-expanded="false"
             >
-              <i class="fa fa-user" aria-hidden="true"></i>
+              <i class="fas fa-user-circle"></i>
+              {{ this.userInfo.mail }}
             </a>
             <div
               class="dropdown-menu dropdown-menu-right"
               aria-labelledby="navbarDropdownMenuLink"
             >
-              <a class="dropdown-item" href="family_admin_order.html">
-                <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                我的訂單
-              </a>
+              <router-link
+                class="dropdown-item"
+                to="/memberAdmin"
+                v-if="userInfo.identity == 'member'"
+                ><i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                我的訂單</router-link
+              >
+              <router-link
+                class="dropdown-item"
+                to="/attendantAdmin"
+                v-if="userInfo.identity == 'attendant'"
+                ><i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                我的訂單</router-link
+              >
               <a class="dropdown-item" href="family_admin_account.html">
                 <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                 帳號管理
               </a>
+
               <div class="dropdown-divider"></div>
               <a
                 class="dropdown-item"
                 href="#"
                 data-toggle="modal"
                 data-target="#logoutModal"
+                @click.prevent="signOut()"
               >
                 <i
                   class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"
@@ -85,7 +101,70 @@
 </template>
 
 <script>
-export default {};
+/* global $ */
+export default {
+  data() {
+    return {
+      userInfo: {
+        token: '',
+        mail: '',
+        userId: '',
+        identity: ''
+      }
+    };
+  },
+  created() {
+    const vm = this;
+    vm.checkAuth();
+    vm.$bus.$on('checkLogin', () => {
+      vm.checkAuth();
+    });
+  },
+  methods: {
+    RegisterLoginModal(action) {
+      $('#registerLogin').modal('show');
+      this.$parent.$data.navModalAction = action;
+    },
+    checkAuth() {
+      const vm = this;
+      vm.$nextTick(() => {
+        const token = localStorage.getItem('token');
+        const mail = localStorage.getItem('userMail');
+        const userId = localStorage.getItem('userId');
+        const identity = localStorage.getItem('identity');
+        vm.userInfo.token = token;
+        vm.userInfo.mail = mail;
+        vm.userInfo.userId = userId;
+        vm.userInfo.identity = identity;
+        if (vm.userInfo.token) {
+          this.$parent.$data.isLogin = true;
+        }
+      });
+    },
+    signOut() {
+      localStorage.clear();
+      this.userInfo.token = '';
+      this.userInfo.mail = '';
+      this.userInfo.userId = '';
+      this.userInfo.identity = '';
+      this.$swal({
+        // toast: true,
+        // position: 'top-end',
+        // showConfirmButton: false,
+        // timer: 3000,
+        // timerProgressBar: false,
+        // onOpen: toast => {
+        //   toast.addEventListener('mouseenter', this.$swal.stopTimer);
+        //   toast.addEventListener('mouseleave', this.$swal.resumeTimer);
+        // },
+        icon: 'success',
+        title: '已登出'
+      });
+      this.$parent.$data.isLogin = false;
+      this.$router.push('/');
+    }
+  }
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

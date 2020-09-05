@@ -10,6 +10,9 @@ import 'vue-form-wizard/dist/vue-form-wizard.min.css';
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
 
+// Bus
+import './bus';
+
 import App from './App.vue';
 import router from './router';
 
@@ -27,7 +30,6 @@ const options = {
 };
 
 Vue.use(VueSweetalert2, options);
-Vue.use(VueSweetalert2);
 Vue.use(VueFormWizard);
 
 Vue.config.productionTip = false;

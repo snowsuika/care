@@ -533,25 +533,20 @@ export default {
   },
   methods: {
     onComplete: function() {
-      this.$swal(
-        // '已成功預約日照服務！',
-        // '做得很好，您可以到 <b style="color:green;">我的訂單</b> 查看預約進度',
-        // 'success'
-        {
-          toast: true,
-          position: 'top-end',
-          showConfirmButton: false,
-          timer: 5000,
-          timerProgressBar: false,
-          onOpen: toast => {
-            toast.addEventListener('mouseenter', this.$swal.stopTimer);
-            toast.addEventListener('mouseleave', this.$swal.resumeTimer);
-          },
-          icon: 'success',
-          title:
-            '已成功預約日照服務！可以到 <b style="color:green;">我的訂單</b> 查看預約進度'
-        }
-      );
+      this.$swal({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 5000,
+        timerProgressBar: false,
+        onOpen: toast => {
+          toast.addEventListener('mouseenter', this.$swal.stopTimer);
+          toast.addEventListener('mouseleave', this.$swal.resumeTimer);
+        },
+        icon: 'success',
+        title:
+          '已成功預約日照服務！可以到 <b style="color:green;">我的訂單</b> 查看預約進度'
+      });
       setTimeout(() => {
         $('#bookingCareer').modal('hide');
       }, 2000);
