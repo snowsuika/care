@@ -1,5 +1,5 @@
 <template>
-  <ul class="nav flex-lg-column justify-content-between">
+  <ul class="nav flex-md-column justify-content-between">
     <li class="nav-item">
       <router-link
         class="nav-link"
@@ -13,7 +13,7 @@
         class="nav-link"
         active-class="active"
         to="/memberAdmin/familyManage"
-        ><i class="fas fa-user-plus"></i> 服務對象管理</router-link
+        ><i class="fas fa-user-plus"></i> 家屬管理</router-link
       >
     </li>
     <li class="nav-item">

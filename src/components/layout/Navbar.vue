@@ -29,9 +29,11 @@
               >尋找日照服務</router-link
             >
           </li>
-          <!-- <li class="nav-item">
-          <router-link class="nav-link" to="/chat">訊息</router-link>
-        </li> -->
+          <li class="nav-item" v-if="userInfo.token">
+            <router-link class="nav-link" to="/chat"
+              ><i class="fas fa-comment-dots"></i> 訊息</router-link
+            >
+          </li>
 
           <li class="nav-item" v-if="!userInfo.token">
             <a class="nav-link" @click="RegisterLoginModal('register')"

@@ -26,6 +26,12 @@ const routes = [
         component: () => import('@/views/Login.vue')
       },
       {
+        path: '/chat',
+        // name: 'chat',
+        component: () => import('@/views/Chat.vue'),
+        meta: { requiresAuth: true }
+      },
+      {
         path: '/searchCares',
         // name: 'FindCare',
         component: () => import('@/views/SearchCares.vue')
