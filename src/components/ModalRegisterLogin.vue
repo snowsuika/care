@@ -217,19 +217,17 @@ export default {
           console.log(res);
           if (res.data.message == '登入成功') {
             vm.$swal({
+              toast: true,
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: false,
+              onOpen: toast => {
+                toast.addEventListener('mouseenter', vm.$swal.stopTimer);
+                toast.addEventListener('mouseleave', vm.$swal.resumeTimer);
+              },
               icon: 'success',
-              title: `${res.data.message}！已登入～`
-              // toast: true,
-              // position: 'top-end',
-              // showConfirmButton: false,
-              // timer: 3000,
-              // timerProgressBar: false,
-              // onOpen: toast => {
-              //   toast.addEventListener('mouseenter', vm.$swal.stopTimer);
-              //   toast.addEventListener('mouseleave', vm.$swal.resumeTimer);
-              // },
-              // icon: 'success',
-              // title: `${res.data.message}！已登入～`
+              title: `${res.data.message}`
             });
             vm.isLoading = false;
             localStorage.setItem('token', `${res.data.token}`);

@@ -3,69 +3,17 @@
   <div class="card shadow-sm radius-3">
     <div class="card-header">
       <ul class="nav nav-tabs card-header-tabs" id="nav-tab" role="tablist">
-        <li class="nav-item">
+        <li v-for="(item, index) in tabStatus" :key="index" class="nav-item">
           <a
             class="nav-link"
-            :class="{ active: orderStatus == 'unconfirm' }"
-            @click="changeStatus('unconfirm')"
+            :class="{ active: orderStatus == `${item.orderStatus}` }"
+            @click="changeStatus(`${item.orderStatus}`)"
             data-toggle="tab"
             role="tab"
-            >未確認訂單
-            <span class="badge badge-pill badge-secondary text-white"
-              >2</span
-            ></a
-          >
-        </li>
-        <li class="nav-item">
-          <a
-            class="nav-link"
-            :class="{ active: orderStatus == 'processing' }"
-            @click="changeStatus('processing')"
-            data-toggle="tab"
-            role="tab"
-            >訂單處理中
-            <span class="badge badge-pill badge-secondary text-white"
-              >2</span
-            ></a
-          >
-        </li>
-        <li class="nav-item">
-          <a
-            class="nav-link"
-            :class="{ active: orderStatus == 'serviceing' }"
-            @click="changeStatus('serviceing')"
-            data-toggle="tab"
-            role="tab"
-            >進行中
-            <span class="badge badge-pill badge-secondary text-white"
-              >2</span
-            ></a
-          >
-        </li>
-        <li class="nav-item">
-          <a
-            class="nav-link"
-            :class="{ active: orderStatus == 'waitmoney' }"
-            @click="changeStatus('waitmoney')"
-            data-toggle="tab"
-            role="tab"
-            >待收款
-            <span class="badge badge-pill badge-secondary text-white"
-              >2</span
-            ></a
-          >
-        </li>
-        <li class="nav-item">
-          <a
-            class="nav-link"
-            :class="{ active: orderStatus == 'finish' }"
-            @click="changeStatus('finish')"
-            data-toggle="tab"
-            role="tab"
-            >已完成
-            <span class="badge badge-pill badge-secondary text-white"
-              >2</span
-            ></a
+            >{{ item.tabName }}
+            <span class="badge badge-pill badge-secondary text-white">{{
+              item.badge
+            }}</span></a
           >
         </li>
       </ul>
@@ -97,7 +45,14 @@ import Finish from '@/components/OrderAttendantFinish.vue';
 export default {
   data() {
     return {
-      orderStatus: 'unconfirm'
+      orderStatus: 'unconfirm',
+      tabStatus: [
+        { tabName: '未確認訂單', orderStatus: 'unconfirm', badge: 2 },
+        { tabName: '訂單處理中', orderStatus: 'processing', badge: 2 },
+        { tabName: '進行中', orderStatus: 'serviceing', badge: 2 },
+        { tabName: '待收款', orderStatus: 'waitmoney', badge: 2 },
+        { tabName: '已完成', orderStatus: 'finish', badge: 0 }
+      ]
     };
   },
   components: {

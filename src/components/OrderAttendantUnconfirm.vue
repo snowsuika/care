@@ -26,7 +26,7 @@
                 type="button"
                 class="btn btn-primary-soft text-primary"
                 data-toggle="modal"
-                data-target="#orderDetail"
+                @click="openModal()"
               >
                 查看並確認訂單
               </button>
@@ -35,5 +35,21 @@
         </tbody>
       </table>
     </div>
+    <modal-order-detail></modal-order-detail>
   </div>
 </template>
+
+<script>
+/* global $ */
+import ModalOrderDetail from '@/components/ModalOrderDetail.vue';
+export default {
+  components: {
+    ModalOrderDetail
+  },
+  methods: {
+    openModal() {
+      $('#orderDetail').modal('show');
+    }
+  }
+};
+</script>

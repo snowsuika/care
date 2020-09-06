@@ -181,15 +181,15 @@ export default {
       this.userInfo.userId = '';
       this.userInfo.identity = '';
       this.$swal({
-        // toast: true,
-        // position: 'top-end',
-        // showConfirmButton: false,
-        // timer: 3000,
-        // timerProgressBar: false,
-        // onOpen: toast => {
-        //   toast.addEventListener('mouseenter', this.$swal.stopTimer);
-        //   toast.addEventListener('mouseleave', this.$swal.resumeTimer);
-        // },
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: false,
+        onOpen: toast => {
+          toast.addEventListener('mouseenter', this.$swal.stopTimer);
+          toast.addEventListener('mouseleave', this.$swal.resumeTimer);
+        },
         icon: 'success',
         title: '已登出'
       });
