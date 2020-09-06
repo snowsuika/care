@@ -6,6 +6,7 @@
     </div>
     <router-view />
     <a name="" id="" class="btn btn-primary" href="#" role="button">123</a> -->
+    <loading :active.sync="isLoading" />
     <div class="home">
       <header class="bg-white border-bottom shadow-sm">
         <!-- 上方選單 -->
@@ -31,7 +32,8 @@ export default {
   data() {
     return {
       navModalAction: '',
-      isLogin: false
+      isLogin: false,
+      isLoading: false
     };
   },
   components: {

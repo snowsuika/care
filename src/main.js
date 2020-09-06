@@ -2,6 +2,15 @@ import Vue from 'vue';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
 import jquery from 'jquery';
+import {
+  ValidationObserver,
+  ValidationProvider,
+  configure,
+  localize,
+  extend
+} from 'vee-validate'; // 驗證套件
+import * as rules from 'vee-validate/dist/rules'; // 規則檔案（ex: email...）
+import zhTW from 'vee-validate/dist/locale/zh_TW.json'; // 語系檔案
 import 'bootstrap';
 
 //FormWizard 套件
@@ -33,13 +42,26 @@ const options = {
   cancelButtonColor: '#e3ead8'
 };
 
+//SweetAlert
 Vue.use(VueSweetalert2, options);
 Vue.use(VueFormWizard);
 
 Vue.config.productionTip = false;
-
+//Loading
 Vue.use(Loading);
-Vue.component('Loading', Loading);
+// vee-validate
+Object.keys(rules).forEach(rule => {
+  extend(rule, rules[rule]);
+}); // 所有驗證規則
+configure({
+  classes: {
+    valid: 'is-valid',
+    invalid: 'is-invalid'
+  }
+});
+localize('tw', zhTW);
+Vue.component('ValidationObserver', ValidationObserver);
+Vue.component('ValidationProvider', ValidationProvider);
 
 Vue.use(VueAxios, axios);
 new Vue({
