@@ -21,11 +21,6 @@ const routes = [
         component: () => import('@/views/Home.vue')
       },
       {
-        path: '/login',
-        // name: 'login',
-        component: () => import('@/views/Login.vue')
-      },
-      {
         path: '/chat',
         // name: 'chat',
         component: () => import('@/views/Chat.vue'),

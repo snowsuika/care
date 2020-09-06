@@ -32,11 +32,11 @@
 </template>
 
 <script>
-import Waitconfirm from '@/components/OrderMemberWaitconfirm.vue';
-import Processing from '@/components/OrderMemberProcessing.vue';
-import Serviceing from '@/components/OrderMemberServiceing.vue';
-import Rating from '@/components/OrderMemberRating.vue';
-import Finish from '@/components/OrderMemberFinish.vue';
+import Waitconfirm from '@/components/member/WaitconfirmTable.vue';
+import Processing from '@/components/member/ProcessingTable.vue';
+import Serviceing from '@/components/member/ServiceingTable.vue';
+import Rating from '@/components/member/RatingTable.vue';
+import Finish from '@/components/member/FinishTable.vue';
 
 export default {
   data() {
