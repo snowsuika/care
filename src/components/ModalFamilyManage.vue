@@ -38,14 +38,24 @@
                   <h4 class="mb-3">被服務對象基本資料</h4>
                   <form>
                     <div class="form-group">
-                      <label for="userName">服務對象姓名</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="userName"
-                        v-model.trim="familyInfo.name"
-                        placeholder="請輸入被服務對象姓名"
-                      />
+                      <validation-provider
+                        rules="required"
+                        v-slot="{ errors, classes }"
+                      >
+                        <label for="userName">服務對象姓名</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          :class="classes"
+                          id="userName"
+                          name="服務對象姓名"
+                          v-model.trim="familyInfo.name"
+                          placeholder="請輸入被服務對象姓名"
+                        />
+                        <div v-if="errors[0]" class="invalid-feedback">
+                          {{ errors[0] }}
+                        </div>
+                      </validation-provider>
                     </div>
                     <div class="form-row">
                       <div class="form-group col-md-6">
@@ -60,36 +70,66 @@
                         </select>
                       </div>
                       <div class="form-group col-md-6">
-                        <label for="age">年齡：</label>
-                        <input
-                          type="number"
-                          class="form-control"
-                          v-model.number="familyInfo.age"
-                          id="age"
-                          placeholder="請輸入年齡"
-                        />
+                        <validation-provider
+                          rules="required|numeric"
+                          v-slot="{ errors, classes }"
+                        >
+                          <label for="age">年齡：</label>
+                          <input
+                            type="number"
+                            class="form-control"
+                            :class="classes"
+                            v-model.number="familyInfo.age"
+                            id="age"
+                            name="年齡"
+                            placeholder="請輸入年齡"
+                          />
+                          <div v-if="errors[0]" class="invalid-feedback">
+                            {{ errors[0] }}
+                          </div>
+                        </validation-provider>
                       </div>
                     </div>
                     <div class="form-row">
                       <div class="form-group col-md-6">
-                        <label for="height">身高：</label>
-                        <input
-                          type="number"
-                          class="form-control"
-                          v-model.number="familyInfo.height"
-                          id="height"
-                          placeholder="請輸入身高"
-                        />
+                        <validation-provider
+                          rules="required|numeric"
+                          v-slot="{ errors, classes }"
+                        >
+                          <label for="height">身高：</label>
+                          <input
+                            type="number"
+                            class="form-control"
+                            :class="classes"
+                            v-model.number="familyInfo.height"
+                            id="height"
+                            name="身高"
+                            placeholder="請輸入身高"
+                          />
+                          <div v-if="errors[0]" class="invalid-feedback">
+                            {{ errors[0] }}
+                          </div>
+                        </validation-provider>
                       </div>
                       <div class="form-group col-md-6">
-                        <label for="bodyWeight">體重：</label>
-                        <input
-                          type="number"
-                          class="form-control"
-                          v-model.number="familyInfo.weight"
-                          id="bodyWeight"
-                          placeholder="請輸入體重"
-                        />
+                        <validation-provider
+                          rules="required|numeric"
+                          v-slot="{ errors, classes }"
+                        >
+                          <label for="bodyWeight">體重：</label>
+                          <input
+                            type="number"
+                            class="form-control"
+                            :class="classes"
+                            v-model.number="familyInfo.weight"
+                            id="bodyWeight"
+                            name="體重"
+                            placeholder="請輸入體重"
+                          />
+                          <div v-if="errors[0]" class="invalid-feedback">
+                            {{ errors[0] }}
+                          </div>
+                        </validation-provider>
                       </div>
                     </div>
                   </form>
@@ -128,15 +168,25 @@
                     >
                   </div>
                   <div class="form-group">
-                    <label for="address">照護地址：</label>
-                    <input
-                      type="email"
-                      class="form-control"
-                      v-model.trim="familyInfo.address"
-                      id="address"
-                      placeholder="請輸入照護地址"
-                      aria-describedby="emailHelp"
-                    />
+                    <validation-provider
+                      rules="required"
+                      v-slot="{ errors, classes }"
+                    >
+                      <label for="address">照護地址：</label>
+                      <input
+                        type="email"
+                        class="form-control"
+                        :class="classes"
+                        v-model.trim="familyInfo.address"
+                        id="address"
+                        name="照護地址"
+                        placeholder="請輸入照護地址"
+                        aria-describedby="emailHelp"
+                      />
+                      <div v-if="errors[0]" class="invalid-feedback">
+                        {{ errors[0] }}
+                      </div>
+                    </validation-provider>
                   </div>
                 </div>
               </div>
@@ -440,36 +490,66 @@
                   <h4 class="mb-3">緊急聯絡人資訊</h4>
                   <form class="row">
                     <div class="form-row col-12 col-md-6 mb-2">
-                      <label for="emergencyContact">緊急聯絡姓名</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        v-model.trim="familyInfo.emergencyContact"
-                        id="emergencyContact"
-                        placeholder="請輸入緊急聯絡姓名"
-                      />
+                      <validation-provider
+                        rules="required"
+                        v-slot="{ errors, classes }"
+                      >
+                        <label for="emergencyContact">緊急聯絡姓名</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          :class="classes"
+                          v-model.trim="familyInfo.emergencyContact"
+                          id="emergencyContact"
+                          name="緊急聯絡姓名"
+                          placeholder="請輸入緊急聯絡姓名"
+                        />
+                        <div v-if="errors[0]" class="invalid-feedback">
+                          {{ errors[0] }}
+                        </div>
+                      </validation-provider>
                     </div>
                     <div class="form-row col-12 col-md-6 mb-2">
-                      <label for="emergencyRelationship"
-                        >與被服務對象的關係</label
+                      <validation-provider
+                        rules="required"
+                        v-slot="{ errors, classes }"
                       >
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="emergencyRelationship"
-                        v-model.trim="familyInfo.emergencyRelationship"
-                        placeholder="請輸入關係"
-                      />
+                        <label for="emergencyRelationship"
+                          >與被服務對象的關係</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          :class="classes"
+                          id="emergencyRelationship"
+                          name="與被服務對象的關係"
+                          v-model.trim="familyInfo.emergencyRelationship"
+                          placeholder="請輸入關係"
+                        />
+                        <div v-if="errors[0]" class="invalid-feedback">
+                          {{ errors[0] }}
+                        </div>
+                      </validation-provider>
                     </div>
                     <div class="form-row col-12 col-md-12">
-                      <label for="emergencyphone">緊急聯絡電話</label>
-                      <input
-                        type="tel"
-                        class="form-control"
-                        v-model.number="familyInfo.emergencyphone"
-                        id="emergencyphone"
-                        placeholder="緊急聯絡電話"
-                      />
+                      <validation-provider
+                        rules="required|numeric"
+                        v-slot="{ errors, classes }"
+                      >
+                        <label for="emergencyphone">緊急聯絡電話</label>
+                        <input
+                          type="tel"
+                          class="form-control"
+                          :class="classes"
+                          v-model.number="familyInfo.emergencyphone"
+                          id="emergencyphone"
+                          name="緊急聯絡電話"
+                          placeholder="緊急聯絡電話"
+                        />
+                        <div v-if="errors[0]" class="invalid-feedback">
+                          {{ errors[0] }}
+                        </div>
+                      </validation-provider>
                     </div>
                   </form>
                 </div>
