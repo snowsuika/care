@@ -21,6 +21,10 @@ min-height: calc(100vh - 120px) ;
 flex: 1;
 }
 
+a{
+  cursor: pointer;
+}
+
 //nav
 a.nav-link.active {
   background-color: #ecf3e2;

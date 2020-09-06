@@ -21,11 +21,6 @@ const routes = [
         component: () => import('@/views/Home.vue')
       },
       {
-        path: '/login',
-        // name: 'login',
-        component: () => import('@/views/Login.vue')
-      },
-      {
         path: '/chat',
         // name: 'chat',
         component: () => import('@/views/Chat.vue'),
@@ -45,7 +40,29 @@ const routes = [
   {
     path: '/attendantAdmin',
     component: () => import('@/views/backendAttendant/AttendantDashboard.vue'),
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true },
+    children: [
+      {
+        path: '',
+        component: () =>
+          import('@/views/backendAttendant/AttendantDashboardOrder.vue')
+      },
+      {
+        path: 'order',
+        component: () =>
+          import('@/views/backendAttendant/AttendantDashboardOrder.vue')
+      },
+      {
+        path: 'profire',
+        component: () =>
+          import('@/views/backendAttendant/AttendantDashboardResume.vue')
+      },
+      {
+        path: 'accountManage',
+        component: () =>
+          import('@/views/backendAttendant/AttendantDashboardAccount.vue')
+      }
+    ]
   },
   {
     path: '/memberAdmin',

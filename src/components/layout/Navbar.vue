@@ -58,28 +58,59 @@
               <i class="fas fa-user-circle"></i>
               {{ this.userInfo.mail }}
             </a>
+            <!-- 家屬端登入 -->
             <div
               class="dropdown-menu dropdown-menu-right"
+              v-if="userInfo.identity == 'member'"
               aria-labelledby="navbarDropdownMenuLink"
             >
-              <router-link
-                class="dropdown-item"
-                to="/memberAdmin/order"
-                v-if="userInfo.identity == 'member'"
+              <router-link class="dropdown-item" to="/memberAdmin/order"
                 ><i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
                 我的訂單</router-link
               >
-              <router-link
-                class="dropdown-item"
-                to="/attendantAdmin/order"
-                v-if="userInfo.identity == 'attendant'"
-                ><i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                我的訂單</router-link
+              <router-link class="dropdown-item" to="/memberAdmin/familyManage"
+                ><i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                家屬管理</router-link
               >
-              <a class="dropdown-item" href="family_admin_account.html">
-                <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                帳號管理
+              <router-link class="dropdown-item" to="/memberAdmin/accountManage"
+                ><i class="fas fa-key fa-sm fa-fw mr-2 text-gray-400"></i>
+                修改密碼</router-link
+              >
+
+              <div class="dropdown-divider"></div>
+              <a
+                class="dropdown-item"
+                href="#"
+                data-toggle="modal"
+                data-target="#logoutModal"
+                @click.prevent="signOut()"
+              >
+                <i
+                  class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"
+                ></i>
+                登出
               </a>
+            </div>
+            <!-- 照服員端登入 -->
+            <div
+              class="dropdown-menu dropdown-menu-right"
+              v-if="userInfo.identity == 'attendant'"
+              aria-labelledby="navbarDropdownMenuLink"
+            >
+              <router-link class="dropdown-item" to="/attendantAdmin/order"
+                ><i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                我的訂單</router-link
+              >
+              <router-link class="dropdown-item" to="/attendantAdmin/profire"
+                ><i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                個人資料</router-link
+              >
+              <router-link
+                class="dropdown-item"
+                to="/attendantAdmin/accountManage"
+                ><i class="fas fa-key fa-sm fa-fw mr-2 text-gray-400"></i>
+                修改密碼</router-link
+              >
 
               <div class="dropdown-divider"></div>
               <a
@@ -150,15 +181,15 @@ export default {
       this.userInfo.userId = '';
       this.userInfo.identity = '';
       this.$swal({
-        // toast: true,
-        // position: 'top-end',
-        // showConfirmButton: false,
-        // timer: 3000,
-        // timerProgressBar: false,
-        // onOpen: toast => {
-        //   toast.addEventListener('mouseenter', this.$swal.stopTimer);
-        //   toast.addEventListener('mouseleave', this.$swal.resumeTimer);
-        // },
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: false,
+        onOpen: toast => {
+          toast.addEventListener('mouseenter', this.$swal.stopTimer);
+          toast.addEventListener('mouseleave', this.$swal.resumeTimer);
+        },
         icon: 'success',
         title: '已登出'
       });
