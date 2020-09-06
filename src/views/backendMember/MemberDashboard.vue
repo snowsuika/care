@@ -38,6 +38,7 @@ export default {
       token: '',
       userId: '',
       userMail: '',
+      identity: '',
       checkSuccess: false,
       navModalAction: ''
     };
@@ -52,6 +53,7 @@ export default {
     this.token = localStorage.getItem('token');
     this.userId = localStorage.getItem('userId');
     this.userMail = localStorage.getItem('userMail');
+    this.identity = localStorage.getItem('identity');
 
     if (!this.token) {
       this.$router.push('/');
