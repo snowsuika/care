@@ -40,14 +40,24 @@
                       <h4 class="mb-3">被服務對象基本資料</h4>
                       <form>
                         <div class="form-group">
-                          <label for="userName">服務對象姓名</label>
-                          <input
-                            type="text"
-                            class="form-control"
-                            id="userName"
-                            v-model="userName"
-                            placeholder="請輸入被服務對象姓名"
-                          />
+                          <validation-provider
+                            rules="required"
+                            v-slot="{ errors, classes }"
+                          >
+                            <label for="userName">服務對象姓名</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              :class="classes"
+                              id="userName"
+                              name="服務對象姓名"
+                              v-model="userName"
+                              placeholder="請輸入被服務對象姓名"
+                            />
+                            <div v-if="errors[0]" class="invalid-feedback">
+                              {{ errors[0] }}
+                            </div>
+                          </validation-provider>
                         </div>
                         <div class="form-row">
                           <div class="form-group col-md-6">
@@ -59,13 +69,19 @@
                             </select>
                           </div>
                           <div class="form-group col-md-6">
-                            <label for="age">年齡：</label>
-                            <input
-                              type="number"
-                              class="form-control"
-                              id="age"
-                              placeholder="請輸入年齡"
-                            />
+                            <validation-provider
+                              rules="required|numeric"
+                              v-slot="{ errors, classes }"
+                            >
+                              <label for="age">年齡：</label>
+                              <input
+                                type="number"
+                                class="form-control"
+                                :class="classes"
+                                id="age"
+                                placeholder="請輸入年齡"
+                              />
+                            </validation-provider>
                           </div>
                         </div>
                         <div class="form-row">

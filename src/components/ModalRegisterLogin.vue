@@ -1,6 +1,5 @@
 <template>
   <div>
-    <Loading :active.sync="isLoading" />
     <!-- 註冊 -->
     <div
       class="modal fade"
@@ -61,17 +60,25 @@
 
             <form>
               <div class="form-group">
-                <label for="loginEmail">電子信箱：</label>
-                <input
-                  type="email"
-                  class="form-control"
-                  value=""
-                  v-model="email"
-                  placeholder="請輸入電子信箱"
-                  id="loginEmail"
-                  autocomplete="on"
-                  aria-describedby="emailHelp"
-                />
+                <validation-provider
+                  rules="required|email"
+                  v-slot="{ errors, classes }"
+                >
+                  <label for="loginEmail">電子信箱：</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    :class="classes"
+                    value=""
+                    v-model="email"
+                    placeholder="請輸入電子信箱"
+                    name="電子信箱"
+                    id="loginEmail"
+                    autocomplete="on"
+                    aria-describedby="emailHelp"
+                  />
+                  <span class="invalid-feedback">{{ errors[0] }}</span>
+                </validation-provider>
               </div>
 
               <div class="form-group">
