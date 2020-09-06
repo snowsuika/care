@@ -32,15 +32,11 @@
 
 <script>
 // eslint-disable-next-line vue/no-parsing-error
-import Unconfirm from '@/components/OrderAttendantUnconfirm.vue';
-// eslint-disable-next-line vue/no-parsing-error
-import Processing from '@/components/OrderAttendantProcessing.vue';
-// eslint-disable-next-line vue/no-parsing-error
-import Serviceing from '@/components/OrderAttendantServiceing.vue';
-// eslint-disable-next-line vue/no-parsing-error
-import Waitmoney from '@/components/OrderAttendantWaitmoney.vue';
-// eslint-disable-next-line vue/no-parsing-error
-import Finish from '@/components/OrderAttendantFinish.vue';
+import Unconfirm from '@/components/attendant/UnconfirmTable.vue';
+import Processing from '@/components/attendant/ProcessingTable.vue';
+import Serviceing from '@/components/attendant/ServiceingTable.vue';
+import Receive from '@/components/attendant/ReceiveTable.vue';
+import Finish from '@/components/attendant/FinishTable.vue';
 
 export default {
   data() {
@@ -50,7 +46,7 @@ export default {
         { tabName: '未確認訂單', orderStatus: 'unconfirm', badge: 2 },
         { tabName: '訂單處理中', orderStatus: 'processing', badge: 2 },
         { tabName: '進行中', orderStatus: 'serviceing', badge: 2 },
-        { tabName: '待收款', orderStatus: 'waitmoney', badge: 2 },
+        { tabName: '待收款', orderStatus: 'receive', badge: 2 },
         { tabName: '已完成', orderStatus: 'finish', badge: 0 }
       ]
     };
@@ -59,7 +55,7 @@ export default {
     Unconfirm,
     Processing,
     Serviceing,
-    Waitmoney,
+    Receive,
     Finish
   },
   methods: {
