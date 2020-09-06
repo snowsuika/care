@@ -17,25 +17,29 @@
         </div>
         <div class="col-md-8">
           <div class="form-group">
-            <label for="exampleFormControlInput1"
-              ><span class="text-danger">*</span> 姓名</label
-            >
-            <input
-              type="email"
-              class="form-control"
-              id="exampleFormControlInput1"
-              placeholder="name@example.com"
-            />
+            <validation-provider rules="required" v-slot="{ errors, classes }">
+              <label for="attendantName"
+                ><span class="text-danger">*</span> 姓名</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                :class="classes"
+                name="姓名"
+                v-model="resume.name"
+                id="attendantName"
+                placeholder="請輸入姓名"
+              />
+              <div v-if="errors[0]" class="invalid-feedback">
+                {{ errors[0] }}
+              </div>
+            </validation-provider>
           </div>
-          <label for="exampleFormControlInput1"
-            ><span class="text-danger">*</span> 請上傳頭像</label
-          >
+          <label><span class="text-danger">*</span> 請上傳頭像</label>
           <div class="input-group mb-3">
             <div class="custom-file">
-              <input type="file" class="custom-file-input" id="customFile" />
-              <label class="custom-file-label" for="customFile"
-                >請選擇檔案..</label
-              >
+              <input type="file" class="custom-file-input" id="photo" />
+              <label class="custom-file-label" for="photo">請選擇檔案..</label>
             </div>
           </div>
         </div>
@@ -43,28 +47,50 @@
       <div class="row">
         <div class="col-12">
           <div class="form-group">
-            <label for="exampleFormControlInput1"
-              ><span class="text-danger">*</span> 薪資（日薪）(元)：</label
+            <validation-provider
+              rules="required|numeric"
+              v-slot="{ errors, classes }"
             >
-            <input
-              type="email"
-              class="form-control"
-              id="exampleFormControlInput1"
-              placeholder="請輸入日薪"
-            />
+              <label for="salary"
+                ><span class="text-danger">*</span> 薪資（日薪）(元)：</label
+              >
+              <input
+                type="email"
+                class="form-control"
+                v-model="resume.salary"
+                :class="classes"
+                name="日薪"
+                id="salary"
+                placeholder="請輸入日薪"
+              />
+              <div v-if="errors[0]" class="invalid-feedback">
+                {{ errors[0] }}
+              </div>
+            </validation-provider>
           </div>
         </div>
         <div class="col-12">
           <div class="form-group">
-            <label for="exampleFormControlInput1"
-              ><span class="text-danger">*</span> 匯款帳號：</label
+            <validation-provider
+              rules="required|numeric"
+              v-slot="{ errors, classes }"
             >
-            <input
-              type="email"
-              class="form-control"
-              id="exampleFormControlInput1"
-              placeholder="請輸入匯款帳號"
-            />
+              <label for="account"
+                ><span class="text-danger">*</span> 匯款帳號：</label
+              >
+              <input
+                type="email"
+                class="form-control"
+                :class="classes"
+                name="匯款帳號"
+                v-model="resume.account"
+                id="account"
+                placeholder="請輸入匯款帳號"
+              />
+              <div v-if="errors[0]" class="invalid-feedback">
+                {{ errors[0] }}
+              </div>
+            </validation-provider>
           </div>
         </div>
       </div>
@@ -74,13 +100,13 @@
       >
       <div class="row mb-3">
         <div class="col-6">
-          <select class="custom-select">
+          <select v-model="resume.servicePlace" class="custom-select">
             <option selected>請選擇縣市</option>
             <option value="1">高雄市</option>
           </select>
         </div>
         <div class="col-6 mb-3">
-          <select class="custom-select">
+          <select v-model="resume.serviceCity" class="custom-select">
             <option selected>請選擇鄉鎮</option>
             <option value="1">前鎮區</option>
             <option value="2">Two</option>
@@ -89,10 +115,10 @@
         </div>
 
         <div class="col-12">
-          <label for="exampleFormControlInput1"> 相關資格文件</label>
+          <label for="licenseFile"> 相關資格文件</label>
           <div class="input-group mb-3">
             <div class="custom-file">
-              <input type="file" class="custom-file-input" id="customFile" />
+              <input type="file" class="custom-file-input" id="licenseFile" />
               <label class="custom-file-label" for="customFile"
                 >請選擇檔案..</label
               >
@@ -110,7 +136,7 @@
           </ul>
         </div>
       </div>
-      <label for="exampleFormControlInput1"
+      <label for="serviceTime"
         ><span class="text-danger">*</span> 服務時段</label
       >
       <div class="row mb-3">
@@ -118,8 +144,10 @@
           <div class="custom-control custom-radio custom-control-inline">
             <input
               type="radio"
-              id="customRadioInline1"
-              name="customRadioInline1"
+              id="serviceTime"
+              v-model="resume.serviceTime"
+              value="01"
+              name="服務時段"
               class="custom-control-input"
             />
             <label class="custom-control-label" for="customRadioInline1"
@@ -129,37 +157,49 @@
           <div class="custom-control custom-radio custom-control-inline">
             <input
               type="radio"
-              id="customRadioInline2"
+              id="serviceTime2"
+              value="02"
               name="customRadioInline1"
               class="custom-control-input"
             />
-            <label class="custom-control-label" for="customRadioInline2"
+            <label class="custom-control-label" for="serviceTime2"
               >傍晚(15:00-23:00)</label
             >
           </div>
           <div class="custom-control custom-radio custom-control-inline">
             <input
               type="radio"
-              id="customRadioInline2"
+              id="serviceTime3"
               name="customRadioInline1"
               class="custom-control-input"
             />
-            <label class="custom-control-label" for="customRadioInline2"
+            <label class="custom-control-label" for="serviceTime3"
               >凌晨(23:00-07:00)</label
             >
           </div>
         </div>
       </div>
       <div class="form-group">
-        <label for="exampleFormControlTextarea1"
-          ><span class="text-danger">*</span>
-          請輸入照護相關經歷、工作經驗：</label
+        <validation-provider
+          rules="required|numeric"
+          v-slot="{ errors, classes }"
         >
-        <textarea
-          class="form-control"
-          id="exampleFormControlTextarea1"
-          rows="3"
-        ></textarea>
+          <label for="experience"
+            ><span class="text-danger">*</span>
+            請輸入照護相關經歷、工作經驗：</label
+          >
+          <textarea
+            class="form-control"
+            id="experience"
+            :class="classes"
+            name="匯款帳號"
+            v-model="resume.experience"
+            rows="3"
+          ></textarea>
+          <div v-if="errors[0]" class="invalid-feedback">
+            {{ errors[0] }}
+          </div>
+        </validation-provider>
       </div>
       <hr />
       <h5 class="mb-3">請勾選可服務項目</h5>
@@ -237,23 +277,59 @@
       </ul>
 
       <div class="row">
-        <label for="openStart"> 接受與家屬進行媒合</label>
+        <label for="isopenMatch"> 接受與家屬進行媒合</label>
         <div class="custom-control custom-switch">
           <input
-            id="my-input"
+            id="isopenMatch"
             class="custom-control-input"
             type="checkbox"
-            name=""
+            v-model="resume.isopenMatch"
             value="true"
           />
-          <label for="my-input" class="custom-control-label"></label>
+          <label for="isopenMatch" class="custom-control-label"></label>
         </div>
       </div>
       <div class="d-flex justify-content-center mt-3">
-        <button type="button" name="" id="" class="btn btn-primary">
+        <button
+          type="button"
+          name=""
+          id=""
+          class="btn btn-primary"
+          @click="getId()"
+        >
           儲存設定
         </button>
       </div>
     </form>
   </div>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      resume: {
+        id: '',
+        name: '',
+        salary: '',
+        account: '',
+        servicePlace: '',
+        serviceCity: '',
+        license: [],
+        serviceTime: '',
+        experience: '',
+        serviceItem: [],
+        isopenMatch: false
+      }
+    };
+  },
+  created() {
+    this.resume.id = localStorage.getItem('userId');
+  },
+  methods: {
+    getId() {
+      console.log('c');
+    }
+  }
+};
+</script>
