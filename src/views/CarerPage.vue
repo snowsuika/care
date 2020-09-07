@@ -131,6 +131,8 @@
                     mode="range"
                     v-model="range"
                     :popover="{ placement: 'bottom', visibility: 'click' }"
+                    :min-date="new Date()"
+                    :max-date="this.maxDate()"
                     color="yellow"
                   />
                 </div>
@@ -155,14 +157,13 @@
       </div>
     </div>
     <modal-booking-step
-      :bookingstart="range.start"
-      :bookingend="range.end"
+      :bookingstart="this.changeFormate(range.start)"
+      :bookingend="this.changeFormate(range.end)"
     ></modal-booking-step>
   </div>
 </template>
 
 <script>
-//global registration
 /* global $ */
 import ModalBookingStep from '@/components/ModalBookingStep.vue';
 export default {
@@ -208,6 +209,20 @@ export default {
           title: '請先登入才能使用！'
         });
       }
+    },
+    changeFormate(date) {
+      var mm = date.getMonth() + 1; // getMonth() is zero-based
+      var dd = date.getDate();
+
+      return [
+        date.getFullYear(),
+        (mm > 9 ? '' : '0') + mm,
+        (dd > 9 ? '' : '0') + dd
+      ].join('-');
+    },
+    maxDate() {
+      let maxDate = new Date().setDate(new Date().getDate() + 30);
+      return maxDate;
     }
   }
 };
