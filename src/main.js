@@ -16,6 +16,7 @@ import 'bootstrap';
 //FormWizard 套件
 import VueFormWizard from 'vue-form-wizard';
 import 'vue-form-wizard/dist/vue-form-wizard.min.css';
+
 //sweetAlert
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
@@ -25,6 +26,9 @@ import './bus';
 // Loading 套件
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
+
+//Multiselect
+import Multiselect from 'vue-multiselect';
 
 import App from './App.vue';
 import router from './router';
@@ -49,6 +53,7 @@ Vue.use(VueFormWizard);
 Vue.config.productionTip = false;
 //Loading
 Vue.use(Loading);
+
 // vee-validate
 Object.keys(rules).forEach(rule => {
   extend(rule, rules[rule]);
@@ -62,6 +67,9 @@ configure({
 localize('tw', zhTW);
 Vue.component('ValidationObserver', ValidationObserver);
 Vue.component('ValidationProvider', ValidationProvider);
+
+// register globally
+Vue.component('multiselect', Multiselect);
 
 Vue.use(VueAxios, axios);
 new Vue({

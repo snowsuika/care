@@ -1,6 +1,8 @@
 @import "~bootstrap/scss/functions"; // 載入 bootstrap 套用變數的方法
 @import "./helpers/variables";  //自定義的變數
+@import "./helpers/vue-multiselect";  //自定義的變數
 @import "~bootstrap/scss/bootstrap";
+
 
 @font-face {
   font-family: FakePearl-Regular;
