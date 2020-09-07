@@ -27,6 +27,19 @@ import './bus';
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
 
+//vue-loading-overlay
+
+Vue.component('Loading', Loading);
+Vue.use(Loading, {
+  canCancel: false,
+  color: '#000000',
+  loader: 'dots', //spinner/dots/bars
+  width: 50,
+  height: 50,
+  backgroundColor: '#ffffff',
+  isFullPage: true,
+  opacity: 0.8
+});
 //Multiselect
 import Multiselect from 'vue-multiselect';
 
@@ -51,8 +64,6 @@ Vue.use(VueSweetalert2, options);
 Vue.use(VueFormWizard);
 
 Vue.config.productionTip = false;
-//Loading
-Vue.use(Loading);
 
 // vee-validate
 Object.keys(rules).forEach(rule => {
