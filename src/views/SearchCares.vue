@@ -17,29 +17,14 @@
         class="p-2 mb-3"
         style="background-color: #EAE4DB;border-radius: 10px;"
       >
-        <div>{{ this.show }}</div>
         <form class="form-inline">
           <label class="sr-only" for="inlineFormInputName2">Name</label>
           <select id="my-select" class="form-control mb-2 mr-sm-2" name="">
             <option>高雄市</option>
           </select>
-          <!-- <select id="my-select" class="form-control mb-2 mr-sm-2" name="">
+          <select id="my-select" class="form-control mb-2 mr-sm-2" name="">
             <option>前鎮區</option>
-          </select> -->
-
-          <div>
-            <multiselect
-              v-model="value"
-              placeholder="請搜尋地區"
-              label="city"
-              track-by="cityId"
-              selectLabel=""
-              :hide-selected="true"
-              :options="options"
-              :multiple="true"
-              :taggable="true"
-            ></multiselect>
-          </div>
+          </select>
 
           <button type="submit" class="btn btn-primary mb-2">搜尋照服員</button>
         </form>
@@ -283,28 +268,7 @@
 <script>
 export default {
   data() {
-    return {
-      value: [],
-      options: [
-        {
-          cityId: '01',
-          city: '前鎮區'
-        },
-        {
-          cityId: '02',
-          city: '小港區'
-        },
-        {
-          cityId: '03',
-          city: '苓雅區'
-        }
-      ]
-    };
-  },
-  computed: {
-    show() {
-      return this.value.map(item => Object.values(item)[0]);
-    }
+    return {};
   }
 };
 </script>

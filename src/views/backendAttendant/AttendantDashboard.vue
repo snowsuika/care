@@ -1,5 +1,11 @@
 <template>
-  <div class="about">
+  <div>
+    <loading
+      loader="bars"
+      :active.sync="isLoading"
+      :can-cancel="true"
+      :is-full-page="false"
+    ></loading>
     <navbar></navbar>
     <main>
       <div
@@ -38,7 +44,8 @@ export default {
       userMail: '',
       identity: '',
       checkSuccess: false,
-      navModalAction: ''
+      navModalAction: '',
+      isLoading: false
     };
   },
   components: {
