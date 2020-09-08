@@ -1,5 +1,6 @@
 <template>
   <div class="table-md-responsive">
+    <loading :active.sync="isLoading"></loading>
     <table class="table table-radius">
       <tr class="table-light">
         <th scope="col">被服務對象</th>
@@ -43,18 +44,17 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+      isLoading: false
+    };
   },
   methods: {
     cancelOrder() {
       const vm = this;
       vm.isLoading = true;
-      const api = `${process.env.VUE_APP_APIPATH}CancelOrder?Id=8`;
+      const api = `${process.env.VUE_APP_APIPATH}CancelOrder?Id=8`; //參數是訂單Id
       vm.$http
-        .post(api, {
-          email: vm.email,
-          password: vm.password
-        })
+        .patch(api)
         .then(res => {
           console.log(res);
           if (res.data.message == '登入成功') {
@@ -97,6 +97,19 @@ export default {
 
           vm.email = '';
           vm.password = '';
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    pay() {
+      const vm = this;
+      vm.isLoading = true;
+      const api = `${process.env.VUE_APP_APIPATH}CancelOrder?Id=8`; //參數是訂單Id
+      vm.$http
+        .patch(api)
+        .then(res => {
+          console.log(res);
         })
         .catch(err => {
           console.log(err);

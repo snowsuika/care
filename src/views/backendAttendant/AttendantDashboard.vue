@@ -1,11 +1,6 @@
 <template>
   <div>
-    <loading
-      loader="bars"
-      :active.sync="isLoading"
-      :can-cancel="true"
-      :is-full-page="false"
-    ></loading>
+    <loading :active.sync="isLoading"></loading>
     <navbar></navbar>
     <main>
       <div

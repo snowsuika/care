@@ -48,9 +48,19 @@
                 class="form-control"
                 @change="previewFile"
               />
-              <label class="custom-file-label" ref="filePhotoName" for="photo">
-                請選擇檔案..</label
+              <label
+                class="custom-file-label"
+                id="picture"
+                ref="filePhotoName"
+                for="photo"
               >
+                <template v-if="photoName">
+                  {{ photoName }}
+                </template>
+                <template v-else>
+                  請上傳檔案..
+                </template>
+              </label>
             </div>
           </div>
         </div>
@@ -111,9 +121,20 @@
       >
       <div class="row mb-3">
         <div class="col-6">
-          <select v-model="resume.servicePlace" class="custom-select">
-            <option selected>請選擇縣市</option>
-            <option value="1">高雄市</option>
+          <select
+            v-model="resume.servicePlaceSelected"
+            class="custom-select"
+            @change="filterCityArea()"
+          >
+            <option value="0" selected>請選擇縣市</option>
+            <option
+              v-for="(item, index) in serviceAllPlace"
+              :key="index"
+              :value="item.Id"
+            >
+              {{ item.City }}
+            </option>
+            >
           </select>
         </div>
         <div class="col-6 mb-3">
@@ -147,8 +168,14 @@
                 class="custom-file-label"
                 ref="licenseFileName"
                 for="licenseFile"
-                >請選擇檔案..</label
               >
+                <template v-if="fileName">
+                  {{ fileName }}
+                </template>
+                <template v-else>
+                  請選擇檔案..
+                </template>
+              </label>
             </div>
           </div>
         </div>
@@ -331,35 +358,30 @@ export default {
         name: '',
         salary: '',
         account: '',
-        servicePlace: '',
-        city: [],
-        license: [],
+        serviceAllPlace: '', //後端給我全部縣市
+        servicePlaceSelected: '', //已選擇的縣市（不用給後端）
+        city: [], //已選的城區
+        license: '',
         serviceTime: '01',
         experience: '',
         service: [],
         isopenMatch: false
       },
       value: [],
-      options: [
-        {
-          cityId: '1',
-          city: '前鎮區'
-        },
-        {
-          cityId: '2',
-          city: '小港區'
-        },
-        {
-          cityId: '3',
-          city: '苓雅區'
-        }
-      ],
+      options: [],
       photoPreview: '',
+      photoIns: '',
+      photoName: '',
+      filePreview: '',
+      fileIns: '',
+      fileName: '',
+      serviceAllPlace: [],
       isLoading: false
     };
   },
   created() {
     this.resume.id = localStorage.getItem('userId');
+    this.getResumeData();
   },
 
   methods: {
@@ -367,19 +389,64 @@ export default {
       const vm = this;
       const photoFile = vm.$refs.filePhoto.files[0];
       const filePreview = new FileReader();
-      vm.$refs.filePhotoName.innerText = photoFile.name;
 
       if (photoFile) {
         filePreview.readAsDataURL(photoFile);
         filePreview.onload = function(event) {
           vm.photoPreview = event.target.result;
+          vm.photoIns = photoFile;
+          vm.photoName = photoFile.name;
         };
       }
     },
     previewLicenseName() {
       const vm = this;
-      const licenseFileName = vm.$refs.licenseFile.files[0].name;
-      vm.$refs.licenseFileName.innerText = licenseFileName;
+      vm.fileName = vm.$refs.licenseFile.files[0].name;
+      vm.fileIns = vm.$refs.licenseFile.files[0];
+    },
+    getResumeData() {
+      const vm = this;
+
+      const api = `${process.env.VUE_APP_APIPATH}AttendantDetails?Id=${vm.resume.id}`;
+      vm.isLoading = true;
+
+      vm.$http
+        .get(api)
+        .then(res => {
+          const resUserData = res.data.attendant;
+          vm.serviceAllPlace = res.data.cities; //後端給全部縣市下拉
+          if (resUserData.Name) {
+            vm.resume.name = resUserData.Name;
+            vm.resume.salary = resUserData.Salary;
+            vm.resume.account = resUserData.Account;
+
+            vm.resume.servicePlaceSelected =
+              resUserData.Locationses[0].Cities.Id; //已被選取的縣市 Id
+            vm.filterCityArea(); //撈出已選縣市的地區下拉
+            let cityArray = resUserData.Locationses.map(function(item) {
+              return { cityId: item.Id, city: item.Area };
+            });
+            vm.resume.city = cityArray; //已被選取的地區轉成套件格式
+            vm.resume.serviceTime = resUserData.ServiceTime;
+            vm.resume.experience = resUserData.Experience;
+            vm.resume.service = resUserData.Service.split(',');
+            vm.resume.isopenMatch = resUserData.Status == '01' ? true : false;
+            vm.photoPreview = `${process.env.VUE_APP_APIPATH}Uploads/${resUserData.Photo}`;
+            vm.photoName = resUserData.Photo;
+
+            vm.filePreview = resUserData.File; //預覽檔案
+            vm.fileName = resUserData.File;
+            vm.isLoading = false;
+          } else {
+            vm.isLoading = false;
+            vm.resume.servicePlaceSelected = '0';
+            vm.photoPreview =
+              'https://www.iotwf.com/assets/nophoto-154f4818d2abb55e33088334ccec18cd.png';
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
     },
     saveResume() {
       const api = `${process.env.VUE_APP_APIPATH}EditAttendantDetails`;
@@ -397,10 +464,16 @@ export default {
       postForms.append('Service', vm.resume.service);
       postForms.append('ServiceTime', vm.resume.serviceTime);
       postForms.append('Experience', vm.resume.experience);
-      postForms.append('Status', vm.resume.isopenMatch);
-      postForms.append('Photo', vm.$refs.filePhoto.files[0], 'file');
-      postForms.append('File', vm.$refs.licenseFile.files[0], 'file');
-      postForms.append('Location', cityArray);
+      postForms.append('Status', vm.resume.isopenMatch ? '01' : '02');
+      postForms.append(
+        'Photo',
+        vm.photoIns ? vm.photoIns : vm.photoName ? vm.photoName : null
+      );
+      postForms.append(
+        'File',
+        vm.fileIns ? vm.fileIns : vm.fileName ? vm.fileName : null
+      );
+      postForms.append('Location', cityArray); //post 給後端的地區 array(只有01、02的陣列)
 
       const config = {
         headers: {
@@ -428,6 +501,24 @@ export default {
             title: `${res.data.message}`
           });
           vm.isLoading = false;
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    filterCityArea() {
+      const vm = this;
+      const CityId = this.resume.servicePlaceSelected;
+      const api = `${process.env.VUE_APP_APIPATH}AttendantDetailsLocation?Id=${CityId}`;
+      vm.resume.city = [];
+      vm.$http
+        .get(api)
+        .then(res => {
+          const area = res.data.locations;
+          let cityArray = area.map(function(item) {
+            return { cityId: item.Id, city: item.Area };
+          });
+          this.options = cityArray;
         })
         .catch(err => {
           console.log(err);
