@@ -3,13 +3,14 @@
     class="bg-white shadow-sm
                         radius-3 p-4"
   >
+    <loading :active.sync="isLoading"></loading>
     <h4 class="mb-3">照服員基本資料</h4>
     <form class="mx-auto" style="max-width:600px">
       <div class="row">
         <div class="col-md-4">
           <img
-            src="https://i.imgur.com/EJFwGRF.jpg"
-            alt=""
+            :src="photoPreview"
+            alt="照服員照片"
             width="150"
             height="150"
             class="rounded-circle"
@@ -35,11 +36,31 @@
               </div>
             </validation-provider>
           </div>
-          <label><span class="text-danger">*</span> 請上傳頭像</label>
+          <label for="photo"
+            ><span class="text-danger">*</span> 請上傳頭像</label
+          >
           <div class="input-group mb-3">
             <div class="custom-file">
-              <input type="file" class="custom-file-input" id="photo" />
-              <label class="custom-file-label" for="photo">請選擇檔案..</label>
+              <input
+                id="photo"
+                ref="filePhoto"
+                type="file"
+                class="form-control"
+                @change="previewFile"
+              />
+              <label
+                class="custom-file-label"
+                id="picture"
+                ref="filePhotoName"
+                for="photo"
+              >
+                <template v-if="photoName">
+                  {{ photoName }}
+                </template>
+                <template v-else>
+                  請上傳檔案..
+                </template>
+              </label>
             </div>
           </div>
         </div>
@@ -55,9 +76,9 @@
                 ><span class="text-danger">*</span> 薪資（日薪）(元)：</label
               >
               <input
-                type="email"
+                type="number"
                 class="form-control"
-                v-model="resume.salary"
+                v-model.number="resume.salary"
                 :class="classes"
                 name="日薪"
                 id="salary"
@@ -79,7 +100,7 @@
                 ><span class="text-danger">*</span> 匯款帳號：</label
               >
               <input
-                type="email"
+                type="number"
                 class="form-control"
                 :class="classes"
                 name="匯款帳號"
@@ -100,40 +121,63 @@
       >
       <div class="row mb-3">
         <div class="col-6">
-          <select v-model="resume.servicePlace" class="custom-select">
-            <option selected>請選擇縣市</option>
-            <option value="1">高雄市</option>
+          <select
+            v-model="resume.servicePlaceSelected"
+            class="custom-select"
+            @change="filterCityArea()"
+          >
+            <option value="0" selected>請選擇縣市</option>
+            <option
+              v-for="(item, index) in serviceAllPlace"
+              :key="index"
+              :value="item.Id"
+            >
+              {{ item.City }}
+            </option>
+            >
           </select>
         </div>
         <div class="col-6 mb-3">
-          <select v-model="resume.serviceCity" class="custom-select">
-            <option selected>請選擇鄉鎮</option>
-            <option value="1">前鎮區</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
-          </select>
+          <multiselect
+            v-model="resume.city"
+            placeholder="請搜尋地區"
+            label="city"
+            track-by="cityId"
+            selectLabel=""
+            :hide-selected="true"
+            :options="options"
+            :multiple="true"
+            :taggable="true"
+          ></multiselect>
         </div>
 
         <div class="col-12">
-          <label for="licenseFile"> 相關資格文件</label>
+          <label for="licenseFile">
+            <span class="text-danger">*</span> 照顧服務員技術士證照</label
+          >
           <div class="input-group mb-3">
             <div class="custom-file">
-              <input type="file" class="custom-file-input" id="licenseFile" />
-              <label class="custom-file-label" for="customFile"
-                >請選擇檔案..</label
+              <input
+                type="file"
+                ref="licenseFile"
+                class="custom-file-input"
+                @change="previewLicenseName()"
+                id="licenseFile"
+              />
+              <label
+                class="custom-file-label"
+                ref="licenseFileName"
+                for="licenseFile"
               >
+                <template v-if="fileName">
+                  {{ fileName }}
+                </template>
+                <template v-else>
+                  請選擇檔案..
+                </template>
+              </label>
             </div>
           </div>
-        </div>
-        <div class="col-12">
-          <ul class="list-unstyled ml-2">
-            <li><i class="fas fa-times text-danger"></i> 照顧服務員證照</li>
-            <li><i class="fas fa-times text-danger"></i> 照服員結業證書</li>
-            <li>
-              <i class="fas fa-times text-danger"></i>
-              體檢表(含B肝表面抗原、胸部Ｘ光)
-            </li>
-          </ul>
         </div>
       </div>
       <label for="serviceTime"
@@ -144,46 +188,47 @@
           <div class="custom-control custom-radio custom-control-inline">
             <input
               type="radio"
-              id="serviceTime"
+              id="serviceTime01"
               v-model="resume.serviceTime"
               value="01"
               name="服務時段"
               class="custom-control-input"
+              checked
             />
-            <label class="custom-control-label" for="customRadioInline1"
+            <label class="custom-control-label" for="serviceTime01"
               >白天(09:00-18:00)</label
             >
           </div>
           <div class="custom-control custom-radio custom-control-inline">
             <input
               type="radio"
-              id="serviceTime2"
+              id="serviceTime02"
+              v-model="resume.serviceTime"
               value="02"
-              name="customRadioInline1"
+              name="服務時段"
               class="custom-control-input"
             />
-            <label class="custom-control-label" for="serviceTime2"
+            <label class="custom-control-label" for="serviceTime02"
               >傍晚(15:00-23:00)</label
             >
           </div>
           <div class="custom-control custom-radio custom-control-inline">
             <input
               type="radio"
-              id="serviceTime3"
-              name="customRadioInline1"
+              id="serviceTime03"
+              v-model="resume.serviceTime"
+              value="03"
+              name="服務時段"
               class="custom-control-input"
             />
-            <label class="custom-control-label" for="serviceTime3"
+            <label class="custom-control-label" for="serviceTime03"
               >凌晨(23:00-07:00)</label
             >
           </div>
         </div>
       </div>
       <div class="form-group">
-        <validation-provider
-          rules="required|numeric"
-          v-slot="{ errors, classes }"
-        >
+        <validation-provider rules="required" v-slot="{ errors, classes }">
           <label for="experience"
             ><span class="text-danger">*</span>
             請輸入照護相關經歷、工作經驗：</label
@@ -192,7 +237,7 @@
             class="form-control"
             id="experience"
             :class="classes"
-            name="匯款帳號"
+            name="照護相關經歷、工作經驗"
             v-model="resume.experience"
             rows="3"
           ></textarea>
@@ -208,70 +253,72 @@
           <div class="custom-control custom-checkbox">
             <input
               type="checkbox"
-              id="conditions_01"
+              id="service01"
+              value="01"
+              v-model="resume.service"
               class="custom-control-input"
             />
-            <label for="conditions_01" class="custom-control-label"
-              >糖尿病</label
-            >
+            <label for="service01" class="custom-control-label">糖尿病</label>
           </div>
         </li>
         <li class="col-12 col-md-6 mb-2">
           <div class="custom-control custom-checkbox">
             <input
               type="checkbox"
-              id="conditions_02"
+              id="service02"
+              value="02"
+              v-model="resume.service"
               class="custom-control-input"
             />
-            <label for="conditions_02" class="custom-control-label">骨折</label>
+            <label for="service02" class="custom-control-label">骨折</label>
           </div>
         </li>
         <li class="col-12 col-md-6 mb-2">
           <div class="custom-control custom-checkbox">
             <input
               type="checkbox"
-              id="conditions_03"
+              id="service03"
+              value="03"
+              v-model="resume.service"
               class="custom-control-input"
             />
-            <label for="conditions_03" class="custom-control-label"
-              >高血壓</label
-            >
+            <label for="service03" class="custom-control-label">高血壓</label>
           </div>
         </li>
         <li class="col-12 col-md-6 mb-2">
           <div class="custom-control custom-checkbox">
             <input
               type="checkbox"
-              id="conditions_04"
+              id="service04"
+              value="04"
+              v-model="resume.service"
               class="custom-control-input"
             />
-            <label for="conditions_04" class="custom-control-label"
-              >身心障礙</label
-            >
+            <label for="service04" class="custom-control-label">身心障礙</label>
           </div>
         </li>
         <li class="col-12 col-md-6 mb-2">
           <div class="custom-control custom-checkbox">
             <input
               type="checkbox"
-              id="conditions_05"
+              id="service05"
+              value="05"
+              v-model="resume.service"
               class="custom-control-input"
             />
-            <label for="conditions_05" class="custom-control-label"
-              >行動不便</label
-            >
+            <label for="service05" class="custom-control-label">行動不便</label>
           </div>
         </li>
         <li class="col-12 col-md-6 mb-2">
           <div class="custom-control custom-checkbox">
             <input
               type="checkbox"
-              id="conditions_06"
+              id="service06"
+              value="06"
+              v-model="resume.service"
               class="custom-control-input"
             />
-            <label for="conditions_06" class="custom-control-label"
-              >精神疾病</label
-            >
+            <label for="service06" class="custom-control-label">精神疾病</label>
           </div>
         </li>
       </ul>
@@ -284,18 +331,16 @@
             class="custom-control-input"
             type="checkbox"
             v-model="resume.isopenMatch"
-            value="true"
+            value=""
           />
           <label for="isopenMatch" class="custom-control-label"></label>
         </div>
       </div>
       <div class="d-flex justify-content-center mt-3">
         <button
-          type="button"
-          name=""
-          id=""
+          type="submit"
+          @click.prevent="saveResume()"
           class="btn btn-primary"
-          @click="getId()"
         >
           儲存設定
         </button>
@@ -313,22 +358,171 @@ export default {
         name: '',
         salary: '',
         account: '',
-        servicePlace: '',
-        serviceCity: '',
-        license: [],
-        serviceTime: '',
+        serviceAllPlace: '', //後端給我全部縣市
+        servicePlaceSelected: '', //已選擇的縣市（不用給後端）
+        city: [], //已選的城區
+        license: '',
+        serviceTime: '01',
         experience: '',
-        serviceItem: [],
+        service: [],
         isopenMatch: false
-      }
+      },
+      value: [],
+      options: [],
+      photoPreview: '',
+      photoIns: '',
+      photoName: '',
+      filePreview: '',
+      fileIns: '',
+      fileName: '',
+      serviceAllPlace: [],
+      isLoading: false
     };
   },
   created() {
     this.resume.id = localStorage.getItem('userId');
+    this.getResumeData();
   },
+
   methods: {
-    getId() {
-      console.log('c');
+    previewFile() {
+      const vm = this;
+      const photoFile = vm.$refs.filePhoto.files[0];
+      const filePreview = new FileReader();
+
+      if (photoFile) {
+        filePreview.readAsDataURL(photoFile);
+        filePreview.onload = function(event) {
+          vm.photoPreview = event.target.result;
+          vm.photoIns = photoFile;
+          vm.photoName = photoFile.name;
+        };
+      }
+    },
+    previewLicenseName() {
+      const vm = this;
+      vm.fileName = vm.$refs.licenseFile.files[0].name;
+      vm.fileIns = vm.$refs.licenseFile.files[0];
+    },
+    getResumeData() {
+      const vm = this;
+
+      const api = `${process.env.VUE_APP_APIPATH}AttendantDetails?Id=${vm.resume.id}`;
+      vm.isLoading = true;
+
+      vm.$http
+        .get(api)
+        .then(res => {
+          const resUserData = res.data.attendant;
+          vm.serviceAllPlace = res.data.cities; //後端給全部縣市下拉
+          if (resUserData.Name) {
+            vm.resume.name = resUserData.Name;
+            vm.resume.salary = resUserData.Salary;
+            vm.resume.account = resUserData.Account;
+
+            vm.resume.servicePlaceSelected =
+              resUserData.Locationses[0].Cities.Id; //已被選取的縣市 Id
+            vm.filterCityArea(); //撈出已選縣市的地區下拉
+            let cityArray = resUserData.Locationses.map(function(item) {
+              return { cityId: item.Id, city: item.Area };
+            });
+            vm.resume.city = cityArray; //已被選取的地區轉成套件格式
+            vm.resume.serviceTime = resUserData.ServiceTime;
+            vm.resume.experience = resUserData.Experience;
+            vm.resume.service = resUserData.Service.split(',');
+            vm.resume.isopenMatch = resUserData.Status == '01' ? true : false;
+            vm.photoPreview = `${process.env.VUE_APP_APIPATH}Uploads/${resUserData.Photo}`;
+            vm.photoName = resUserData.Photo;
+
+            vm.filePreview = resUserData.File; //預覽檔案
+            vm.fileName = resUserData.File;
+            vm.isLoading = false;
+          } else {
+            vm.isLoading = false;
+            vm.resume.servicePlaceSelected = '0';
+            vm.photoPreview =
+              'https://www.iotwf.com/assets/nophoto-154f4818d2abb55e33088334ccec18cd.png';
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    saveResume() {
+      const api = `${process.env.VUE_APP_APIPATH}EditAttendantDetails`;
+      const vm = this;
+      vm.isLoading = true;
+      let cityArray = vm.resume.city.map(element => {
+        return element.cityId;
+      });
+
+      const postForms = new FormData();
+      postForms.append('Id', vm.resume.id);
+      postForms.append('Name', vm.resume.name);
+      postForms.append('Salary', vm.resume.salary);
+      postForms.append('Account', vm.resume.account);
+      postForms.append('Service', vm.resume.service);
+      postForms.append('ServiceTime', vm.resume.serviceTime);
+      postForms.append('Experience', vm.resume.experience);
+      postForms.append('Status', vm.resume.isopenMatch ? '01' : '02');
+      postForms.append(
+        'Photo',
+        vm.photoIns ? vm.photoIns : vm.photoName ? vm.photoName : null
+      );
+      postForms.append(
+        'File',
+        vm.fileIns ? vm.fileIns : vm.fileName ? vm.fileName : null
+      );
+      postForms.append('Location', cityArray); //post 給後端的地區 array(只有01、02的陣列)
+
+      const config = {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      };
+
+      vm.$http
+        .patch(api, postForms, config)
+        .then(res => {
+          console.log(res);
+          let alertIcon =
+            res.data.message == '更新資料成功' ? 'success' : 'error';
+          vm.$swal({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: false,
+            onOpen: toast => {
+              toast.addEventListener('mouseenter', vm.$swal.stopTimer);
+              toast.addEventListener('mouseleave', vm.$swal.resumeTimer);
+            },
+            icon: `${alertIcon}`,
+            title: `${res.data.message}`
+          });
+          vm.isLoading = false;
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    filterCityArea() {
+      const vm = this;
+      const CityId = this.resume.servicePlaceSelected;
+      const api = `${process.env.VUE_APP_APIPATH}AttendantDetailsLocation?Id=${CityId}`;
+      vm.resume.city = [];
+      vm.$http
+        .get(api)
+        .then(res => {
+          const area = res.data.locations;
+          let cityArray = area.map(function(item) {
+            return { cityId: item.Id, city: item.Area };
+          });
+          this.options = cityArray;
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
   }
 };

@@ -1,5 +1,6 @@
 <template>
-  <div class="about">
+  <div>
+    <loading :active.sync="isLoading"></loading>
     <navbar></navbar>
     <main>
       <div
@@ -38,7 +39,8 @@ export default {
       userMail: '',
       identity: '',
       checkSuccess: false,
-      navModalAction: ''
+      navModalAction: '',
+      isLoading: false
     };
   },
   components: {
