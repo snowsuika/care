@@ -1,6 +1,56 @@
 <template>
   <div class="home">
     <!-- banner -->
+    <!-- <div
+      id="carouselExampleFade"
+      class="carousel slide carousel-fade"
+      data-ride="carousel"
+    >
+      <div class="carousel-inner">
+        <div class="carousel-item">
+          <img
+            src="@/assets/images/banner/2886626_m.jpg"
+            class="d-block w-100 img-fluid"
+            style="object-fit: cover;"
+            alt="..."
+          />
+        </div>
+        <div class="carousel-item active">
+          <img
+            src="@/assets/images/banner/2886643_l.jpg"
+            class="d-block w-100 img-fluid"
+            style="object-fit: cover;"
+            alt="..."
+          />
+        </div>
+        <div class="carousel-item">
+          <img
+            src="@/assets/images/banner/2886679_l.jpg"
+            class="d-block w-100 img-fluid"
+            style="object-fit: cover;"
+            alt="..."
+          />
+        </div>
+      </div>
+      <a
+        class="carousel-control-prev"
+        href="#carouselExampleFade"
+        role="button"
+        data-slide="prev"
+      >
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a
+        class="carousel-control-next"
+        href="#carouselExampleFade"
+        role="button"
+        data-slide="next"
+      >
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div> -->
     <div
       class="banner d-flex justify-content-center align-items-center text-white"
     >
@@ -406,6 +456,21 @@
   height: 570px;
   background-position: center;
   background-size: cover;
+}
+
+.carousel-item img {
+  height: 570px;
+}
+
+.carousel-item.active img {
+  transition: -webkit-transform 10s cubic-bezier(0.455, 0.03, 0.515, 0.955) 0s;
+  transition: transform 10s ease-in-out 0s;
+}
+
+.carousel-item.active img {
+  -webkit-transform: scale(1.1);
+  -ms-transform: scale(1.1);
+  transform: scale(1.1);
 }
 </style>
 

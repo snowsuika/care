@@ -1,5 +1,6 @@
 <template>
   <div>
+    <loading :active.sync="isLoading"></loading>
     <div
       class="banner d-flex justify-content-center align-items-center text-white"
     >
@@ -19,28 +20,67 @@
       >
         <form class="form-inline">
           <label class="sr-only" for="inlineFormInputName2">Name</label>
-          <select id="my-select" class="form-control mb-2 mr-sm-2" name="">
-            <option>高雄市</option>
+          <select
+            id="my-select"
+            class="form-control mb-2 mr-sm-2"
+            v-model="selectedCity"
+            @change="useCitySearch(selectedCity)"
+          >
+            <option>請選擇</option>
+            <option
+              v-for="(city, index) in cities"
+              :key="index"
+              :value="`${city.Id}`"
+            >
+              {{ city.City }}</option
+            >
           </select>
-          <select id="my-select" class="form-control mb-2 mr-sm-2" name="">
-            <option>前鎮區</option>
+          <select
+            id="my-select"
+            class="form-control mb-2 mr-sm-2"
+            name=""
+            v-model="selectedArea"
+            @change="useAreaSearch(selectedArea)"
+          >
+            <option value="0">全部地區</option>
+            <option v-for="area in areas" :key="area.Id" :value="`${area.Id}`">
+              {{ area.Area }}</option
+            >
           </select>
-
-          <button type="submit" class="btn btn-primary mb-2">搜尋照服員</button>
         </form>
       </div>
+      <div v-if="allAttendant == ''">
+        目前這個縣市沒有任何照服員，請選擇其他縣市
+      </div>
       <ul class="row list-unstyled">
-        <li class="col-12 col-lg-4 mb-3">
+        <li
+          class="col-12 col-lg-4 mb-3"
+          v-for="attendant in allAttendant"
+          :key="attendant.Id"
+        >
           <div class="bg-white radius-3 p-3">
             <div class="d-flex align-items-center mb-2">
               <img
                 width="120"
                 height="120"
                 class="rounded-circle"
-                src="https://attach.setn.com/newsimages/2020/08/02/2697335-PH.jpg"
+                v-if="attendant.Photo"
+                :src="
+                  `http://careup.rocket-coding.com/Uploads/` +
+                    `${attendant.Photo}`
+                "
+              />
+              <img
+                width="120"
+                height="120"
+                class="rounded-circle"
+                v-else
+                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAMFBMVEXFxcX////CwsLGxsb7+/vT09PJycn19fXq6urb29ve3t7w8PDOzs7n5+f5+fnt7e30nlkBAAAFHUlEQVR4nO2dC5qqMAyFMTwUBdz/bq+VYYrKKJCkOfXmXwHna5uTpA+KwnEcx3Ecx3Ecx3Ecx3Ecx3Ecx3Ecx3Ecx3EcA2iO9cdIc5PUdO257y+BU39u66b4HplE3fk6VIcnqmNfl1+gksr6+iIucjl3WYukor7+re6Hoe1y1UhNO3zUd+fUFRmKpOa0Tt6dY5ubRCrOG/QFLk1WGmnt/JxzykcjdZ/jyxJDLlOV2l36AtcsJJb9boG3YcR3DuqODIE3ztYKPkDdmwRmpUToUaSaq++AvRgZMWbOpbQW8hdCAm8ZDugoikzREdCJ2okJPBx6azFLNOwoOgcxojJ98JkaTSJxMpklKrCAKhZGI0drTY/wU5lXoJYibannV9NYy4oozNEAkPHTjop+DTDxVGkIgYJNoyQQJtiIW+EMjGAjm649AjGIaqswcEFQKJ2QPlJbqytki6ZXAAZRJ52J2McaUowzAfs+uFzrYhnzaapphiPWdaJWShqxjqa6kTTQ205TVbsfMa6htL0iYOsXpJrQjHSmCkv1QGPtiHqlYcQ21Gj7fcDU8xOEUuNgSltPzexh+HqFlanCBHZ4OLhCV+gK/3OF6vWvucLv98MUOY2pwu/PS/+D2qJU7pYGbOvDFDW+bbON9p3o3oRxn0bfLgZTgSn6pSfrtr56qLHemtHPTK2319SzGvtjQ9qeb39WgS66Cm073nd0U1PzDdJCO3Gzn6TKpl9Zq7ujGWsQhlA3NwWIMwG9zM08Y/tBrR9VWeczv5CSQuuUNKIUTk23ZJ5RKfVhjnkXotfWIlgX2BSCDYbZR+QTcLhb3dKZDUY2M0d4KWItwhHRah/zsrOgKw4wycwjcgEVcgQDQo23CqSiWEJkFAfod2oE1uIFdA1OsCPqFXYNTjCfb8Ez+iX2x5sKLlVbhtqdDcar9ZevhnbZxoBUD35k23t0d304LYs1ELVbnfFaZ/REJJX9niP8Q19moZGo3m8XR/yBvOnjFfsXcI2c8ZuNo7WMP5HQh6yRGrlmFOJTnyTcT+zRlqPUBI2gTVWNUzUna1ERgecgF4GpNBQ38jGqxVLzQA1A31Rrhk6Yz9QEh/WND0GnuG9huhiTXJkxfAizTHLr6cbJKN6UCU6x/2DTRE1xEeEXi3O0ZUqBN4nJRzHhFB1JPlFTBZlI2kQ8zc3KJ1Le8DIRmFJiknuVS6RK4Ej/JtBfJErDSzOBiY4wJHX6Z1I4v1GUmdCPNirnLLeg3oJLcbX5PcpHNbRvOa1A956QmRPOUXVF+zkaUJynpkYR0bOMJH2nNej1pqyV/aKkz9jr5yj5vrXXz1F5SQLACiMapmierj2ikLyleKdlA/I/2oFxiglxx9B+mHwz0lf34IZQfhDRhlD6bhvgEAoPYooHkTczSIZTLC+cEExsoNKZiGBiY9cCfo/Y/SjIOBMQizWWTe73CMUasJx7jlD+DdKdWUKoY4PRYFtGpO0G1Lx4RaadgTtJhf4fiGqGIwKWCGuGIwKWqP+7IxYCzygjR9IAO5pC7Da9g70TBVpWRNgFBlgT8RV2WxHbKwJMv4BOaEaYaU2K16yZMN/qgV+G7IWIvwyZCxHeDQMsR8wg0DBDDXB5H2EV+hkEGmaoySHQsEJNFoGGFWrAq98JRhUMX1iMMMqLLEIpK5jCbd4vw9nSt/72lewXiN6jmdjfq8Hdknlk92ZwJnbIMMRM7JBhiFlUFoHd1UWaP1QKsPsHA5mkNB+Smn9JqV3wskatnQAAAABJRU5ErkJggg=="
               />
               <div class="ml-3">
-                <h5 class="card-title font-weight-bold">張嫦兆</h5>
+                <h5 class="card-title font-weight-bold">
+                  {{ attendant.Name }}
+                </h5>
                 <div class="rating">
                   <span class="fa fa-star checked"></span>
                   <span class="fa fa-star checked"></span>
@@ -49,7 +89,7 @@
                   <span class="fa fa-star"></span>
                   (10)
                   <p class="font-weight-bolder text-primary h6 mt-3">
-                    $1,200 元/日
+                    $ {{ attendant.Salary }} 元/日
                   </p>
                 </div>
               </div>
@@ -64,198 +104,13 @@
               >
             </div>
             <p class="card-text">
-              超過十年的照顧經驗，人稱亞洲照顧王。沒有我不能駕馭的病患或老人，請放心交給我。
-            </p>
-            <p class="d-flex justify-content-lg-between align-items-center h5">
-              <!-- <a
-                href="career.html"
-                class="btn btn-primary-soft text-primary btn-block "
-                >立即預約</a
-              > -->
-              <router-link
-                class="btn btn-primary-soft text-primary btn-block"
-                :to="`/carePage/1234`"
-                >立即預約</router-link
-              >
-            </p>
-          </div>
-        </li>
-        <li class="col-12 col-lg-4 mb-3">
-          <div class="bg-white radius-3 p-3">
-            <div class="d-flex align-items-center mb-2">
-              <img
-                width="120"
-                height="120"
-                class="rounded-circle"
-                src="https://attach.setn.com/newsimages/2020/08/02/2697335-PH.jpg"
-              />
-              <div class="ml-3">
-                <h5 class="card-title font-weight-bold">張嫦兆</h5>
-                <div class="rating">
-                  <span class="fa fa-star checked"></span>
-                  <span class="fa fa-star checked"></span>
-                  <span class="fa fa-star checked"></span>
-                  <span class="fa fa-star"></span>
-                  <span class="fa fa-star"></span>
-                  (10)
-                  <p class="font-weight-bolder text-primary h6 mt-3">
-                    $1,200 元/日
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="text-truncate">
-              <span class="badge badge-light p-2 ml-1 mb-1">協助如廁</span>
-              <span class="badge badge-light p-2 ml-1 mb-1"
-                >身心靈陪伴及安全維護</span
-              >
-              <span class="badge badge-light p-2 ml-1 mb-1"
-                >協助進食、用藥</span
-              >
-            </div>
-            <p class="card-text">
-              超過十年的照顧經驗，人稱亞洲照顧王。沒有我不能駕馭的病患或老人，請放心交給我。
+              {{ attendant.Experience }}
             </p>
             <p class="d-flex justify-content-lg-between align-items-center h5">
               <router-link
                 class="btn btn-primary-soft text-primary btn-block"
-                :to="`/carePage/1234`"
+                :to="`/carePage/${attendant.Id}`"
                 >立即預約</router-link
-              >
-            </p>
-          </div>
-        </li>
-        <li class="col-12 col-lg-4 mb-3">
-          <div class="bg-white radius-3 p-3">
-            <div class="d-flex align-items-center mb-2">
-              <img
-                width="120"
-                height="120"
-                class="rounded-circle"
-                src="https://attach.setn.com/newsimages/2020/08/02/2697335-PH.jpg"
-              />
-              <div class="ml-3">
-                <h5 class="card-title font-weight-bold">張嫦兆</h5>
-                <div class="rating">
-                  <span class="fa fa-star checked"></span>
-                  <span class="fa fa-star checked"></span>
-                  <span class="fa fa-star checked"></span>
-                  <span class="fa fa-star"></span>
-                  <span class="fa fa-star"></span>
-                  (10)
-                  <p class="font-weight-bolder text-primary h6 mt-3">
-                    $1,200 元/日
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="text-truncate">
-              <span class="badge badge-light p-2 ml-1 mb-1">協助如廁</span>
-              <span class="badge badge-light p-2 ml-1 mb-1"
-                >身心靈陪伴及安全維護</span
-              >
-              <span class="badge badge-light p-2 ml-1 mb-1"
-                >協助進食、用藥</span
-              >
-            </div>
-            <p class="card-text">
-              超過十年的照顧經驗，人稱亞洲照顧王。沒有我不能駕馭的病患或老人，請放心交給我。
-            </p>
-            <p class="d-flex justify-content-lg-between align-items-center h5">
-              <a
-                href="career.html"
-                class="btn btn-primary-soft text-primary btn-block "
-                >立即預約</a
-              >
-            </p>
-          </div>
-        </li>
-        <li class="col-12 col-lg-4 mb-3">
-          <div class="bg-white radius-3 p-3">
-            <div class="d-flex align-items-center mb-2">
-              <img
-                width="120"
-                height="120"
-                class="rounded-circle"
-                src="https://attach.setn.com/newsimages/2020/08/02/2697335-PH.jpg"
-              />
-              <div class="ml-3">
-                <h5 class="card-title font-weight-bold">張嫦兆</h5>
-                <div class="rating">
-                  <span class="fa fa-star checked"></span>
-                  <span class="fa fa-star checked"></span>
-                  <span class="fa fa-star checked"></span>
-                  <span class="fa fa-star"></span>
-                  <span class="fa fa-star"></span>
-                  (10)
-                  <p class="font-weight-bolder text-primary h6 mt-3">
-                    $1,200 元/日
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="text-truncate">
-              <span class="badge badge-light p-2 ml-1 mb-1">協助如廁</span>
-              <span class="badge badge-light p-2 ml-1 mb-1"
-                >身心靈陪伴及安全維護</span
-              >
-              <span class="badge badge-light p-2 ml-1 mb-1"
-                >協助進食、用藥</span
-              >
-            </div>
-            <p class="card-text">
-              超過十年的照顧經驗，人稱亞洲照顧王。沒有我不能駕馭的病患或老人，請放心交給我。
-            </p>
-            <p class="d-flex justify-content-lg-between align-items-center h5">
-              <a
-                href="career.html"
-                class="btn btn-primary-soft text-primary btn-block "
-                >立即預約</a
-              >
-            </p>
-          </div>
-        </li>
-        <li class="col-12 col-lg-4 mb-3">
-          <div class="bg-white radius-3 p-3">
-            <div class="d-flex align-items-center mb-2">
-              <img
-                width="120"
-                height="120"
-                class="rounded-circle"
-                src="https://attach.setn.com/newsimages/2020/08/02/2697335-PH.jpg"
-              />
-              <div class="ml-3">
-                <h5 class="card-title font-weight-bold">張嫦兆</h5>
-                <div class="rating">
-                  <span class="fa fa-star checked"></span>
-                  <span class="fa fa-star checked"></span>
-                  <span class="fa fa-star checked"></span>
-                  <span class="fa fa-star"></span>
-                  <span class="fa fa-star"></span>
-                  (10)
-                  <p class="font-weight-bolder text-primary h6 mt-3">
-                    $1,200 元/日
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="text-truncate">
-              <span class="badge badge-light p-2 ml-1 mb-1">協助如廁</span>
-              <span class="badge badge-light p-2 ml-1 mb-1"
-                >身心靈陪伴及安全維護</span
-              >
-              <span class="badge badge-light p-2 ml-1 mb-1"
-                >協助進食、用藥</span
-              >
-            </div>
-            <p class="card-text">
-              超過十年的照顧經驗，人稱亞洲照顧王。沒有我不能駕馭的病患或老人，請放心交給我。
-            </p>
-            <p class="d-flex justify-content-lg-between align-items-center h5">
-              <a
-                href="career.html"
-                class="btn btn-primary-soft text-primary btn-block "
-                >立即預約</a
               >
             </p>
           </div>
@@ -268,7 +123,82 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+      isLoading: false,
+      allAttendant: {},
+      cities: [],
+      areas: [],
+      selectedCity: '',
+      selectedArea: '0'
+    };
+  },
+  created() {
+    this.getAttendantData();
+  },
+  methods: {
+    getAttendantData() {
+      const vm = this;
+      vm.isLoading = true;
+
+      const api = `${process.env.VUE_APP_APIPATH}SearchAttendant`;
+      vm.$http
+        .get(api)
+        .then(res => {
+          console.log(res);
+          vm.allAttendant = res.data.attendant;
+          vm.cities = res.data.cities;
+          vm.selectedCity = res.data.attendant[0].Locationses[0].Cities.Id;
+          vm.getArea();
+          vm.isLoading = false;
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    getArea() {
+      const vm = this;
+
+      const api = `${process.env.VUE_APP_APIPATH}City?Id=${vm.selectedCity}`;
+      vm.isLoading = true;
+      vm.$http
+        .get(api)
+        .then(res => {
+          vm.isLoading = false;
+          vm.areas = res.data.locationses;
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    useCitySearch(cityId) {
+      const vm = this;
+      vm.isLoading = true;
+      const api = `${process.env.VUE_APP_APIPATH}City?Id=${cityId}`;
+      vm.$http
+        .get(api)
+        .then(res => {
+          vm.allAttendant = res.data.attendant;
+          vm.isLoading = false;
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    useAreaSearch(areaId) {
+      const vm = this;
+      vm.isLoading = true;
+      const api = `${process.env.VUE_APP_APIPATH}Location?Id=${areaId}`;
+      vm.$http
+        .get(api)
+        .then(res => {
+          // console.log(res);
+          vm.allAttendant = res.data.attendant;
+          vm.isLoading = false;
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
   }
 };
 </script>
