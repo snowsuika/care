@@ -8,6 +8,7 @@
     aria-labelledby="staticBackdropLabel"
     aria-hidden="true"
   >
+    <loading :active.sync="isLoading"></loading>
     <div class="modal-dialog modal-lg">
       <div class="modal-content radius-4">
         <div class="modal-body">
@@ -52,7 +53,7 @@
                           :class="classes"
                           id="userName"
                           name="服務對象姓名"
-                          v-model.trim="familyInfo.name"
+                          v-model.trim="familyInfo.Name"
                           placeholder="請輸入被服務對象姓名"
                         />
                         <div v-if="errors[0]" class="invalid-feedback">
@@ -68,10 +69,10 @@
                         <select
                           id="sex"
                           class="form-control"
-                          v-model="familyInfo.sex"
+                          v-model="familyInfo.Gender"
                         >
-                          <option value="man">男</option>
-                          <option value="woman">女</option>
+                          <option value="1">男</option>
+                          <option value="2">女</option>
                         </select>
                       </div>
                       <div class="form-group col-md-6">
@@ -86,7 +87,7 @@
                             type="number"
                             class="form-control"
                             :class="classes"
-                            v-model.number="familyInfo.age"
+                            v-model.number="familyInfo.Age"
                             id="age"
                             name="年齡"
                             placeholder="請輸入年齡"
@@ -110,7 +111,7 @@
                             type="number"
                             class="form-control"
                             :class="classes"
-                            v-model.number="familyInfo.height"
+                            v-model.number="familyInfo.Height"
                             id="height"
                             name="身高"
                             placeholder="請輸入身高"
@@ -132,7 +133,7 @@
                             type="number"
                             class="form-control"
                             :class="classes"
-                            v-model.number="familyInfo.weight"
+                            v-model.number="familyInfo.Weight"
                             id="bodyWeight"
                             name="體重"
                             placeholder="請輸入體重"
@@ -155,8 +156,8 @@
                       id="place_home"
                       name="customRadioInline1"
                       class="custom-control-input"
-                      value="home"
-                      v-model.trim="familyInfo.place"
+                      value="1"
+                      v-model.trim="familyInfo.Place"
                       checked
                     />
                     <label class="custom-control-label" for="place_home"
@@ -169,7 +170,7 @@
                     <input
                       type="radio"
                       id="place_hospital"
-                      value="hospital"
+                      value="2"
                       v-model="familyInfo.place"
                       name="customRadioInline1"
                       class="custom-control-input"
@@ -187,10 +188,10 @@
                         ><span class="text-danger">*</span> 照護地址：</label
                       >
                       <input
-                        type="email"
+                        type="text"
                         class="form-control"
                         :class="classes"
-                        v-model.trim="familyInfo.address"
+                        v-model.trim="familyInfo.Address"
                         id="address"
                         name="照護地址"
                         placeholder="請輸入照護地址"
@@ -216,7 +217,7 @@
                             type="checkbox"
                             class="custom-control-input"
                             value="01"
-                            v-model="familyInfo.condition"
+                            v-model="familyInfo.Body"
                             id="condition01"
                           />
                           <label class="custom-control-label" for="condition01"
@@ -229,7 +230,7 @@
                           <input
                             type="checkbox"
                             class="custom-control-input"
-                            v-model="familyInfo.condition"
+                            v-model="familyInfo.Body"
                             value="02"
                             id="condition02"
                           />
@@ -243,7 +244,7 @@
                           <input
                             type="checkbox"
                             class="custom-control-input"
-                            v-model="familyInfo.condition"
+                            v-model="familyInfo.Body"
                             value="03"
                             id="condition03"
                           />
@@ -257,7 +258,7 @@
                           <input
                             type="checkbox"
                             class="custom-control-input"
-                            v-model="familyInfo.condition"
+                            v-model="familyInfo.Body"
                             value="04"
                             id="condition04"
                           />
@@ -271,7 +272,7 @@
                           <input
                             type="checkbox"
                             class="custom-control-input"
-                            v-model="familyInfo.condition"
+                            v-model="familyInfo.Body"
                             id="condition05"
                             value="05"
                           />
@@ -285,7 +286,7 @@
                           <input
                             type="checkbox"
                             class="custom-control-input"
-                            v-model="familyInfo.condition"
+                            v-model="familyInfo.Body"
                             value="06"
                             id="condition06"
                           />
@@ -308,7 +309,7 @@
                           <input
                             type="checkbox"
                             class="custom-control-input"
-                            v-model="familyInfo.equipment"
+                            v-model="familyInfo.Equipment"
                             value="01"
                             id="equipment01"
                           />
@@ -322,7 +323,7 @@
                           <input
                             type="checkbox"
                             class="custom-control-input"
-                            v-model="familyInfo.equipment"
+                            v-model="familyInfo.Equipment"
                             value="02"
                             id="equipment02"
                           />
@@ -338,7 +339,7 @@
                             class="custom-control-input"
                             value="03"
                             id="equipment03"
-                            v-model="familyInfo.equipment"
+                            v-model="familyInfo.Equipment"
                           />
                           <label class="custom-control-label" for="equipment03"
                             >拐杖</label
@@ -350,7 +351,7 @@
                           <input
                             type="checkbox"
                             class="custom-control-input"
-                            v-model="familyInfo.equipment"
+                            v-model="familyInfo.Equipment"
                             value="04"
                             id="equipment04"
                           />
@@ -364,7 +365,7 @@
                           <input
                             type="checkbox"
                             class="custom-control-input"
-                            v-model="familyInfo.equipment"
+                            v-model="familyInfo.Equipment"
                             value="05"
                             id="equipment05"
                           />
@@ -378,7 +379,7 @@
                           <input
                             type="checkbox"
                             class="custom-control-input"
-                            v-model="familyInfo.equipment"
+                            v-model="familyInfo.Equipment"
                             value="06"
                             id="equipment06"
                           />
@@ -402,7 +403,7 @@
                             type="checkbox"
                             class="custom-control-input"
                             id="serviceItem01"
-                            v-model="familyInfo.serviceItem"
+                            v-model="familyInfo.ServiceItems"
                             value="01"
                           />
                           <label
@@ -417,7 +418,7 @@
                           <input
                             type="checkbox"
                             class="custom-control-input"
-                            v-model="familyInfo.serviceItem"
+                            v-model="familyInfo.ServiceItems"
                             id="serviceItem02"
                             value="02"
                           />
@@ -433,7 +434,7 @@
                           <input
                             type="checkbox"
                             class="custom-control-input"
-                            v-model="familyInfo.serviceItem"
+                            v-model="familyInfo.ServiceItems"
                             value="03"
                             id="serviceItem03"
                           />
@@ -449,7 +450,7 @@
                           <input
                             type="checkbox"
                             class="custom-control-input"
-                            v-model="familyInfo.serviceItem"
+                            v-model="familyInfo.ServiceItems"
                             value="04"
                             id="serviceItem04"
                           />
@@ -465,7 +466,7 @@
                           <input
                             type="checkbox"
                             class="custom-control-input"
-                            v-model="familyInfo.serviceItem"
+                            v-model="familyInfo.ServiceItems"
                             value="05"
                             id="serviceItem05"
                           />
@@ -481,7 +482,7 @@
                           <input
                             type="checkbox"
                             class="custom-control-input"
-                            v-model="familyInfo.serviceItem"
+                            v-model="familyInfo.ServiceItems"
                             value="06"
                             id="serviceItem06"
                           />
@@ -509,12 +510,15 @@
                         rules="required"
                         v-slot="{ errors, classes }"
                       >
-                        <label for="emergencyContact">緊急聯絡姓名</label>
+                        <label for="emergencyContact"
+                          ><span class="text-danger">*</span>
+                          緊急聯絡姓名</label
+                        >
                         <input
                           type="text"
                           class="form-control"
                           :class="classes"
-                          v-model.trim="familyInfo.emergencyContact"
+                          v-model.trim="familyInfo.Urgent"
                           id="emergencyContact"
                           name="緊急聯絡姓名"
                           placeholder="請輸入緊急聯絡姓名"
@@ -539,7 +543,7 @@
                           :class="classes"
                           id="emergencyRelationship"
                           name="與被服務對象的關係"
-                          v-model.trim="familyInfo.emergencyRelationship"
+                          v-model.trim="familyInfo.Relationship"
                           placeholder="請輸入關係"
                         />
                         <div v-if="errors[0]" class="invalid-feedback">
@@ -561,7 +565,7 @@
                             type="tel"
                             class="form-control"
                             :class="classes"
-                            v-model.number="familyInfo.emergencyphone"
+                            v-model="familyInfo.Phone"
                             id="emergencyphone"
                             name="緊急聯絡電話"
                             placeholder="緊急聯絡電話"
@@ -610,23 +614,26 @@ export default {
   data() {
     return {
       familyInfo: {
-        name: '',
-        sex: 'man',
-        age: '',
-        height: '',
-        weight: '',
-        place: 'home',
-        address: '',
-        condition: [],
-        equipment: [],
-        serviceItem: [],
-        emergencyContact: '',
-        emergencyRelationship: '',
-        emergencyphone: '',
-        remark: ''
-      }
+        MemberId: '',
+        Name: '',
+        Gender: '1', // 1 男 2 女
+        Age: '',
+        Height: '',
+        Weight: '',
+        Place: '1', //1居家, 2醫院
+        Address: '',
+        Body: [], //後端要字串
+        Equipment: [], //後端要字串
+        ServiceItems: [], //後端要字串
+        Urgent: '',
+        Relationship: '',
+        Phone: ''
+        // remark: ''
+      },
+      isLoading: false
     };
   },
+  created() {},
   props: {
     // 步驟套件
     title: {
@@ -670,20 +677,53 @@ export default {
   },
   methods: {
     onComplete: function() {
-      this.$swal({
-        toast: true,
-        position: 'top-end',
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: false,
-        onOpen: toast => {
-          toast.addEventListener('mouseenter', this.$swal.stopTimer);
-          toast.addEventListener('mouseleave', this.$swal.resumeTimer);
-        },
-        icon: 'success',
-        title: '已儲存'
-      });
-      $('#familyManage').modal('hide');
+      const vm = this;
+
+      const api = `${process.env.VUE_APP_APIPATH}AddElder`;
+      vm.isLoading = true;
+
+      let postTobackObj = {
+        MemberId: vm.familyInfo.MemberId,
+        Name: vm.familyInfo.Name,
+        Gender: vm.familyInfo.Gender, // 1 男 2 女
+        Age: vm.familyInfo.Age,
+        Height: vm.familyInfo.Height,
+        Weight: vm.familyInfo.Weight,
+        Place: vm.familyInfo.Place, //1居家, 2醫院
+        Address: vm.familyInfo.Address,
+        Body: vm.familyInfo.Body.toString(), //後端要字串
+        Equipment: vm.familyInfo.Equipment.toString(), //後端要字串
+        ServiceItems: vm.familyInfo.ServiceItems.toString(), //後端要字串
+        Urgent: vm.familyInfo.Urgent,
+        Relationship: vm.familyInfo.Relationship,
+        Phone: vm.familyInfo.Phone
+      };
+
+      vm.$http
+        .post(api, postTobackObj)
+        .then(res => {
+          console.log(res);
+          if (res.data.result == '建立成功') {
+            vm.$swal({
+              toast: true,
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 5000,
+              timerProgressBar: false,
+              onOpen: toast => {
+                toast.addEventListener('mouseenter', this.$swal.stopTimer);
+                toast.addEventListener('mouseleave', this.$swal.resumeTimer);
+              },
+              icon: 'success',
+              title: `已成功新增家屬資料`
+            });
+            $('#familyManage').modal('hide');
+            vm.isLoading = false;
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
   }
 };

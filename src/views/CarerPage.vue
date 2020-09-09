@@ -126,6 +126,11 @@
                     :popover="{ placement: 'bottom', visibility: 'click' }"
                     :min-date="new Date()"
                     :max-date="this.maxDate()"
+                    :disabled-dates="[
+                      new Date('2020-09-01'),
+                      new Date('2020-09-15'),
+                      new Date('2020-09-29')
+                    ]"
                     color="yellow"
                   />
                 </div>
