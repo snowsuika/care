@@ -40,6 +40,36 @@
                     <h4 class="mb-3">被服務對象基本資料</h4>
                     <form>
                       <div class="form-group">
+                        <label for="">是否帶入現有家屬資料：</label>
+                        <div
+                          class="custom-control custom-radio custom-control-inline"
+                        >
+                          <input
+                            type="radio"
+                            id="self"
+                            name="customRadioInline1"
+                            class="custom-control-input"
+                            checked
+                          />
+                          <label class="custom-control-label" for="self"
+                            >否</label
+                          >
+                        </div>
+                        <div
+                          class="custom-control custom-radio custom-control-inline"
+                        >
+                          <input
+                            type="radio"
+                            id="auto"
+                            name="customRadioInline1"
+                            class="custom-control-input"
+                          />
+                          <label class="custom-control-label" for="auto"
+                            >是</label
+                          >
+                        </div>
+                      </div>
+                      <div class="form-group">
                         <validation-provider
                           rules="required"
                           v-slot="{ errors, classes }"

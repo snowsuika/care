@@ -33,7 +33,13 @@
             </button>
           </td>
           <td>
-            <button type="button" class="btn btn-primary">取消訂單</button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              @click="cancelOrder(8)"
+            >
+              取消訂單
+            </button>
           </td>
         </tr>
       </tbody>
@@ -49,67 +55,29 @@ export default {
     };
   },
   methods: {
-    cancelOrder() {
+    cancelOrder(orderId) {
       const vm = this;
       vm.isLoading = true;
-      const api = `${process.env.VUE_APP_APIPATH}CancelOrder?Id=8`; //參數是訂單Id
+      const api = `${process.env.VUE_APP_APIPATH}CancelOrder?Id=${orderId}`; //參數是訂單Id
       vm.$http
         .patch(api)
         .then(res => {
           console.log(res);
-          if (res.data.message == '登入成功') {
-            vm.$swal({
-              toast: true,
-              position: 'top-end',
-              showConfirmButton: false,
-              timer: 3000,
-              timerProgressBar: false,
-              onOpen: toast => {
-                toast.addEventListener('mouseenter', vm.$swal.stopTimer);
-                toast.addEventListener('mouseleave', vm.$swal.resumeTimer);
-              },
-              icon: 'success',
-              title: `${res.data.message}`
-            });
-            vm.isLoading = false;
-            localStorage.setItem('token', `${res.data.token}`);
-            localStorage.setItem('userId', `${res.data.Id}`);
-            localStorage.setItem('userMail', `${res.data.Email}`);
-            localStorage.setItem('identity', this.identity);
-            this.$bus.$emit('checkLogin');
-          } else {
-            console.log(res.data.message);
-            vm.$swal({
-              // toast: true,
-              // position: 'top-end',
-              // showConfirmButton: false,
-              // timer: 3000,
-              // timerProgressBar: false,
-              // onOpen: toast => {
-              //   toast.addEventListener('mouseenter', vm.$swal.stopTimer);
-              //   toast.addEventListener('mouseleave', vm.$swal.resumeTimer);
-              // },
-              icon: 'error',
-              title: `${res.data.message}，請重新登入`
-            });
-            vm.isLoading = false;
-          }
 
-          vm.email = '';
-          vm.password = '';
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    },
-    pay() {
-      const vm = this;
-      vm.isLoading = true;
-      const api = `${process.env.VUE_APP_APIPATH}CancelOrder?Id=8`; //參數是訂單Id
-      vm.$http
-        .patch(api)
-        .then(res => {
-          console.log(res);
+          vm.$swal({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: false,
+            onOpen: toast => {
+              toast.addEventListener('mouseenter', vm.$swal.stopTimer);
+              toast.addEventListener('mouseleave', vm.$swal.resumeTimer);
+            },
+            icon: 'success',
+            title: `${res.data.result}`
+          });
+          vm.isLoading = false;
         })
         .catch(err => {
           console.log(err);

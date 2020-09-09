@@ -39,13 +39,6 @@
                 <li>
                   <i class="fas fa-check text-primary mr-2"></i>照顧服務員證照
                 </li>
-                <li>
-                  <i class="fas fa-check text-primary mr-2"></i>照服員結業證書
-                </li>
-                <li>
-                  <i class="fas fa-check text-primary mr-2"></i
-                  >體檢表(含B肝表面抗原、胸部Ｘ光)
-                </li>
               </ul>
             </div>
             <div class="服務項目 mb-4">
@@ -133,6 +126,11 @@
                     :popover="{ placement: 'bottom', visibility: 'click' }"
                     :min-date="new Date()"
                     :max-date="this.maxDate()"
+                    :disabled-dates="[
+                      new Date('2020-09-01'),
+                      new Date('2020-09-15'),
+                      new Date('2020-09-29')
+                    ]"
                     color="yellow"
                   />
                 </div>
@@ -192,7 +190,16 @@ export default {
   },
   methods: {
     bookingCare() {
-      if (this.$parent.isLogin) {
+      let Identity = localStorage.getItem('identity');
+      let errorMessage = '';
+
+      if (!this.$parent.isLogin) {
+        errorMessage = '請先登入才能使用！';
+      } else if (Identity !== 'member') {
+        errorMessage = '預約日照服務僅供一般會員';
+      }
+
+      if (this.$parent.isLogin && Identity == 'member') {
         $('#bookingCareer').modal('show');
       } else {
         this.$swal({
@@ -206,7 +213,7 @@ export default {
             toast.addEventListener('mouseleave', this.$swal.resumeTimer);
           },
           icon: 'warning',
-          title: '請先登入才能使用！'
+          title: `${errorMessage}`
         });
       }
     },

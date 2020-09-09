@@ -465,14 +465,15 @@ export default {
       postForms.append('ServiceTime', vm.resume.serviceTime);
       postForms.append('Experience', vm.resume.experience);
       postForms.append('Status', vm.resume.isopenMatch ? '01' : '02');
-      postForms.append(
-        'Photo',
-        vm.photoIns ? vm.photoIns : vm.photoName ? vm.photoName : null
-      );
-      postForms.append(
-        'File',
-        vm.fileIns ? vm.fileIns : vm.fileName ? vm.fileName : null
-      );
+
+      if (vm.photoIns) {
+        postForms.append('Photo', vm.photoIns);
+      }
+
+      if (vm.fileIns) {
+        postForms.append('Photo', vm.fileIns);
+      }
+
       postForms.append('Location', cityArray); //post 給後端的地區 array(只有01、02的陣列)
 
       const config = {
