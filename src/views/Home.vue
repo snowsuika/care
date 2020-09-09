@@ -1,30 +1,33 @@
 <template>
   <div class="home">
     <!-- banner -->
-    <div
+    <!-- <div
       id="carouselExampleFade"
       class="carousel slide carousel-fade"
       data-ride="carousel"
     >
       <div class="carousel-inner">
+        <div class="carousel-item">
+          <img
+            src="@/assets/images/banner/2886626_m.jpg"
+            class="d-block w-100 img-fluid"
+            style="object-fit: cover;"
+            alt="..."
+          />
+        </div>
         <div class="carousel-item active">
           <img
-            src="https://cw1.tw/CH/images/channel_master/ea7c3450-a4b8-4295-bc4e-f8b2f4886db8.jpg"
-            class="d-block w-100"
+            src="@/assets/images/banner/2886643_l.jpg"
+            class="d-block w-100 img-fluid"
+            style="object-fit: cover;"
             alt="..."
           />
         </div>
         <div class="carousel-item">
           <img
-            src="https://lh3.googleusercontent.com/proxy/gjEjfDcdIUF_TnqrPEJ_At61NzHthmXn0gIUVmYJBHvy7FuVhNEqc3oq8CitDkyxbGJtO7pqJVjRTdvMLMcFHlhhbe50mVcfgYBSBZOK9QX17TW-toS90X3_MscCLJ7netNUPP7CAdI"
-            class="d-block w-100"
-            alt="..."
-          />
-        </div>
-        <div class="carousel-item">
-          <img
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSf6k3UbzP6VGNHaiDKsvUhbXyYY6b-kQ01bA&usqp=CAU"
-            class="d-block w-100"
+            src="@/assets/images/banner/2886679_l.jpg"
+            class="d-block w-100 img-fluid"
+            style="object-fit: cover;"
             alt="..."
           />
         </div>
@@ -47,8 +50,8 @@
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="sr-only">Next</span>
       </a>
-    </div>
-    <!-- <div
+    </div> -->
+    <div
       class="banner d-flex justify-content-center align-items-center text-white"
     >
       <div class="container">
@@ -58,7 +61,7 @@
           </div>
         </div>
       </div>
-    </div> -->
+    </div>
     <div class="container my-4">
       <h2 class="text-center">平台流程</h2>
 
@@ -460,18 +463,14 @@
 }
 
 .carousel-item.active img {
-  -webkit-transition: -webkit-transform 10s
-    cubic-bezier(0.455, 0.03, 0.515, 0.955) 0s;
-  transition: -webkit-transform 20s cubic-bezier(0.455, 0.03, 0.515, 0.955) 0s;
-  transition: transform 10s cubic-bezier(0.455, 0.03, 0.515, 0.955) 0s;
-  transition: transform 10s cubic-bezier(0.455, 0.03, 0.515, 0.955) 0s,
-    -webkit-transform 10s cubic-bezier(0.455, 0.03, 0.515, 0.955) 0s;
+  transition: -webkit-transform 10s cubic-bezier(0.455, 0.03, 0.515, 0.955) 0s;
+  transition: transform 10s ease-in-out 0s;
 }
 
 .carousel-item.active img {
-  -webkit-transform: scale(1.2);
-  -ms-transform: scale(1.2);
-  transform: scale(1.2);
+  -webkit-transform: scale(1.1);
+  -ms-transform: scale(1.1);
+  transform: scale(1.1);
 }
 </style>
 

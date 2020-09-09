@@ -35,23 +35,23 @@
           </div>
           <div class="col-md-8">
             <div class="row">
-              <ul class="list-unstyled col-3 col-md-3">
+              <ul class="list-unstyled col-6 col-md-3">
                 <li><h5>找照顧服務</h5></li>
                 <li><a class="text-white" href="#">臨時看護</a></li>
                 <li><a class="text-white" href="#">醫院看護與居家看護</a></li>
               </ul>
 
-              <ul class="list-unstyled col-3 col-md-3">
+              <ul class="list-unstyled col-6 col-md-3">
                 <li><h5>加入日日照你</h5></li>
                 <li><a class="text-white" href="#">加入流程與說明</a></li>
               </ul>
-              <ul class="list-unstyled col-3 col-md-3">
+              <ul class="list-unstyled col-6 col-md-3">
                 <li><h5>照護知識庫</h5></li>
                 <li><a class="text-white" href="#">最新消息</a></li>
                 <li><a class="text-white" href="#">照顧新知</a></li>
                 <li><a class="text-white" href="#">照顧部落格</a></li>
               </ul>
-              <ul class="list-unstyled col-3 col-md-3">
+              <ul class="list-unstyled col-6 col-md-3">
                 <li><h5>關於日日照你</h5></li>
                 <li><a class="text-white" href="#">公司理念與介紹</a></li>
                 <li><a class="text-white" href="#">常見問題</a></li>
@@ -65,13 +65,18 @@
       <div class="container d-flex justify-content-between align-items-center">
         <small class="text-white">© 2020. All Rights Reserved.</small>
         <ul class="list-unstyled d-flex mb-0" style="font-size: 2rem;">
-          <li>
+          <li class="mr-2">
             <a class="text-white" href="#"
               ><i class="fab fa-facebook-square"></i
             ></a>
           </li>
-          <li>
+          <li class="mr-2">
             <a class="text-white" href="#"> <i class="fab fa-instagram"></i></a>
+          </li>
+          <li class="mr-2">
+            <a class="text-white" href="#">
+              <i class="fab fa-twitter-square"></i
+            ></a>
           </li>
         </ul>
       </div>
