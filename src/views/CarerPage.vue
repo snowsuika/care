@@ -1,5 +1,6 @@
 <template>
   <div>
+    <loading :active.sync="isLoading"></loading>
     <div
       class="banner d-flex justify-content-center align-items-center text-white"
     ></div>
@@ -175,10 +176,13 @@ export default {
       range: {
         start: new Date(), // Jan 16th, 2018
         end: new Date() // Jan 19th, 2018
-      }
+      },
+      isLoading: false
     };
   },
-
+  created() {
+    // this.getAttendantData();
+  },
   computed: {
     dateDiff: function() {
       return (
@@ -188,7 +192,23 @@ export default {
       ); // 把相差的毫秒數轉換為天數;
     }
   },
+
   methods: {
+    getAttendantData() {
+      const vm = this;
+      const attendantId = vm.$route.params.id;
+      vm.isLoading = true;
+      const api = `${process.env.VUE_APP_APIPATH}GetAttendat?id=${attendantId}`;
+      vm.$http
+        .get(api)
+        .then(res => {
+          console.log(res);
+          vm.isLoading = false;
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
     bookingCare() {
       let Identity = localStorage.getItem('identity');
       let errorMessage = '';
