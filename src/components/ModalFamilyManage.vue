@@ -42,7 +42,10 @@
                         rules="required"
                         v-slot="{ errors, classes }"
                       >
-                        <label for="userName">服務對象姓名</label>
+                        <label for="userName"
+                          ><span class="text-danger">*</span>
+                          服務對象姓名</label
+                        >
                         <input
                           type="text"
                           class="form-control"
@@ -59,7 +62,9 @@
                     </div>
                     <div class="form-row">
                       <div class="form-group col-md-6">
-                        <label for="sex">性別</label>
+                        <label for="sex"
+                          ><span class="text-danger">*</span> 性別</label
+                        >
                         <select
                           id="sex"
                           class="form-control"
@@ -74,7 +79,9 @@
                           rules="required|numeric"
                           v-slot="{ errors, classes }"
                         >
-                          <label for="age">年齡：</label>
+                          <label for="age"
+                            ><span class="text-danger">*</span> 年齡：</label
+                          >
                           <input
                             type="number"
                             class="form-control"
@@ -96,7 +103,9 @@
                           rules="required|numeric"
                           v-slot="{ errors, classes }"
                         >
-                          <label for="height">身高：</label>
+                          <label for="height"
+                            ><span class="text-danger">*</span> 身高：</label
+                          >
                           <input
                             type="number"
                             class="form-control"
@@ -116,7 +125,9 @@
                           rules="required|numeric"
                           v-slot="{ errors, classes }"
                         >
-                          <label for="bodyWeight">體重：</label>
+                          <label for="bodyWeight"
+                            ><span class="text-danger">*</span> 體重：</label
+                          >
                           <input
                             type="number"
                             class="form-control"
@@ -172,7 +183,9 @@
                       rules="required"
                       v-slot="{ errors, classes }"
                     >
-                      <label for="address">照護地址：</label>
+                      <label for="address"
+                        ><span class="text-danger">*</span> 照護地址：</label
+                      >
                       <input
                         type="email"
                         class="form-control"
@@ -487,9 +500,11 @@
             <tab-content title="緊急聯絡人資訊">
               <div class="row justify-content-center mt-4">
                 <div class="col-8">
-                  <h4 class="mb-3">緊急聯絡人資訊</h4>
+                  <h4 class="mb-3">
+                    緊急聯絡人資訊
+                  </h4>
                   <form class="row">
-                    <div class="form-row col-12 col-md-6 mb-2">
+                    <div class="col-12 col-md-6 mb-2">
                       <validation-provider
                         rules="required"
                         v-slot="{ errors, classes }"
@@ -509,13 +524,14 @@
                         </div>
                       </validation-provider>
                     </div>
-                    <div class="form-row col-12 col-md-6 mb-2">
+                    <div class="col-12 col-md-6 mb-2">
                       <validation-provider
                         rules="required"
                         v-slot="{ errors, classes }"
                       >
                         <label for="emergencyRelationship"
-                          >與被服務對象的關係</label
+                          ><span class="text-danger">*</span>
+                          與被服務對象的關係</label
                         >
                         <input
                           type="text"
@@ -531,25 +547,42 @@
                         </div>
                       </validation-provider>
                     </div>
-                    <div class="form-row col-12 col-md-12">
+                    <div class="col-12 col-md-12">
                       <validation-provider
                         rules="required|numeric"
                         v-slot="{ errors, classes }"
                       >
-                        <label for="emergencyphone">緊急聯絡電話</label>
-                        <input
-                          type="tel"
-                          class="form-control"
-                          :class="classes"
-                          v-model.number="familyInfo.emergencyphone"
-                          id="emergencyphone"
-                          name="緊急聯絡電話"
-                          placeholder="緊急聯絡電話"
-                        />
-                        <div v-if="errors[0]" class="invalid-feedback">
-                          {{ errors[0] }}
+                        <div class="form-group">
+                          <label for="emergencyphone"
+                            ><span class="text-danger">*</span>
+                            緊急聯絡電話</label
+                          >
+                          <input
+                            type="tel"
+                            class="form-control"
+                            :class="classes"
+                            v-model.number="familyInfo.emergencyphone"
+                            id="emergencyphone"
+                            name="緊急聯絡電話"
+                            placeholder="緊急聯絡電話"
+                          />
+                          <div v-if="errors[0]" class="invalid-feedback">
+                            {{ errors[0] }}
+                          </div>
                         </div>
                       </validation-provider>
+                    </div>
+                    <div class="col-12 col-md-12">
+                      <div class="form-group">
+                        <label for="remark">備註</label>
+                        <textarea
+                          class="form-control"
+                          name=""
+                          id="remark"
+                          v-model="familyInfo.remark"
+                          rows="3"
+                        ></textarea>
+                      </div>
                     </div>
                   </form>
                 </div>
@@ -589,7 +622,8 @@ export default {
         serviceItem: [],
         emergencyContact: '',
         emergencyRelationship: '',
-        emergencyphone: ''
+        emergencyphone: '',
+        remark: ''
       }
     };
   },

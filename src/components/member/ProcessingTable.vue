@@ -1,5 +1,6 @@
 <template>
   <div class="table-responsive">
+    <loading :active.sync="isLoading"></loading>
     <table class="table table-radius">
       <tr class="table-light">
         <th scope="col">被服務對象</th>
@@ -47,7 +48,13 @@
           <td>4,000</td>
           <td>已付款</td>
           <td>
-            <button type="button" class="btn btn-primary">取消訂單</button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              @click="cancelOrder(8)"
+            >
+              取消訂單
+            </button>
           </td>
           <td>
             <button
@@ -64,3 +71,56 @@
     </table>
   </div>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      isLoading: false
+    };
+  },
+  methods: {
+    cancelOrder(orderId) {
+      const vm = this;
+      vm.isLoading = true;
+      const api = `${process.env.VUE_APP_APIPATH}CancelOrder?Id=${orderId}`; //參數是訂單Id
+      vm.$http
+        .patch(api)
+        .then(res => {
+          console.log(res);
+
+          vm.$swal({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: false,
+            onOpen: toast => {
+              toast.addEventListener('mouseenter', vm.$swal.stopTimer);
+              toast.addEventListener('mouseleave', vm.$swal.resumeTimer);
+            },
+            icon: 'success',
+            title: `${res.data.result}`
+          });
+          vm.isLoading = false;
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
+    // pay() {
+    //   const vm = this;
+    //   vm.isLoading = true;
+    //   const api = `${process.env.VUE_APP_APIPATH}CancelOrder?Id=8`; //參數是訂單Id
+    //   vm.$http
+    //     .patch(api)
+    //     .then(res => {
+    //       console.log(res);
+    //     })
+    //     .catch(err => {
+    //       console.log(err);
+    //     });
+    // }
+  }
+};
+</script>
