@@ -1,5 +1,5 @@
 <template>
-  <div class="table-md-responsive">
+  <div class="table-responsive-md">
     <loading :active.sync="isLoading"></loading>
     <table class="table table-radius" v-if="orders.Id">
       <tr class="table-light">
@@ -60,7 +60,7 @@ export default {
       orders: []
     };
   },
-  props: ['user-id'],
+  props: ['user-id', 'identity'],
   created() {
     this.getWaitConfirmData();
   },
@@ -111,7 +111,7 @@ export default {
         });
     },
     showOrderDetail(orderId) {
-      this.$refs.orderDetailModal.getOrderData(orderId);
+      this.$refs.orderDetailModal.getOrderData(orderId, this.identity);
     }
   }
 };

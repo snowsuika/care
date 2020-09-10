@@ -105,19 +105,6 @@
               </tr>
             </tbody>
           </table>
-          <!-- <div class="d-flex justify-content-center">
-            <button
-              class="btn btn-primary-soft text-primary mr-2"
-              data-dismiss="modal"
-              data-toggle="modal"
-              data-target="#rejectOrder"
-            >
-              拒絕此訂單
-            </button>
-            <button class="btn btn-primary">
-              確認接收此單
-            </button>
-          </div> -->
         </div>
         <div class="modal-footer">
           <button
@@ -140,15 +127,16 @@ export default {
       orderData: {},
       Attendants: {},
       Elders: {},
+      identity: '',
       isLoading: false
     };
   },
 
   methods: {
-    getOrderData(orderId) {
+    getOrderData(orderId, identity) {
       const vm = this;
       vm.isLoading = true;
-
+      vm.identity = identity;
       const api = `${process.env.VUE_APP_APIPATH}CheckOrder?id=${orderId}`;
       vm.$http
         .get(api)
