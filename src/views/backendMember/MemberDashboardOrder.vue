@@ -22,7 +22,7 @@
         <div class="tab-content" id="nav-tabContent">
           <div class="tab-pane show active">
             <div class="table-responsive-md">
-              <div :is="orderStatus"></div>
+              <div :is="orderStatus" :user-id="userId"></div>
             </div>
           </div>
         </div>
@@ -51,6 +51,7 @@ export default {
       ]
     };
   },
+  props: ['user-id'],
   components: {
     Waitconfirm,
     Processing,
@@ -58,6 +59,7 @@ export default {
     Rating,
     Finish
   },
+  created() {},
   methods: {
     changeStatus(orderStatus) {
       this.orderStatus = orderStatus;

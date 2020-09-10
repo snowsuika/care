@@ -703,7 +703,7 @@ export default {
         .post(api, postTobackObj)
         .then(res => {
           console.log(res);
-          if (res.data.result == '建立成功') {
+          if (res.status == '200') {
             vm.$swal({
               toast: true,
               position: 'top-end',

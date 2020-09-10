@@ -2,7 +2,12 @@
   <div class="table-responsive">
     <loading :active.sync="isLoading"></loading>
 
-    <form method="post" action="https://ccore.spgateway.com/MPG/mpg_gateway">
+    <form
+      method="post"
+      id="forr"
+      ref="forr"
+      action="https://ccore.spgateway.com/MPG/mpg_gateway"
+    >
       <input
         name="MerchantID"
         id=""
@@ -15,14 +20,14 @@
         id=""
         class="btn btn-primary"
         type="hidden"
-        value="ef63e0f893ccd9b7e6a88ed2cdf7b6d8e6692d8bff2883ff0d2e96b9f7893a2ed514532f99bc12729632aa21d9061bd7ce7a938da1c8eb38db61f066096332c6514a795075a95632dbbc4f698ca4e5aed365e69713b2298defa4640e2c3ddaa4b0659c9791177c9b5e1070ad251fdef0adb6757be965cb6f7a52d510111db6ff2f327b85914172e1a939118699f05212c13430abfc7d2b2adbbabc66c172bd61aa2cef62c4323843c9901750aeed828703fd8bc8b422ee0890324952b97148ca6c0924cd2367a8948d68ee59cceaba552fbd909af1ba62abc11d3ccd5eb05854d0b7a231e4f7aebd9af72856e410f44890864a7c079db5f84ff7347a1c47279cd660c1f0161ad750ee179be9674281c043e3458b24a8addf4550e4849930d39b95ded5b69f2230ae3675799e3eef8516b58c200fe2fc3995b3a5a01bee55388db4580423ca5bb00e77debbd57bdb6ec83533fa6679ddececa9b353839a5c7db5e3585df3d956014a50194e6a234533ea4b9d31b72bea97deb72cf525d89db01b"
+        value="ef63e0f893ccd9b7e6a88ed2cdf7b6d8e6692d8bff2883ff0d2e96b9f7893a2ed514532f99bc12729632aa21d9061bd70b3756c6d2d364dcf53fdd699bd01dc9ca8a784efbd30795113f8d39896a0640740d0d8e5eca3da6f4fbdcd6959f1590443b15647ce6af947ad341583c2c8e9bf0ec2667ba6a49504a6cfd656a6fd38f6363deb136cf449f578ff4b62872cb593214ab1433fcc94e79bb0b70dc2bc75c71dc63d6e8222870abc0d6d1115fd7205c4c6c2e49c6d8d2edca1262cd2bb83ba9e68970911ed9d82daa74c8a0869a6be69b71dec6de3cd1b6529518023ae913ac59d213077c80c1420039bf2494483b0f7e09907d63a1f2e390cb9ba6c9cbb11bd8ecd2c22ab12de5a981c73eb2f25aa28e5b5181a08b2bb6859653675ff69dd8f1907680305d6320dc02d28596dfe96892f9a69d4ea9b2577425e209bb81f26fb5887e96717deb9561c767101e7b8049cf6857fe00e568476b4bdf005cab54"
       />
       <input
         name="TradeSha"
         id=""
         class="btn btn-primary"
         type="hidden"
-        value="AF3061DECD14F6884D75F0BF54C76C829CF7377DAB1F1CA4D95AFD95CC3F5CB8"
+        value="790737665C219FC407E4C5619005EC919288B8938B7C1D6CF0400CA3D8DEAF4B"
       />
       <input
         name="Version"
@@ -31,7 +36,14 @@
         type="hidden"
         value="1.5"
       />
-      <input name="" id="" class="btn btn-primary" type="submit" value="go" />
+      <input
+        name=""
+        id="ss"
+        ref="subutn"
+        class="btn btn-primary"
+        type="submit"
+        value="go"
+      />
     </form>
 
     <table class="table table-radius">
@@ -58,7 +70,7 @@
           <td>4,000</td>
           <td>未付款</td>
           <td>
-            <button type="button" class="btn btn-primary" @click="pay()">
+            <button type="button" class="btn btn-primary" @click="seadToback()">
               付款
             </button>
           </td>
@@ -110,29 +122,50 @@
 </template>
 
 <script>
+/* global $ */
 export default {
   data() {
     return {
       isLoading: false,
-      getData: {}
+      getData: {},
+      resData: []
     };
   },
   created() {
-    const vm = this;
-    const api = `${process.env.VUE_APP_APIPATH}get?amount=123&ProductName=12`; //參數是訂單Id
-    // vm.isLoading = true;
-
-    vm.$http
-      .get(api)
-      .then(res => {
-        console.log(res);
-        vm.getData = res.data;
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    // const vm = this;
+    // const api = `${process.env.VUE_APP_APIPATH}get?amount=123&ProductName=12`; //參數是訂單Id
+    // // vm.isLoading = true;
+    // vm.$http
+    //   .get(api)
+    //   .then(res => {
+    //     console.log(res);
+    //     vm.getData = res.data;
+    //   })
+    //   .catch(err => {
+    //     console.log(err);
+    //   });
   },
   methods: {
+    seadToback() {
+      const vm = this;
+
+      const api = `http://careup.rocket-coding.com/SpgatewayPayBill`;
+      vm.$http
+        .post(api, {
+          OrderId: '2'
+        })
+        .then(res => {
+          console.log(res);
+          vm.resData = res.data;
+          // console.log(vm.$refs.subutn);
+          $('#forr').trigger('submit');
+          // $('#ss').trigger('click');
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+
     cancelOrder(orderId) {
       const vm = this;
       vm.isLoading = true;

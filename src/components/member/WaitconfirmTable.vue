@@ -1,42 +1,43 @@
 <template>
   <div class="table-md-responsive">
     <loading :active.sync="isLoading"></loading>
-    <table class="table table-radius">
+    <table class="table table-radius" v-if="orders.Id">
       <tr class="table-light">
-        <th scope="col">被服務對象</th>
-        <th scope="col">照服人員</th>
-        <th scope="col">服務時段</th>
-        <th scope="col">訂單金額</th>
-        <th scope="col">查看訂單詳細</th>
-        <th scope="col">取消訂單</th>
+        <th class="text-center text-nowrap">被服務對象</th>
+        <th class="text-center text-nowrap">照服人員</th>
+        <th class="text-center text-nowrap">服務時段</th>
+        <th class="text-center text-nowrap">訂單金額</th>
+        <th class="text-center text-nowrap">查看訂單詳細</th>
+        <th class="text-center text-nowrap">取消訂單</th>
       </tr>
 
       <tbody>
-        <tr>
-          <td class="text-center">王伯伯</td>
-          <td>張照服</td>
-          <td>
+        <tr v-for="(order, index) in orders" :key="index">
+          <td class="text-center">{{ order.Elders.Name }}</td>
+          <td class="text-center">{{ order.Attendants.Name }}</td>
+          <td class="text-center">
             <p>
-              2020-08-15 <br />
-              2020-08-16
+              {{ order.StartDate }} <br />
+              {{ order.EndDate }}
             </p>
           </td>
-          <td>4,000</td>
-          <td>
+          <td class="text-center">{{ order.Total | currency }}</td>
+          <td class="text-center">
             <button
               type="button"
               class="btn btn-primary-soft text-primary"
               data-toggle="modal"
               data-target="#orderDetail"
+              @click="showOrderDetail(order.Id)"
             >
               訂單細節
             </button>
           </td>
-          <td>
+          <td class="text-center">
             <button
               type="button"
               class="btn btn-primary"
-              @click="cancelOrder(8)"
+              @click="cancelOrder(order.Id)"
             >
               取消訂單
             </button>
@@ -44,17 +45,44 @@
         </tr>
       </tbody>
     </table>
+    <p v-else>目前沒有訂單</p>
+    <modal-order-detail ref="orderDetailModal"></modal-order-detail>
   </div>
 </template>
 
 <script>
+import ModalOrderDetail from '@/components/ModalOrderDetail.vue';
+
 export default {
   data() {
     return {
-      isLoading: false
+      isLoading: false,
+      orders: []
     };
   },
+  props: ['user-id'],
+  created() {
+    this.getWaitConfirmData();
+  },
+  components: {
+    ModalOrderDetail
+  },
   methods: {
+    getWaitConfirmData() {
+      const vm = this;
+      vm.isLoading = true;
+      const api = `${process.env.VUE_APP_APIPATH}MemberGet10?id=${vm.userId}`;
+
+      vm.$http
+        .get(api)
+        .then(res => {
+          vm.orders = res.data;
+          vm.isLoading = false;
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
     cancelOrder(orderId) {
       const vm = this;
       vm.isLoading = true;
@@ -62,8 +90,6 @@ export default {
       vm.$http
         .patch(api)
         .then(res => {
-          console.log(res);
-
           vm.$swal({
             toast: true,
             position: 'top-end',
@@ -77,11 +103,15 @@ export default {
             icon: 'success',
             title: `${res.data.result}`
           });
+          vm.getWaitConfirmData();
           vm.isLoading = false;
         })
         .catch(err => {
           console.log(err);
         });
+    },
+    showOrderDetail(orderId) {
+      this.$refs.orderDetailModal.getOrderData(orderId);
     }
   }
 };
