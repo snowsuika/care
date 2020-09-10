@@ -328,22 +328,24 @@
         <div class="cos bg-light p-5" style="border-radius: 10px;">
           <div class="row">
             <div class="col-md-6">
-              家屬是否可中途解僱照服人員？
-              <a
-                class="btn btn-primary"
-                data-toggle="collapse"
-                @click="coll()"
-                role="button"
-                aria-expanded="false"
-                aria-controls="multiCollapseExample1"
-                >箭頭</a
-              >
-              <div class="collapse multi-collapse multiCollapseExample1">
-                <div class="card card-body">
-                  Anim pariatur cliche reprehenderit, enim eiusmod high life
-                  accusamus terry richardson ad squid. Nihil anim keffiyeh
-                  helvetica, craft beer labore wes anderson cred nesciunt
-                  sapiente ea proident.
+              <div class="qablock">
+                <div class="d-flex justify-content-between align-items-center">
+                  家屬是否可中途解僱照服人員？
+                  <a
+                    class="btn btn-primary"
+                    data-toggle="collapse"
+                    role="button"
+                    href="#multiCollapseExample1"
+                    aria-expanded="false"
+                    aria-controls="multiCollapseExample1"
+                    >箭頭</a
+                  >
+                </div>
+                <div class="collapse multi-collapse" id="multiCollapseExample1">
+                  <div class="card card-body border-0">
+                    家屬與照服員雙方於服務期間皆可中途終止服務，但主動提出解約的一方須支付照服員日薪
+                    50% 作為解約金。
+                  </div>
                 </div>
               </div>
             </div>
