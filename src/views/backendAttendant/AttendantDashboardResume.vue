@@ -13,7 +13,7 @@
             alt="照服員照片"
             width="150"
             height="150"
-            class="rounded-circle"
+            class="rounded-circle profirePhoto"
           />
         </div>
         <div class="col-md-8">
@@ -258,7 +258,7 @@
               v-model="resume.service"
               class="custom-control-input"
             />
-            <label for="service01" class="custom-control-label">糖尿病</label>
+            <label for="service01" class="custom-control-label">基本照護</label>
           </div>
         </li>
         <li class="col-12 col-md-6 mb-2">
@@ -270,7 +270,9 @@
               v-model="resume.service"
               class="custom-control-input"
             />
-            <label for="service02" class="custom-control-label">骨折</label>
+            <label for="service02" class="custom-control-label"
+              >協助進食、用藥（按醫囑給藥）</label
+            >
           </div>
         </li>
         <li class="col-12 col-md-6 mb-2">
@@ -282,7 +284,7 @@
               v-model="resume.service"
               class="custom-control-input"
             />
-            <label for="service03" class="custom-control-label">高血壓</label>
+            <label for="service03" class="custom-control-label">代購物品</label>
           </div>
         </li>
         <li class="col-12 col-md-6 mb-2">
@@ -294,7 +296,9 @@
               v-model="resume.service"
               class="custom-control-input"
             />
-            <label for="service04" class="custom-control-label">身心障礙</label>
+            <label for="service04" class="custom-control-label"
+              >備餐（限被照顧者及其伴侶）</label
+            >
           </div>
         </li>
         <li class="col-12 col-md-6 mb-2">
@@ -306,7 +310,9 @@
               v-model="resume.service"
               class="custom-control-input"
             />
-            <label for="service05" class="custom-control-label">行動不便</label>
+            <label for="service05" class="custom-control-label"
+              >身心靈陪伴及安全維護</label
+            >
           </div>
         </li>
         <li class="col-12 col-md-6 mb-2">
@@ -318,7 +324,9 @@
               v-model="resume.service"
               class="custom-control-input"
             />
-            <label for="service06" class="custom-control-label">精神疾病</label>
+            <label for="service06" class="custom-control-label"
+              >環境整理、洗衣（限被照顧者）</label
+            >
           </div>
         </li>
       </ul>

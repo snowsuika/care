@@ -43,6 +43,9 @@ Vue.use(Loading, {
 //Multiselect
 import Multiselect from 'vue-multiselect';
 
+// filter 加千分位
+import currencyFilter from './filters/currency';
+
 import App from './App.vue';
 import router from './router';
 
@@ -64,7 +67,7 @@ Vue.use(VueSweetalert2, options);
 Vue.use(VueFormWizard);
 
 Vue.config.productionTip = false;
-
+Vue.filter('currency', currencyFilter);
 // vee-validate
 Object.keys(rules).forEach(rule => {
   extend(rule, rules[rule]);

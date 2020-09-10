@@ -55,8 +55,26 @@ background-color:rgba(255,255,255,0.7)!important
 
 }
 
+
+// index.html
+.qablock{
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+
+
 .rating>.checked {
   color:orange;
+}
+
+
+.profirePhoto{
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
 }
 
 
