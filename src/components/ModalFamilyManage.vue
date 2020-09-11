@@ -71,8 +71,8 @@
                           class="form-control"
                           v-model="familyInfo.Gender"
                         >
-                          <option value="1">男</option>
-                          <option value="2">女</option>
+                          <option value="0">男</option>
+                          <option value="1">女</option>
                         </select>
                       </div>
                       <div class="form-group col-md-6">
@@ -156,7 +156,7 @@
                       id="place_home"
                       name="customRadioInline1"
                       class="custom-control-input"
-                      value="1"
+                      value="0"
                       v-model.trim="familyInfo.Place"
                       checked
                     />
@@ -170,7 +170,7 @@
                     <input
                       type="radio"
                       id="place_hospital"
-                      value="2"
+                      value="1"
                       v-model="familyInfo.place"
                       name="customRadioInline1"
                       class="custom-control-input"
@@ -616,11 +616,11 @@ export default {
       familyInfo: {
         MemberId: '',
         Name: '',
-        Gender: '1', // 1 男 2 女
+        Gender: '0', // 0 男 1 女
         Age: '',
         Height: '',
         Weight: '',
-        Place: '1', //1居家, 2醫院
+        Place: '0', //0居家, 1醫院
         Address: '',
         Body: [], //後端要字串
         Equipment: [], //後端要字串
@@ -635,6 +635,7 @@ export default {
   },
   created() {},
   props: {
+    userId: {},
     // 步驟套件
     title: {
       type: String,
@@ -683,13 +684,13 @@ export default {
       vm.isLoading = true;
 
       let postTobackObj = {
-        MemberId: vm.familyInfo.MemberId,
+        MemberId: vm.userId,
         Name: vm.familyInfo.Name,
-        Gender: vm.familyInfo.Gender, // 1 男 2 女
+        Gender: vm.familyInfo.Gender, // 0 男 1 女
         Age: vm.familyInfo.Age,
         Height: vm.familyInfo.Height,
         Weight: vm.familyInfo.Weight,
-        Place: vm.familyInfo.Place, //1居家, 2醫院
+        Place: vm.familyInfo.Place, //0居家, 1醫院
         Address: vm.familyInfo.Address,
         Body: vm.familyInfo.Body.toString(), //後端要字串
         Equipment: vm.familyInfo.Equipment.toString(), //後端要字串
@@ -711,12 +712,14 @@ export default {
               timer: 5000,
               timerProgressBar: false,
               onOpen: toast => {
-                toast.addEventListener('mouseenter', this.$swal.stopTimer);
-                toast.addEventListener('mouseleave', this.$swal.resumeTimer);
+                toast.addEventListener('mouseenter', vm.$swal.stopTimer);
+                toast.addEventListener('mouseleave', vm.$swal.resumeTimer);
               },
               icon: 'success',
               title: `已成功新增家屬資料`
             });
+            vm.$emit('get-elders-data');
+            vm.familyInfo = {};
             $('#familyManage').modal('hide');
             vm.isLoading = false;
           }

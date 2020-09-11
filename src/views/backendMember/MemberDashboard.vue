@@ -15,7 +15,7 @@
             </div>
           </div>
           <div class="col-12 col-lg-10 mt-3 mt-md-0">
-            <router-view></router-view>
+            <router-view :user-id="userId" :identity="identity"></router-view>
           </div>
         </div>
       </div>

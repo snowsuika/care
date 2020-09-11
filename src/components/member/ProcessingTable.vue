@@ -2,7 +2,12 @@
   <div class="table-responsive">
     <loading :active.sync="isLoading"></loading>
 
-    <form method="post" action="https://ccore.spgateway.com/MPG/mpg_gateway">
+    <form
+      method="post"
+      id="forr"
+      ref="forr"
+      action="https://ccore.spgateway.com/MPG/mpg_gateway"
+    >
       <input
         name="MerchantID"
         id=""
@@ -15,14 +20,14 @@
         id=""
         class="btn btn-primary"
         type="hidden"
-        value="ef63e0f893ccd9b7e6a88ed2cdf7b6d8e6692d8bff2883ff0d2e96b9f7893a2ed514532f99bc12729632aa21d9061bd7ce7a938da1c8eb38db61f066096332c6514a795075a95632dbbc4f698ca4e5aed365e69713b2298defa4640e2c3ddaa4b0659c9791177c9b5e1070ad251fdef0adb6757be965cb6f7a52d510111db6ff2f327b85914172e1a939118699f05212c13430abfc7d2b2adbbabc66c172bd61aa2cef62c4323843c9901750aeed828703fd8bc8b422ee0890324952b97148ca6c0924cd2367a8948d68ee59cceaba552fbd909af1ba62abc11d3ccd5eb05854d0b7a231e4f7aebd9af72856e410f44890864a7c079db5f84ff7347a1c47279cd660c1f0161ad750ee179be9674281c043e3458b24a8addf4550e4849930d39b95ded5b69f2230ae3675799e3eef8516b58c200fe2fc3995b3a5a01bee55388db4580423ca5bb00e77debbd57bdb6ec83533fa6679ddececa9b353839a5c7db5e3585df3d956014a50194e6a234533ea4b9d31b72bea97deb72cf525d89db01b"
+        value="ef63e0f893ccd9b7e6a88ed2cdf7b6d8e6692d8bff2883ff0d2e96b9f7893a2ed514532f99bc12729632aa21d9061bd738f889d6c94d8016f6cfb19607e7a350d2c724d4768c8132516e9cb4c9aebee1c28b5a9a53292961654154c6552033345ab0cec48ee8b7adcb681bf1a9149090b3056164fd2ffd6d715e061eb9af9e9e24dbee9c9c4ab004a17601a2eb78d689366068b6f4df2b2dc5ea6e671b135bd543165d30fcefb30691239d6998dddaf5a8e7cb7b2deaf8cbe455d672a5b890a45749772f57f01023a03307951134dd9d861336cae474fcbefdb6db1ea66ccb1257aab53c735a6b0243670a196632cf456a0ae5226f8ce41474c9d3abac3eca5a346e1d5097f8c4bcde58e7b1369a31b976e74b2cd7668c79f01b9321b3934f77b132bac6833f1f2029314f0fa2d2244bd0398cfd985719f891769a5bd7059891aebf246d0288fde33b1c11d75a460a172babdf43da595eee5b5ec0103feb9b0f"
       />
       <input
         name="TradeSha"
         id=""
         class="btn btn-primary"
         type="hidden"
-        value="AF3061DECD14F6884D75F0BF54C76C829CF7377DAB1F1CA4D95AFD95CC3F5CB8"
+        value="5FD46CABA02C9E56A1F952598FAEA906C3575D96AD570E4BDC84D8EB844F7531"
       />
       <input
         name="Version"
@@ -31,7 +36,14 @@
         type="hidden"
         value="1.5"
       />
-      <input name="" id="" class="btn btn-primary" type="submit" value="go" />
+      <input
+        name=""
+        id="ss"
+        ref="subutn"
+        class="btn btn-primary"
+        type="submit"
+        value="go"
+      />
     </form>
 
     <table class="table table-radius">
@@ -58,7 +70,7 @@
           <td>4,000</td>
           <td>未付款</td>
           <td>
-            <button type="button" class="btn btn-primary" @click="pay()">
+            <button type="button" class="btn btn-primary" @click="seadToback()">
               付款
             </button>
           </td>
@@ -110,57 +122,78 @@
 </template>
 
 <script>
+// /* global $ */
 export default {
   data() {
     return {
       isLoading: false,
-      getData: {}
+      getData: {},
+      resData: []
     };
   },
   created() {
-    const vm = this;
-    const api = `${process.env.VUE_APP_APIPATH}get?amount=123&ProductName=12`; //參數是訂單Id
-    // vm.isLoading = true;
-
-    vm.$http
-      .get(api)
-      .then(res => {
-        console.log(res);
-        vm.getData = res.data;
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    // const vm = this;
+    // const api = `${process.env.VUE_APP_APIPATH}get?amount=123&ProductName=12`; //參數是訂單Id
+    // // vm.isLoading = true;
+    // vm.$http
+    //   .get(api)
+    //   .then(res => {
+    //     console.log(res);
+    //     vm.getData = res.data;
+    //   })
+    //   .catch(err => {
+    //     console.log(err);
+    //   });
   },
   methods: {
-    cancelOrder(orderId) {
+    seadToback() {
       const vm = this;
-      vm.isLoading = true;
-      const api = `${process.env.VUE_APP_APIPATH}CancelOrder?Id=${orderId}`; //參數是訂單Id
+
+      const api = `http://careup.rocket-coding.com/SpgatewayPayBill`;
       vm.$http
-        .patch(api)
+        .post(api, {
+          OrderId: '2'
+        })
         .then(res => {
           console.log(res);
-
-          vm.$swal({
-            toast: true,
-            position: 'top-end',
-            showConfirmButton: false,
-            timer: 3000,
-            timerProgressBar: false,
-            onOpen: toast => {
-              toast.addEventListener('mouseenter', vm.$swal.stopTimer);
-              toast.addEventListener('mouseleave', vm.$swal.resumeTimer);
-            },
-            icon: 'success',
-            title: `${res.data.result}`
-          });
-          vm.isLoading = false;
+          // vm.resData = res.data;
+          // console.log(vm.$refs.subutn);
+          // $('#forr').trigger('submit');
+          // $('#ss').trigger('click');
         })
         .catch(err => {
           console.log(err);
         });
     }
+
+    // cancelOrder(orderId) {
+    //   const vm = this;
+    //   vm.isLoading = true;
+    //   const api = `${process.env.VUE_APP_APIPATH}CancelOrder?Id=${orderId}`; //參數是訂單Id
+    //   vm.$http
+    //     .patch(api)
+    //     .then(res => {
+    //       console.log(res);
+
+    //       vm.$swal({
+    //         toast: true,
+    //         position: 'top-end',
+    //         showConfirmButton: false,
+    //         timer: 3000,
+    //         timerProgressBar: false,
+    //         onOpen: toast => {
+    //           toast.addEventListener('mouseenter', vm.$swal.stopTimer);
+    //           toast.addEventListener('mouseleave', vm.$swal.resumeTimer);
+    //         },
+    //         icon: 'success',
+    //         title: `${res.data.result}`
+    //       });
+    //       vm.isLoading = false;
+    //     })
+    //     .catch(err => {
+    //       console.log(err);
+    //     });
+    // }
     // pay() {
     //   var formData = new FormData();
     //   formData.append('MerchantID', 'MS113893343');

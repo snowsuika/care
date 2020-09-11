@@ -49,13 +49,13 @@
           </select>
         </form>
       </div>
-      <div v-if="allAttendant == ''">
+      <div v-if="attendants == ''">
         目前這個縣市沒有任何照服員，請選擇其他縣市
       </div>
       <ul class="row list-unstyled">
         <li
           class="col-12 col-lg-4 mb-3"
-          v-for="attendant in allAttendant"
+          v-for="attendant in attendants"
           :key="attendant.Id"
         >
           <div class="bg-white radius-3 p-3">
@@ -64,10 +64,10 @@
                 width="120"
                 height="120"
                 class="rounded-circle profirePhoto"
-                v-if="attendant.Photo"
+                v-if="attendant.x.Photo"
                 :src="
                   `http://careup.rocket-coding.com/Uploads/` +
-                    `${attendant.Photo}`
+                    `${attendant.x.Photo}`
                 "
               />
               <img
@@ -79,7 +79,7 @@
               />
               <div class="ml-3">
                 <h5 class="card-title font-weight-bold">
-                  {{ attendant.Name }}
+                  {{ attendant.x.Name }}
                 </h5>
                 <div class="rating">
                   <span class="fa fa-star checked"></span>
@@ -88,28 +88,28 @@
                   <span class="fa fa-star"></span>
                   <span class="fa fa-star"></span>
                   (10)
-                  <p class="font-weight-bolder text-primary h6 mt-3">
-                    {{ attendant.Salary | currency }} 元/日
+                  <p class="font-weight-bolder text-primary h6 mt-3 mb-0">
+                    {{ attendant.x.Salary | currency }} 元/日
                   </p>
+                  {{ attendant.服務時段 }}
                 </div>
               </div>
             </div>
             <div class="text-truncate">
-              <span class="badge badge-light p-2 ml-1 mb-1">協助如廁</span>
-              <span class="badge badge-light p-2 ml-1 mb-1"
-                >身心靈陪伴及安全維護</span
-              >
-              <span class="badge badge-light p-2 ml-1 mb-1"
-                >協助進食、用藥</span
+              <span
+                class="badge badge-light p-2 ml-1 mb-1"
+                v-for="(serviceItem, i) in attendant.服務項目"
+                :key="i"
+                >{{ serviceItem }}</span
               >
             </div>
             <p class="card-text">
-              {{ attendant.Experience }}
+              {{ attendant.x.Experience }}
             </p>
             <p class="d-flex justify-content-lg-between align-items-center h5">
               <router-link
                 class="btn btn-primary-soft text-primary btn-block"
-                :to="`/carePage/${attendant.Id}`"
+                :to="`/carePage/${attendant.x.Id}`"
                 >立即預約</router-link
               >
             </p>
@@ -125,7 +125,7 @@ export default {
   data() {
     return {
       isLoading: false,
-      allAttendant: {},
+      attendants: {},
       cities: [],
       areas: [],
       selectedCity: '',
@@ -145,9 +145,10 @@ export default {
         .get(api)
         .then(res => {
           console.log(res);
-          vm.allAttendant = res.data.attendant;
+          vm.attendants = res.data.attendants;
+
           vm.cities = res.data.cities;
-          vm.selectedCity = res.data.attendant[0].Locationses[0].Cities.Id;
+          vm.selectedCity = res.data.attendants[0].x.Locationses[0].Cities.Id;
           vm.getArea();
           vm.isLoading = false;
         })
@@ -177,7 +178,7 @@ export default {
       vm.$http
         .get(api)
         .then(res => {
-          vm.allAttendant = res.data.attendant;
+          vm.attendants = res.data.attendants;
           vm.isLoading = false;
         })
         .catch(err => {
@@ -192,7 +193,7 @@ export default {
         .get(api)
         .then(res => {
           // console.log(res);
-          vm.allAttendant = res.data.attendant;
+          vm.attendants = res.data.attendants;
           vm.isLoading = false;
         })
         .catch(err => {
