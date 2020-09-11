@@ -23,47 +23,35 @@
           <th class="text-center text-nowrap">刪除</th>
         </tr>
         <tbody>
-          <tr v-for="(item, index) in allElders" :key="index">
-            <td class="text-center text-nowrap">{{ item.Name }}</td>
+          <tr v-for="(elder, index) in elders" :key="index">
+            <td class="text-center text-nowrap">{{ elder.x.Name }}</td>
             <td class="text-nowrap">
               <ul class="list-unstyled">
-                <li>{{ item.ServiceItems }}</li>
+                <li>{{ elder.EldersServiceItems }}</li>
               </ul>
             </td>
-            <td class="text-nowrap">{{ item.Body }}</td>
+            <td class="text-nowrap">{{ elder.EldersBody }}</td>
             <td class="text-center text-nowrap">
               <button class="btn btn-primary-soft text-primary">
                 <i class="fas fa-pen"></i> 編輯
               </button>
             </td>
             <td class="text-center text-nowrap">
-              <button class="btn btn-primary-soft text-primary">
+              <button
+                class="btn btn-primary-soft text-primary"
+                @click="delElder(elder.x.Id)"
+              >
                 <i class="fas fa-trash-alt"></i> 刪除
               </button>
             </td>
           </tr>
-          <!-- <td class="text-center text-nowrap">王伯伯</td>
-            <td class="text-nowrap">
-              <ul class="list-unstyled">
-                <li>協助如廁</li>
-                <li>身心靈陪伴及安全維護</li>
-              </ul>
-            </td>
-            <td class="text-nowrap">無法行動</td>
-            <td class="text-center text-nowrap">
-              <button class="btn btn-primary-soft text-primary">
-                <i class="fas fa-pen"></i> 編輯
-              </button>
-            </td>
-            <td class="text-center text-nowrap">
-              <button class="btn btn-primary-soft text-primary">
-                <i class="fas fa-trash-alt"></i> 刪除
-              </button>
-            </td> -->
         </tbody>
       </table>
     </div>
-    <modal-family-manage></modal-family-manage>
+    <modal-family-manage
+      :user-id="userId"
+      @get-elders-data="getEldersData()"
+    ></modal-family-manage>
   </div>
 </template>
 
@@ -74,12 +62,12 @@ export default {
   data() {
     return {
       isLoading: false,
-      allElders: {},
+      elders: [],
       userId: ''
     };
   },
   created() {
-    this.getAllElders();
+    this.getEldersData();
   },
   components: {
     ModalFamilyManage
@@ -91,18 +79,50 @@ export default {
     editFamily(ElderId) {
       console.log(ElderId);
     },
-    getAllElders() {
+    getEldersData() {
       const vm = this;
       vm.isLoading = true;
       vm.userId = localStorage.getItem('userId');
-      const api = `${process.env.VUE_APP_APIPATH}GetElders/?id=${this.userId}`;
-      console.log(api);
+      const api = `${process.env.VUE_APP_APIPATH}GetElders/?id=${vm.userId}`;
+
       vm.$http
         .get(api)
         .then(res => {
           console.log(res);
           vm.isLoading = false;
-          vm.allElders = res.data;
+          vm.elders = res.data.elders;
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    delElder(elderId) {
+      const vm = this;
+      vm.isLoading = true;
+
+      const api = `${process.env.VUE_APP_APIPATH}DeleteElder?id=${elderId}`;
+
+      vm.$http
+        .delete(api)
+        .then(res => {
+          if (res.data.result == '刪除成功') {
+            vm.$swal({
+              toast: true,
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: false,
+              onOpen: toast => {
+                toast.addEventListener('mouseenter', vm.$swal.stopTimer);
+                toast.addEventListener('mouseleave', vm.$swal.resumeTimer);
+              },
+              icon: 'success',
+              title: `已成功刪除照護對象`
+            });
+
+            vm.getEldersData();
+            vm.isLoading = false;
+          }
         })
         .catch(err => {
           console.log(err);
