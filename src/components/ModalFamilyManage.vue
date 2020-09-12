@@ -630,11 +630,13 @@ export default {
         Phone: ''
         // remark: ''
       },
-      isLoading: false
+      isLoading: false,
+      editElderId: ''
     };
   },
-  created() {},
+
   props: {
+    isNew: {},
     userId: {},
     // 步驟套件
     title: {
@@ -677,52 +679,96 @@ export default {
     }
   },
   methods: {
-    onComplete: function() {
+    addElder() {
+      this.familyInfo = {
+        Body: [], //後端要字串
+        Equipment: [], //後端要字串
+        ServiceItems: [] //後端要字串
+      };
+      this.editElderId = '';
+      this.$set(this.familyInfo, 'MemberId', this.userId); //會員ID
+    },
+    //獲取單一個病患的資料
+    getElderData(elderId) {
       const vm = this;
 
-      const api = `${process.env.VUE_APP_APIPATH}AddElder`;
+      vm.editElderId = elderId;
+      const api = `${process.env.VUE_APP_APIPATH}ElderDetails?Id=${elderId}`;
       vm.isLoading = true;
+      vm.$http
+        .get(api)
+        .then(res => {
+          vm.editElderId = res.data.elders.Id;
+          vm.familyInfo = {
+            MemberId: res.data.elders.Members.Id,
+            Name: res.data.elders.Name,
+            Gender: res.data.elders.Gender, // 0 男 1 女
+            Age: res.data.elders.Age,
+            Height: res.data.elders.Height,
+            Weight: res.data.elders.Weight,
+            Place: res.data.elders.Place, //0居家, 1醫院
+            Address: res.data.elders.Address,
+            Body: res.data.elders.Body.split(','),
+            Equipment: res.data.elders.Equipment.split(','),
+            ServiceItems: res.data.elders.ServiceItems.split(','),
+            Urgent: res.data.elders.Urgent,
+            Relationship: res.data.elders.Relationship,
+            Phone: res.data.elders.Phone
+          };
 
-      let postTobackObj = {
-        MemberId: vm.userId,
-        Name: vm.familyInfo.Name,
-        Gender: vm.familyInfo.Gender, // 0 男 1 女
-        Age: vm.familyInfo.Age,
-        Height: vm.familyInfo.Height,
-        Weight: vm.familyInfo.Weight,
-        Place: vm.familyInfo.Place, //0居家, 1醫院
-        Address: vm.familyInfo.Address,
+          vm.isLoading = false;
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    //填寫完畢
+    onComplete: function() {
+      const vm = this;
+      //定義要傳送給後端的資料格式（新增病患）
+      let postAddElder = {
+        ...vm.familyInfo,
         Body: vm.familyInfo.Body.toString(), //後端要字串
         Equipment: vm.familyInfo.Equipment.toString(), //後端要字串
-        ServiceItems: vm.familyInfo.ServiceItems.toString(), //後端要字串
-        Urgent: vm.familyInfo.Urgent,
-        Relationship: vm.familyInfo.Relationship,
-        Phone: vm.familyInfo.Phone
+        ServiceItems: vm.familyInfo.ServiceItems.toString() //後端要字串
       };
 
-      vm.$http
-        .post(api, postTobackObj)
+      let method = vm.isNew ? 'post' : 'put';
+      let apiAction = vm.isNew ? 'AddElder' : 'EditElder';
+      let postData = '';
+
+      if (vm.isNew) {
+        postData = postAddElder;
+      } else {
+        postData = {
+          Id: vm.editElderId.toString(), //編輯的情況要多給病患的 id
+          Gender: vm.familyInfo.Gender.toString(),
+          ...postAddElder
+        };
+      }
+      const api = `${process.env.VUE_APP_APIPATH}${apiAction}`;
+      vm.isLoading = true;
+
+      vm.$http[method](api, postData)
         .then(res => {
           console.log(res);
-          if (res.data.result == '建立成功') {
-            vm.$swal({
-              toast: true,
-              position: 'top-end',
-              showConfirmButton: false,
-              timer: 5000,
-              timerProgressBar: false,
-              onOpen: toast => {
-                toast.addEventListener('mouseenter', vm.$swal.stopTimer);
-                toast.addEventListener('mouseleave', vm.$swal.resumeTimer);
-              },
-              icon: 'success',
-              title: `已成功新增家屬資料`
-            });
-            vm.$emit('get-elders-data');
-            vm.familyInfo = {};
-            $('#familyManage').modal('hide');
-            vm.isLoading = false;
-          }
+          vm.$swal({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 5000,
+            timerProgressBar: false,
+            onOpen: toast => {
+              toast.addEventListener('mouseenter', vm.$swal.stopTimer);
+              toast.addEventListener('mouseleave', vm.$swal.resumeTimer);
+            },
+            icon: 'success',
+            title: vm.isNew ? '已成功新增' : '已成功修改'
+          });
+          vm.$emit('get-elders-data'); //重新渲染畫面
+
+          $('#familyManage').modal('hide');
+          vm.isLoading = false;
         })
         .catch(err => {
           console.log(err);

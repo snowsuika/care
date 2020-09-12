@@ -8,7 +8,7 @@
       <button
         type="button"
         class="btn btn-primary-soft text-primary"
-        @click="addFamily()"
+        @click="addElder()"
       >
         <i class="fas fa-plus"></i> 新增被照護對象
       </button>
@@ -32,7 +32,10 @@
             </td>
             <td class="text-nowrap">{{ elder.EldersBody }}</td>
             <td class="text-center text-nowrap">
-              <button class="btn btn-primary-soft text-primary">
+              <button
+                class="btn btn-primary-soft text-primary"
+                @click="editElder(elder.x.Id)"
+              >
                 <i class="fas fa-pen"></i> 編輯
               </button>
             </td>
@@ -49,6 +52,8 @@
       </table>
     </div>
     <modal-family-manage
+      ref="familyModal"
+      :is-new="isNew"
       :user-id="userId"
       @get-elders-data="getEldersData()"
     ></modal-family-manage>
@@ -62,6 +67,7 @@ export default {
   data() {
     return {
       isLoading: false,
+      isNew: false, //使用者的操作，是新增還是編輯
       elders: [],
       userId: ''
     };
@@ -73,13 +79,8 @@ export default {
     ModalFamilyManage
   },
   methods: {
-    addFamily() {
-      $('#familyManage').modal('show');
-    },
-    editFamily(ElderId) {
-      console.log(ElderId);
-    },
     getEldersData() {
+      //取得所有病患資料
       const vm = this;
       vm.isLoading = true;
       vm.userId = localStorage.getItem('userId');
@@ -88,7 +89,6 @@ export default {
       vm.$http
         .get(api)
         .then(res => {
-          console.log(res);
           vm.isLoading = false;
           vm.elders = res.data.elders;
         })
@@ -96,6 +96,17 @@ export default {
           console.log(err);
         });
     },
+    addElder() {
+      $('#familyManage').modal('show');
+      this.isNew = true;
+      this.$refs.familyModal.addElder();
+    },
+    editElder(ElderId) {
+      $('#familyManage').modal('show');
+      this.isNew = false;
+      this.$refs.familyModal.getElderData(ElderId);
+    },
+
     delElder(elderId) {
       const vm = this;
       vm.isLoading = true;
