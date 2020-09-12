@@ -33,7 +33,12 @@
                 <th class="bg-light text-nowrap">下單時間</th>
                 <td>{{ orderData.InitDate }}</td>
                 <th class="bg-light text-nowrap">服務期間</th>
-                <td>{{ orderData.StartDate }} ~ {{ orderData.EndDate }}</td>
+                <td>
+                  {{ orderData.servicePeriod[0] }}<br />
+                  {{
+                    orderData.servicePeriod[orderData.servicePeriod.length - 1]
+                  }}
+                </td>
               </tr>
               <tr>
                 <th class="bg-light text-nowrap">付款狀態</th>
@@ -124,7 +129,9 @@
 export default {
   data() {
     return {
-      orderData: {},
+      orderData: {
+        servicePeriod: []
+      },
       Attendants: {},
       Elders: {},
       identity: '',
@@ -141,12 +148,14 @@ export default {
       vm.$http
         .get(api)
         .then(res => {
+          console.log(res);
           vm.orderData = res.data.order;
           vm.Attendants = res.data.order.Attendants;
           vm.Elders = res.data.order.Elders;
           vm.Elders.body = res.data.EldersBody.toString();
           vm.Elders.equipment = res.data.EldersEquipment.toString();
           vm.Elders.serviceItems = res.data.EldersServiceItems.toString();
+          vm.orderData.servicePeriod = res.data.date;
 
           vm.isLoading = false;
         })

@@ -14,23 +14,23 @@
 
       <tbody>
         <tr v-for="(order, index) in orders" :key="index">
-          <td class="text-center text-nowrap">{{ order.Elders.Name }}</td>
-          <td class="text-center text-nowrap">2020-09-03 18:34</td>
-          <!-- <td class="text-nowrap">{{ order.Elders.InitDate }}</td> -->
+          <td class="text-center text-nowrap">{{ order.x.Elders.Name }}</td>
+          <td class="text-center text-nowrap">{{ order.OrderInitDate }}</td>
+
           <td class="text-nowrap">
             <p>
-              {{ order.StartDate }} <br />
-              {{ order.EndDate }}
+              {{ order.startDate }} <br />
+              {{ order.endDate }}
             </p>
           </td>
-          <td class="text-nowrap">{{ order.Total | currency }}</td>
+          <td class="text-nowrap">{{ order.x.Total | currency }}</td>
           <td class="text-nowrap">
             <button
               type="button"
               class="btn btn-primary-soft text-primary"
               data-toggle="modal"
               data-target="#orderDetail"
-              @click="showOrderDetail(order.Id)"
+              @click="showOrderDetail(order.x.Id)"
             >
               查看
             </button>
@@ -50,7 +50,7 @@
               type="button"
               class="btn btn-primary-soft text-primary"
               data-toggle="modal"
-              @click="rejectOrder(order.Id)"
+              @click="rejectOrder(order.x.Id)"
             >
               拒絕訂單
             </button>
@@ -87,7 +87,8 @@ export default {
     getUnconfirmData() {
       const vm = this;
       vm.isLoading = true;
-      const api = `${process.env.VUE_APP_APIPATH}AttendantsGet10?id=${vm.userId}`;
+      console.log(vm.userId);
+      const api = `${process.env.VUE_APP_APIPATH}AttendantsOrder01?id=${vm.userId}`;
 
       vm.$http
         .get(api)

@@ -1,7 +1,7 @@
 <template>
   <div class="table-responsive-md">
     <loading :active.sync="isLoading"></loading>
-    <table class="table table-radius" v-if="orders.Id">
+    <table class="table table-radius" v-if="orders.length">
       <tr class="table-light">
         <th class="text-center text-nowrap">被服務對象</th>
         <th class="text-center text-nowrap">照服人員</th>
@@ -13,22 +13,22 @@
 
       <tbody>
         <tr v-for="(order, index) in orders" :key="index">
-          <td class="text-center">{{ order.Elders.Name }}</td>
-          <td class="text-center">{{ order.Attendants.Name }}</td>
+          <td class="text-center">{{ order.x.Elders.Name }}</td>
+          <td class="text-center">{{ order.x.Attendants.Name }}</td>
           <td class="text-center">
             <p>
-              {{ order.StartDate }} <br />
-              {{ order.EndDate }}
+              {{ order.startDate }} <br />
+              {{ order.endDate }}
             </p>
           </td>
-          <td class="text-center">{{ order.Total | currency }}</td>
+          <td class="text-center">{{ order.x.Total | currency }}</td>
           <td class="text-center">
             <button
               type="button"
               class="btn btn-primary-soft text-primary"
               data-toggle="modal"
               data-target="#orderDetail"
-              @click="showOrderDetail(order.Id)"
+              @click="showOrderDetail(order.x.Id)"
             >
               訂單細節
             </button>
@@ -37,7 +37,7 @@
             <button
               type="button"
               class="btn btn-primary"
-              @click="cancelOrder(order.Id)"
+              @click="cancelOrder(order.x.Id)"
             >
               取消訂單
             </button>
@@ -71,11 +71,12 @@ export default {
     getWaitConfirmData() {
       const vm = this;
       vm.isLoading = true;
-      const api = `${process.env.VUE_APP_APIPATH}MemberGet10?id=${vm.userId}`;
+      const api = `${process.env.VUE_APP_APIPATH}MemberOrder01?id=${vm.userId}`;
 
       vm.$http
         .get(api)
         .then(res => {
+          console.log(res);
           vm.orders = res.data;
           vm.isLoading = false;
         })
@@ -86,10 +87,12 @@ export default {
     cancelOrder(orderId) {
       const vm = this;
       vm.isLoading = true;
+      console.log(orderId);
       const api = `${process.env.VUE_APP_APIPATH}CancelOrder?Id=${orderId}`; //參數是訂單Id
       vm.$http
         .patch(api)
         .then(res => {
+          console.log(res);
           vm.$swal({
             toast: true,
             position: 'top-end',
@@ -101,7 +104,7 @@ export default {
               toast.addEventListener('mouseleave', vm.$swal.resumeTimer);
             },
             icon: 'success',
-            title: `${res.data.result}`
+            title: `成功取消訂單`
           });
           vm.getWaitConfirmData();
           vm.isLoading = false;
