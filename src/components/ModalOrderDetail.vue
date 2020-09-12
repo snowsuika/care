@@ -23,15 +23,19 @@
             <tbody>
               <tr>
                 <th class="bg-light text-nowrap">訂單狀態</th>
-                <td colspan="3">待家屬付款中</td>
+                <td colspan="3" class="text-danger">
+                  (記得跟後端討論呈現方式){{ orderData.Status }}
+                </td>
               </tr>
               <tr>
                 <th class="bg-light text-nowrap">訂單金額</th>
                 <td colspan="3">{{ orderData.Total | currency }}</td>
               </tr>
               <tr>
-                <th class="bg-light text-nowrap">下單時間</th>
-                <td>{{ orderData.InitDate }}</td>
+                <th class="bg-light text-nowrap ">下單時間</th>
+                <td class=" text-danger">
+                  {{ orderData.InitDate }}（再請後端幫忙）
+                </td>
                 <th class="bg-light text-nowrap">服務期間</th>
                 <td>
                   {{ orderData.servicePeriod[0] }}<br />

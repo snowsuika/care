@@ -1,7 +1,7 @@
 <template>
   <div class="table-responsive-md">
     <loading :active.sync="isLoading"></loading>
-    <table class="table table-radius">
+    <table class="table table-radius" v-if="orders.length">
       <tr class="table-light">
         <th class="text-center text-nowrap" scope="col">家屬姓名</th>
         <th class="text-center text-nowrap" scope="col">下單日期</th>
@@ -41,6 +41,7 @@
               type="button"
               class="btn btn-primary-soft text-primary"
               data-toggle="modal"
+              @click="confirmOrder(order.x.Id)"
             >
               接受訂單
             </button>
@@ -58,6 +59,7 @@
         </tr>
       </tbody>
     </table>
+    <p v-else>目前沒有訂單</p>
     <modal-order-detail ref="orderDetailModal"></modal-order-detail>
     <modal-reject-order
       ref="orderRejectModal"
@@ -88,7 +90,8 @@ export default {
       const vm = this;
       vm.isLoading = true;
       console.log(vm.userId);
-      const api = `${process.env.VUE_APP_APIPATH}AttendantsOrder01?id=${vm.userId}`;
+      // const api = `${process.env.VUE_APP_APIPATH}AttendantsOrder01?id=${vm.userId}`;
+      const api = `${process.env.VUE_APP_APIPATH}AttendantsOrder01?id=1`;
 
       vm.$http
         .get(api)
@@ -104,6 +107,34 @@ export default {
 
     showOrderDetail(orderId) {
       this.$refs.orderDetailModal.getOrderData(orderId);
+    },
+    confirmOrder(orderId) {
+      const vm = this;
+      vm.isLoading = true;
+
+      const api = `${process.env.VUE_APP_APIPATH}OrderAccept?id=${orderId}`;
+      vm.$http
+        .patch(api)
+        .then(res => {
+          console.log(res);
+          vm.$swal({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: false,
+            onOpen: toast => {
+              toast.addEventListener('mouseenter', vm.$swal.stopTimer);
+              toast.addEventListener('mouseleave', vm.$swal.resumeTimer);
+            },
+            icon: 'success',
+            title: `已接收訂單，訂單 <b style="color:green;">等待家屬付款中</b>`
+          });
+          vm.getUnconfirmData();
+        })
+        .catch(err => {
+          console.log(err);
+        });
     },
     rejectOrder(orderId) {
       this.$refs.orderRejectModal.openModal(orderId);
