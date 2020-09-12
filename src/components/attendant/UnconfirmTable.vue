@@ -89,9 +89,7 @@ export default {
     getUnconfirmData() {
       const vm = this;
       vm.isLoading = true;
-      console.log(vm.userId);
-      // const api = `${process.env.VUE_APP_APIPATH}AttendantsOrder01?id=${vm.userId}`;
-      const api = `${process.env.VUE_APP_APIPATH}AttendantsOrder01?id=1`;
+      const api = `${process.env.VUE_APP_APIPATH}AttendantsOrder01?id=${vm.userId}`;
 
       vm.$http
         .get(api)

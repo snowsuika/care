@@ -871,6 +871,10 @@ export default {
       vm.$http[method](api, postData)
         .then(res => {
           console.log(res);
+          if (vm.orderInfo.isManual) {
+            vm.orderInfo.ElderId = res.data.elder.Id;
+          }
+
           vm.submitOrder();
         })
         .catch(err => {
@@ -906,9 +910,7 @@ export default {
             icon: 'success',
             title: `${res.data.result}！可以到 <b style="color:green;">我的訂單</b> 查看預約進度`
           });
-          setTimeout(() => {
-            $('#bookingCareer').modal('hide');
-          }, 2000);
+          vm.colseModal();
           vm.isLoading = false;
         })
         .catch(err => {
