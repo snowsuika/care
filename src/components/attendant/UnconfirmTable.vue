@@ -17,14 +17,16 @@
           <td class="text-center text-nowrap">{{ order.x.Elders.Name }}</td>
           <td class="text-center text-nowrap">{{ order.OrderInitDate }}</td>
 
-          <td class="text-nowrap">
+          <td class="text-center text-nowrap">
             <p>
               {{ order.startDate }} <br />
               {{ order.endDate }}
             </p>
           </td>
-          <td class="text-nowrap">{{ order.x.Total | currency }}</td>
-          <td class="text-nowrap">
+          <td class="text-center text-nowrap">
+            {{ order.x.Total | currency }}
+          </td>
+          <td class="text-center text-nowrap">
             <button
               type="button"
               class="btn btn-primary-soft text-primary"
@@ -36,17 +38,17 @@
             </button>
           </td>
 
-          <td class="text-nowrap">
+          <td class="text-center text-nowrap">
             <button
               type="button"
-              class="btn btn-primary-soft text-primary"
+              class="btn btn-primary"
               data-toggle="modal"
               @click="confirmOrder(order.x.Id)"
             >
               接受訂單
             </button>
           </td>
-          <td class="text-nowrap">
+          <td class="text-center text-nowrap">
             <button
               type="button"
               class="btn btn-primary-soft text-primary"

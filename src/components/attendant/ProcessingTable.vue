@@ -14,17 +14,19 @@
       <tbody>
         <tr v-for="(order, index) in orders" :key="index">
           <td class="text-center text-nowrap">{{ order.x.Elders.Name }}</td>
-          <td class="text-nowrap">{{ order.OrderInitDate }}</td>
-          <td class="text-nowrap">
+          <td class="text-center text-nowrap">{{ order.OrderInitDate }}</td>
+          <td class="text-center text-nowrap">
             <p>
               {{ order.startDate }} <br />
               {{ order.endDate }}
             </p>
           </td>
-          <td class="text-nowrap">{{ order.x.Total | currency }}</td>
-          <td class="text-nowrap">{{ order.OrderStatus }}</td>
+          <td class="text-center text-nowrap">
+            {{ order.x.Total | currency }}
+          </td>
+          <td class="text-center text-nowrap">{{ order.OrderStatus }}</td>
 
-          <td class="text-nowrap">
+          <td class="text-center text-nowrap">
             <button
               type="button"
               class="btn btn-primary-soft text-primary"
