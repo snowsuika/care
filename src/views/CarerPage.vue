@@ -206,7 +206,7 @@ export default {
       vm.$http
         .get(api)
         .then(res => {
-          console.log(res);
+          // console.log(res);
           vm.resume = res.data.attendantDetails;
           vm.resume.servierCity =
             res.data.attendantDetails.Locationses[0].Cities.City;
