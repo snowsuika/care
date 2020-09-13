@@ -1,7 +1,7 @@
 <template>
   <div class="table-responsive">
     <loading :active.sync="isLoading"></loading>
-    <table class="table table-radius">
+    <table class="table table-radius" v-if="orders.length">
       <tr class="table-light">
         <th class="text-center text-nowrap">家屬姓名</th>
         <th class="text-center text-nowrap">下單日期</th>
@@ -14,17 +14,19 @@
       <tbody>
         <tr v-for="(order, index) in orders" :key="index">
           <td class="text-center text-nowrap">{{ order.x.Elders.Name }}</td>
-          <td class="text-nowrap">{{ order.OrderInitDate }}</td>
-          <td class="text-nowrap">
+          <td class="text-center text-nowrap">{{ order.OrderInitDate }}</td>
+          <td class="text-center text-nowrap">
             <p>
               {{ order.startDate }} <br />
               {{ order.endDate }}
             </p>
           </td>
-          <td class="text-nowrap">{{ order.x.Total | currency }}</td>
-          <td class="text-nowrap">{{ order.OrderStatus }}</td>
+          <td class="text-center text-nowrap">
+            {{ order.x.Total | currency }}
+          </td>
+          <td class="text-center text-nowrap">{{ order.OrderStatus }}</td>
 
-          <td class="text-nowrap">
+          <td class="text-center text-nowrap">
             <button
               type="button"
               class="btn btn-primary-soft text-primary"
@@ -38,6 +40,7 @@
         </tr>
       </tbody>
     </table>
+    <p v-else>目前尚無處理中訂單</p>
     <modal-order-detail ref="orderDetailModal"></modal-order-detail>
   </div>
 </template>
