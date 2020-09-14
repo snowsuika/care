@@ -47,6 +47,7 @@
 
 <script>
 import ModalOrderDetail from '@/components/ModalOrderDetail.vue';
+
 export default {
   data() {
     return {

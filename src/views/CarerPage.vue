@@ -2,7 +2,7 @@
   <div>
     <loading :active.sync="isLoading"></loading>
     <div
-      class="banner d-flex justify-content-center align-items-center text-white"
+      class="innderBanner d-flex justify-content-center align-items-center text-white"
     ></div>
     <!-- 照服員 -->
     <div class="container py-5">
@@ -149,6 +149,7 @@
       </div>
     </div>
     <modal-booking-step
+      ref="bookingModal"
       :bookingstart="this.changeFormate(range.start)"
       :bookingend="this.changeFormate(range.end)"
     ></modal-booking-step>
@@ -156,7 +157,7 @@
 </template>
 
 <script>
-/* global $ */
+// /* global $ */
 import ModalBookingStep from '@/components/ModalBookingStep.vue';
 export default {
   components: {
@@ -195,6 +196,11 @@ export default {
         return new Date(item);
       });
     }
+    // minDate() {
+    //   var date = new Date(this.valueOf());
+    //   date.setDate(new Date().date.getDate() + 3);
+    //   return date;
+    // }
   },
 
   methods: {
@@ -202,12 +208,13 @@ export default {
       const vm = this;
 
       const attendantId = vm.$route.params.id;
+
       vm.isLoading = true;
       const api = `${process.env.VUE_APP_APIPATH}GetAttendat?id=${attendantId}`;
       vm.$http
         .get(api)
         .then(res => {
-          // console.log(res);
+          console.log(res);
           vm.resume = res.data.attendantDetails;
           vm.resume.servierCity =
             res.data.attendantDetails.Locationses[0].Cities.City;
@@ -218,7 +225,7 @@ export default {
           );
           vm.rate = res.data.star;
 
-          vm.bookedDate = res.data.日期;
+          vm.bookedDate = res.data.已被預約的日期;
           vm.resume.serviceTimePeriod = res.data.服務時段;
           vm.resume.serviceItems = res.data.服務項目;
 
@@ -239,7 +246,7 @@ export default {
       }
 
       if (this.$parent.isLogin && Identity == 'member') {
-        $('#bookingCareer').modal('show');
+        this.$refs.bookingModal.modalshow();
       } else {
         this.$swal({
           toast: true,
@@ -278,7 +285,7 @@ export default {
 body {
   background-color: #f6f3ee;
 }
-.banner {
+.innderBanner {
   background-color: gray;
   height: 250px;
   // background-image: url(images/2886653_s.jpg);

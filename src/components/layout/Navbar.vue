@@ -1,6 +1,6 @@
 <template>
   <nav
-    class="navbar fixed-top navbar-expand-lg navbar-light bg-white-opacity-7"
+    class="navbar fixed-top navbar-expand-lg navbar-light shadow bg-white-opacity-7"
   >
     <div class="container">
       <router-link class="navbar-brand" to="/">
@@ -26,8 +26,8 @@
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
             <router-link class="nav-link" to="/searchCares"
-              >尋找日照服務</router-link
-            >
+              >尋找日照服務
+            </router-link>
           </li>
           <li class="nav-item" v-if="userInfo.token">
             <router-link class="nav-link" to="/chat"
@@ -40,10 +40,13 @@
               >註冊新帳號</a
             >
           </li>
-          <li class="nav-item" v-if="!userInfo.token">
-            <a class="nav-link" @click="RegisterLoginModal('login')"
-              ><i class="fas fa-user-circle"></i> 會員登入</a
+          <li class="nav-item ml-lg-4" v-if="!userInfo.token">
+            <button
+              class="btn btn-primary text-white radius-4 nav-link"
+              @click="RegisterLoginModal('login')"
             >
+              會員登入
+            </button>
           </li>
           <li class="nav-item dropdown" v-if="userInfo.token">
             <a

@@ -1,6 +1,7 @@
 <template>
   <div class="table-responsive">
     <loading :active.sync="isLoading"></loading>
+
     <table class="table table-radius" v-if="orders.length">
       <tr class="table-light">
         <th class="text-center text-nowrap">被服務對象</th>
@@ -28,7 +29,7 @@
               type="button"
               class="btn btn-primary-soft text-primary"
               data-toggle="modal"
-              data-target="#orderCareRecord"
+              @click="showCareDetail(order.x.Id)"
             >
               照護紀錄
             </button>
@@ -54,11 +55,15 @@
     </table>
     <p v-else>目前尚無進行中訂單</p>
     <modal-order-detail ref="orderDetailModal"></modal-order-detail>
+    <modal-care-record-detail
+      ref="orderCareDetailModal"
+    ></modal-care-record-detail>
   </div>
 </template>
 
 <script>
 import ModalOrderDetail from '@/components/ModalOrderDetail.vue';
+import ModalCareRecordDetail from '@/components/ModalCareRecordDetail.vue';
 export default {
   data() {
     return {
@@ -68,7 +73,8 @@ export default {
   },
   props: ['user-id', 'identity'],
   components: {
-    ModalOrderDetail
+    ModalOrderDetail,
+    ModalCareRecordDetail
   },
   created() {
     this.getServiceingData();
@@ -93,6 +99,9 @@ export default {
     },
     showOrderDetail(orderId) {
       this.$refs.orderDetailModal.getOrderData(orderId, this.identity);
+    },
+    showCareDetail(orderId) {
+      this.$refs.orderCareDetailModal.getCardRecordData(orderId);
     }
   }
 };

@@ -29,7 +29,7 @@
               type="button"
               class="btn btn-primary-soft text-primary"
               data-toggle="modal"
-              data-target="#orderCareRecord"
+              @click="showCareDetail(order.Id)"
             >
               照護紀錄
             </button>
@@ -51,6 +51,7 @@
               class="btn btn-primary"
               data-toggle="modal"
               data-target="#evaluation"
+              @click="showEvaluation(order.Id)"
             >
               填寫評價
             </button>
@@ -99,13 +100,19 @@
         </tr> -->
       </tbody>
     </table>
-    <p v-else>目前尚無進行中訂單</p>
+    <p v-else>目前尚無進待評價訂單</p>
     <modal-order-detail ref="orderDetailModal"></modal-order-detail>
+    <modal-care-record-detail
+      ref="orderCareDetailModal"
+    ></modal-care-record-detail>
+    <modal-evaluation ref="orderEvaluationModal"></modal-evaluation>
   </div>
 </template>
 
 <script>
 import ModalOrderDetail from '@/components/ModalOrderDetail.vue';
+import ModalCareRecordDetail from '@/components/ModalCareRecordDetail.vue';
+import ModalEvaluation from '@/components/ModalEvaluation.vue';
 export default {
   data() {
     return {
@@ -115,7 +122,9 @@ export default {
   },
   props: ['user-id', 'identity'],
   components: {
-    ModalOrderDetail
+    ModalOrderDetail,
+    ModalCareRecordDetail,
+    ModalEvaluation
   },
   created() {
     this.getRatingData();
@@ -140,6 +149,12 @@ export default {
     },
     showOrderDetail(orderId) {
       this.$refs.orderDetailModal.getOrderData(orderId, this.identity);
+    },
+    showCareDetail(orderId) {
+      this.$refs.orderCareDetailModal.getCardRecordData(orderId);
+    },
+    showEvaluation(orderId) {
+      this.$refs.orderEvaluationModal.openEvaluationModal(orderId);
     }
   }
 };
