@@ -1,19 +1,62 @@
 <template>
   <div class="table-responsive">
-    <table class="table table-radius">
+    <loading :active.sync="isLoading"></loading>
+    <table class="table table-radius" v-if="orders.length">
       <tbody>
         <tr class="table-light">
-          <th scope="col">被服務對象</th>
-          <th scope="col">照服人員</th>
-          <th scope="col">服務時段</th>
-          <th scope="col">訂單金額</th>
-          <th scope="col">查看照護紀錄</th>
-          <th scope="col">查看訂單詳細</th>
-          <th scope="col">填寫評價</th>
+          <th class="text-center text-nowrap">被服務對象</th>
+          <th class="text-center text-nowrap">照服人員</th>
+          <th class="text-center text-nowrap">服務時段</th>
+          <th class="text-center text-nowrap">訂單金額</th>
+          <th class="text-center text-nowrap">查看照護紀錄</th>
+          <th class="text-center text-nowrap">查看訂單詳細</th>
+          <th class="text-center text-nowrap">填寫評價</th>
         </tr>
       </tbody>
       <tbody>
-        <tr>
+        <tr v-for="(order, index) in orders" :key="index">
+          <td class="text-center">{{ order.Elders.Name }}</td>
+          <td class="text-center">{{ order.Attendants.Name }}</td>
+          <td>
+            <p>
+              {{ order.StartDate }} <br />
+              {{ order.EndDate }}
+            </p>
+          </td>
+          <td>{{ order.Total | currency }}</td>
+          <td>
+            <button
+              type="button"
+              class="btn btn-primary-soft text-primary"
+              data-toggle="modal"
+              data-target="#orderCareRecord"
+            >
+              照護紀錄
+            </button>
+          </td>
+          <td>
+            <button
+              type="button"
+              class="btn btn-primary-soft text-primary"
+              data-toggle="modal"
+              data-target="#orderDetail"
+              @click="showOrderDetail(order.Id)"
+            >
+              訂單細節
+            </button>
+          </td>
+          <td>
+            <button
+              type="button"
+              class="btn btn-primary"
+              data-toggle="modal"
+              data-target="#evaluation"
+            >
+              填寫評價
+            </button>
+          </td>
+        </tr>
+        <!-- <tr>
           <td class="text-center">王伯伯</td>
           <td>張照服</td>
           <td>
@@ -53,49 +96,51 @@
               填寫評價
             </button>
           </td>
-        </tr>
-        <tr>
-          <td class="text-center">王伯伯</td>
-          <td>張照服</td>
-          <td>
-            <p>
-              2020-08-15 <br />
-              2020-08-16
-            </p>
-          </td>
-          <td>4,000</td>
-          <td>
-            <button
-              type="button"
-              class="btn btn-primary-soft text-primary"
-              data-toggle="modal"
-              data-target="#orderCareRecord"
-            >
-              照護紀錄
-            </button>
-          </td>
-          <td>
-            <button
-              type="button"
-              class="btn btn-primary-soft text-primary"
-              data-toggle="modal"
-              data-target="#orderDetail"
-            >
-              訂單細節
-            </button>
-          </td>
-          <td>
-            <button
-              type="button"
-              class="btn btn-primary"
-              data-toggle="modal"
-              data-target="#evaluation"
-            >
-              填寫評價
-            </button>
-          </td>
-        </tr>
+        </tr> -->
       </tbody>
     </table>
+    <p v-else>目前尚無進行中訂單</p>
+    <modal-order-detail ref="orderDetailModal"></modal-order-detail>
   </div>
 </template>
+
+<script>
+import ModalOrderDetail from '@/components/ModalOrderDetail.vue';
+export default {
+  data() {
+    return {
+      isLoading: false,
+      orders: []
+    };
+  },
+  props: ['user-id', 'identity'],
+  components: {
+    ModalOrderDetail
+  },
+  created() {
+    this.getRatingData();
+  },
+  methods: {
+    getRatingData() {
+      const vm = this;
+      vm.isLoading = true;
+      // const api = `${process.env.VUE_APP_APIPATH}MemberOrder04?id=${vm.userId}`;
+      const api = `${process.env.VUE_APP_APIPATH}MemberOrder04?id=1`;
+
+      vm.$http
+        .get(api)
+        .then(res => {
+          console.log(res);
+          vm.orders = res.data;
+          vm.isLoading = false;
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    showOrderDetail(orderId) {
+      this.$refs.orderDetailModal.getOrderData(orderId, this.identity);
+    }
+  }
+};
+</script>

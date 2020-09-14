@@ -71,10 +71,10 @@ export default {
     ModalOrderDetail
   },
   created() {
-    this.getProcessingData();
+    this.getServiceingData();
   },
   methods: {
-    getProcessingData() {
+    getServiceingData() {
       const vm = this;
       vm.isLoading = true;
       const api = `${process.env.VUE_APP_APIPATH}MemberOrder03?id=${vm.userId}`;

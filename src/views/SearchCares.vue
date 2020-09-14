@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div class="innerBg">
     <loading :active.sync="isLoading"></loading>
     <div
-      class="banner d-flex justify-content-center align-items-center text-white"
+      class="innerBanner d-flex justify-content-center align-items-center text-white"
     >
       <!-- <div class="container">
         <div class="row">
@@ -54,11 +54,11 @@
       </div>
       <ul class="row list-unstyled">
         <li
-          class="col-12 col-lg-4 mb-3"
+          class=" col-12 col-lg-4 mb-3"
           v-for="attendant in attendants"
           :key="attendant.Id"
         >
-          <div class="bg-white radius-3 p-3">
+          <div class="attendantCard bg-white radius-3 p-3">
             <div class="d-flex align-items-center mb-2">
               <img
                 width="120"
@@ -205,15 +205,26 @@ export default {
 </script>
 
 <style lang="scss">
-body {
+.innerBg {
   background-color: #f6f3ee;
 }
 
-.banner {
+.innerBanner {
   background-color: gray;
   height: 300px;
   // background-image: url(images/2886653_s.jpg);
   background-position: center;
   background-size: cover;
+}
+
+.attendantCard {
+  -webkit-transition: all 200ms ease;
+  transition: all 200ms ease;
+  &:hover {
+    box-shadow: 0 6px 31px -2px rgba(0, 0, 0, 0.1);
+    -webkit-transform: translate(0px, -10px);
+    -ms-transform: translate(0px, -10px);
+    transform: translate(0px, -10px);
+  }
 }
 </style>
