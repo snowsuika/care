@@ -1,7 +1,7 @@
 <template>
   <div class="table-responsive">
     <loading :active.sync="isLoading"></loading>
-    <table class="table table-radius" v-if="orders.length">
+    <table class="table table-radius" v-if="orders">
       <tbody>
         <tr class="table-light">
           <th class="text-center text-nowrap">被服務對象</th>
@@ -15,43 +15,44 @@
       </tbody>
       <tbody>
         <tr v-for="(order, index) in orders" :key="index">
-          <td class="text-center">{{ order.Elders.Name }}</td>
-          <td class="text-center">{{ order.Attendants.Name }}</td>
-          <td>
+          <td class="text-center text-nowrap">{{ order.x.Elders.Name }}</td>
+          <td class="text-center text-nowrap">{{ order.x.Attendants.Name }}</td>
+          <td class="text-center text-nowrap">
             <p>
-              {{ order.StartDate }} <br />
-              {{ order.EndDate }}
+              {{ order.startTime }} <br />
+              {{ order.endTime }}
             </p>
           </td>
-          <td>{{ order.Total | currency }}</td>
-          <td>
+          <td class="text-center text-nowrap">
+            {{ order.x.Total | currency }}
+          </td>
+          <td class="text-center text-nowrap">
             <button
               type="button"
               class="btn btn-primary-soft text-primary"
               data-toggle="modal"
-              @click="showCareDetail(order.Id)"
+              @click="showCareDetail(order.x.Id)"
             >
               照護紀錄
             </button>
           </td>
-          <td>
+          <td class="text-center text-nowrap">
             <button
               type="button"
               class="btn btn-primary-soft text-primary"
               data-toggle="modal"
               data-target="#orderDetail"
-              @click="showOrderDetail(order.Id)"
+              @click="showOrderDetail(order.x.Id)"
             >
               訂單細節
             </button>
           </td>
-          <td>
+          <td class="text-center text-nowrap">
             <button
               type="button"
               class="btn btn-primary"
               data-toggle="modal"
-              data-target="#evaluation"
-              @click="showEvaluation(order.Id)"
+              @click="showEvaluation(order.x.Id)"
             >
               填寫評價
             </button>
@@ -105,7 +106,10 @@
     <modal-care-record-detail
       ref="orderCareDetailModal"
     ></modal-care-record-detail>
-    <modal-evaluation ref="orderEvaluationModal"></modal-evaluation>
+    <modal-evaluation
+      ref="orderEvaluationModal"
+      @get-rateing-data="getRatingData()"
+    ></modal-evaluation>
   </div>
 </template>
 
@@ -140,7 +144,7 @@ export default {
         .get(api)
         .then(res => {
           console.log(res);
-          vm.orders = res.data;
+          vm.orders = res.data.order;
           vm.isLoading = false;
         })
         .catch(err => {

@@ -31,8 +31,8 @@
 
       <tbody>
         <tr v-for="(order, index) in orders" :key="index">
-          <td class="text-center">{{ order.x.Attendants.Name }}</td>
           <td class="text-center">{{ order.x.Elders.Name }}</td>
+          <td class="text-center">{{ order.x.Attendants.Name }}</td>
           <td class="text-center">
             <p>
               {{ order.startDate }} <br />
@@ -117,7 +117,9 @@ export default {
       this.$refs.orderDetailModal.getOrderData(orderId, this.identity);
     },
     payInfoToBack(orderId) {
+      console.log(orderId);
       const vm = this;
+      // const api = `http://36b2fa41bb08.ngrok.io/SpgatewayPayBill`;
       const api = `http://careup.rocket-coding.com/SpgatewayPayBill`;
       vm.$http
         .post(api, {

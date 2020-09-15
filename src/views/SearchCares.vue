@@ -49,7 +49,7 @@
           </select>
         </form>
       </div>
-      <div v-if="attendants == ''">
+      <div v-if="!attendants">
         目前這個縣市沒有任何照服員，請選擇其他縣市
       </div>
       <ul class="row list-unstyled">
@@ -178,6 +178,7 @@ export default {
       vm.$http
         .get(api)
         .then(res => {
+          console.log(res);
           vm.attendants = res.data.attendants;
           vm.isLoading = false;
         })

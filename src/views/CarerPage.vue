@@ -123,7 +123,7 @@
                     :popover="{ placement: 'bottom', visibility: 'click' }"
                     :min-date="new Date()"
                     :max-date="this.maxDate()"
-                    :disabled-dates="this.disabledDates"
+                    :disabled-dates="this.disabledDates()"
                     color="yellow"
                   />
                 </div>
@@ -190,17 +190,7 @@ export default {
           Math.abs(this.range.end - this.range.start) / 1000 / 60 / 60 / 24
         ) + 1
       ); // 把相差的毫秒數轉換為天數;
-    },
-    disabledDates() {
-      return this.bookedDate.map(function(item) {
-        return new Date(item);
-      });
     }
-    // minDate() {
-    //   var date = new Date(this.valueOf());
-    //   date.setDate(new Date().date.getDate() + 3);
-    //   return date;
-    // }
   },
 
   methods: {
@@ -273,8 +263,15 @@ export default {
         (dd > 9 ? '' : '0') + dd
       ].join('-');
     },
+    disabledDates() {
+      let disabledDates = this.bookedDate.map(function(item) {
+        return new Date(item);
+      });
+      return disabledDates;
+    },
+
     maxDate() {
-      let maxDate = new Date().setDate(new Date().getDate() + 30);
+      let maxDate = new Date().setDate(new Date().getDate() + 60);
       return maxDate;
     }
   }

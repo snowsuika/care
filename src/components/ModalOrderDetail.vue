@@ -146,6 +146,7 @@ export default {
   methods: {
     getOrderData(orderId, identity) {
       const vm = this;
+
       vm.isLoading = true;
       vm.identity = identity;
       const api = `${process.env.VUE_APP_APIPATH}CheckOrder?id=${orderId}`;
