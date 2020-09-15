@@ -64,10 +64,10 @@
                 width="120"
                 height="120"
                 class="rounded-circle profirePhoto"
-                v-if="attendant.x.Photo"
+                v-if="attendant.photo"
                 :src="
                   `http://careup.rocket-coding.com/Uploads/` +
-                    `${attendant.x.Photo}`
+                    `${attendant.photo}`
                 "
               />
               <img
@@ -79,20 +79,53 @@
               />
               <div class="ml-3">
                 <h5 class="card-title font-weight-bold">
-                  {{ attendant.x.Name }}
+                  {{ attendant.name }}
                 </h5>
                 <div class="rating">
-                  <span class="fa fa-star checked"></span>
+                  <star-rating
+                    :max-rating="5"
+                    :read-only="true"
+                    :rounded-corners="true"
+                    :border-width="3"
+                    inactive-color="#585851"
+                    active-color="orange"
+                    :rating="2.8"
+                    :star-size="15"
+                    :star-points="[
+                      23,
+                      2,
+                      14,
+                      17,
+                      0,
+                      19,
+                      10,
+                      34,
+                      7,
+                      50,
+                      23,
+                      43,
+                      38,
+                      50,
+                      36,
+                      34,
+                      46,
+                      19,
+                      31,
+                      17
+                    ]"
+                    style="transform: translateY(-5px);"
+                  >
+                  </star-rating>
+                  <!-- <span class="fa fa-star checked"></span>
                   <span class="fa fa-star checked"></span>
                   <span class="fa fa-star checked"></span>
                   <span class="fa fa-star"></span>
-                  <span class="fa fa-star"></span>
-                  (10)
-                  <p class="font-weight-bolder text-primary h6 mt-3 mb-0">
-                    {{ attendant.x.Salary | currency }} 元/日
-                  </p>
-                  {{ attendant.服務時段 }}
+                  <span class="fa fa-star"></span> -->
                 </div>
+                <p class="font-weight-bolder text-primary h6 mt-3 mb-0">
+                  {{ attendant.salary | currency }} 元/日
+                </p>
+                {{ attendant.服務時段 }}
               </div>
             </div>
             <div class="text-truncate">
@@ -104,12 +137,12 @@
               >
             </div>
             <p class="card-text">
-              {{ attendant.x.Experience }}
+              {{ attendant.experience }}
             </p>
             <p class="d-flex justify-content-lg-between align-items-center h5">
               <router-link
                 class="btn btn-primary-soft text-primary btn-block"
-                :to="`/carePage/${attendant.x.Id}`"
+                :to="`/carePage/${attendant.attendantId}`"
                 >立即預約</router-link
               >
             </p>
@@ -148,8 +181,8 @@ export default {
           vm.attendants = res.data.attendants;
 
           vm.cities = res.data.cities;
-          vm.selectedCity = res.data.attendants[0].x.Locationses[0].Cities.Id;
-          vm.getArea();
+          vm.selectedCity = res.data.locationses[0].CityId; //預設高雄
+          vm.areas = res.data.locationses;
           vm.isLoading = false;
         })
         .catch(err => {
@@ -178,7 +211,7 @@ export default {
       vm.$http
         .get(api)
         .then(res => {
-          console.log(res);
+          // console.log(res);
           vm.attendants = res.data.attendants;
           vm.isLoading = false;
         })

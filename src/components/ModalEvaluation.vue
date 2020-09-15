@@ -111,7 +111,8 @@ export default {
     return {
       orderId: '',
       comment: '',
-      rating: 0
+      rating: 0,
+      isLoading: false
     };
   },
   methods: {
