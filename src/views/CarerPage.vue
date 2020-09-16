@@ -196,11 +196,10 @@ export default {
   methods: {
     getAttendantData() {
       const vm = this;
-
       const attendantId = vm.$route.params.id;
 
       vm.isLoading = true;
-      const api = `${process.env.VUE_APP_APIPATH}GetAttendat?id=${attendantId}`;
+      const api = `${process.env.VUE_APP_APIPATH}SelectAttendant?id=${attendantId}`;
       vm.$http
         .get(api)
         .then(res => {

@@ -27,6 +27,13 @@
                   (記得跟後端討論呈現方式){{ orderData.Status }}
                 </td>
               </tr>
+              <tr v-if="orderData.Cancel">
+                <th class="bg-light text-nowrap">拒接理由</th>
+                <td colspan="3">
+                  {{ orderData.Cancel }}
+                </td>
+              </tr>
+
               <tr>
                 <th class="bg-light text-nowrap">訂單金額</th>
                 <td colspan="3">{{ orderData.Total | currency }}</td>
