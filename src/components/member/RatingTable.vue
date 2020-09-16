@@ -16,7 +16,27 @@
       <tbody>
         <tr v-for="(order, index) in orders" :key="index">
           <td class="text-center text-nowrap">{{ order.x.Elders.Name }}</td>
-          <td class="text-center text-nowrap">{{ order.x.Attendants.Name }}</td>
+          <td class="text-center text-nowrap">
+            <img
+              width="40"
+              height="40"
+              v-if="order.x.Attendants.Photo"
+              :src="
+                `http://careup.rocket-coding.com/Uploads/` +
+                  `${order.x.Attendants.Photo}`
+              "
+              alt="..."
+              class="rounded-circle objectFit"
+            />
+            <img
+              width="40"
+              height="40"
+              v-else
+              src="@/assets/images/noPhoto.png"
+              alt="..."
+              class="rounded-circle"
+            />{{ order.x.Attendants.Name }}
+          </td>
           <td class="text-center text-nowrap">
             <p>
               {{ order.startTime }} <br />

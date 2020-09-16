@@ -1,7 +1,7 @@
 <template>
   <div class="table-responsive">
     <loading :active.sync="isLoading"></loading>
-    <table class="table table-radius" v-if="orders.length">
+    <table class="table table-radius" v-if="orders">
       <tr class="table-light">
         <th class="text-center text-nowrap">家屬姓名</th>
         <th class="text-center text-nowrap">下單日期</th>
@@ -144,7 +144,7 @@
         </tr> -->
       </tbody>
     </table>
-    <p v-else>目前尚無進待評價訂單</p>
+    <p v-else>目前尚無已完成訂單</p>
     <modal-order-detail ref="orderDetailModal"></modal-order-detail>
     <modal-care-record ref="orderCardRecordModal"></modal-care-record>
   </div>
@@ -172,8 +172,8 @@ export default {
     getFinishData() {
       const vm = this;
       vm.isLoading = true;
-      // const api = `${process.env.VUE_APP_APIPATH}MemberOrder04?id=${vm.userId}`;
-      const api = `${process.env.VUE_APP_APIPATH}AttendantsOrder05?id=1`;
+      const api = `${process.env.VUE_APP_APIPATH}AttendantsOrder05?id=${vm.userId}`;
+      // const api = `${process.env.VUE_APP_APIPATH}AttendantsOrder05?id=1`;
 
       vm.$http
         .get(api)

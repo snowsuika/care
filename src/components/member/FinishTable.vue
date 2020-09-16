@@ -1,7 +1,7 @@
 <template>
   <div class="table-responsive">
     <loading :active.sync="isLoading"></loading>
-    <table class="table table-radius" v-if="orders.length">
+    <table class="table table-radius" v-if="orders">
       <tbody>
         <tr class="table-light">
           <th class="text-center text-nowrap">被服務對象</th>
@@ -16,7 +16,27 @@
       <tbody>
         <tr v-for="(order, index) in orders" :key="index">
           <td class="text-center">{{ order.x.Elders.Name }}</td>
-          <td>{{ order.x.Attendants.Name }}</td>
+          <td>
+            <img
+              width="40"
+              height="40"
+              v-if="order.x.Attendants.Photo"
+              :src="
+                `http://careup.rocket-coding.com/Uploads/` +
+                  `${order.x.Attendants.Photo}`
+              "
+              alt="..."
+              class="rounded-circle objectFit"
+            />
+            <img
+              width="40"
+              height="40"
+              v-else
+              src="@/assets/images/noPhoto.png"
+              alt="..."
+              class="rounded-circle"
+            />{{ order.x.Attendants.Name }}
+          </td>
           <td>
             <p>
               {{ order.x.StartDate }} <br />
