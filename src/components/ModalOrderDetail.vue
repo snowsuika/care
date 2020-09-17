@@ -40,8 +40,8 @@
               </tr>
               <tr>
                 <th class="bg-light text-nowrap ">下單時間</th>
-                <td class=" text-danger">
-                  {{ orderData.InitDate }}（再請後端幫忙）
+                <td>
+                  {{ orderInitDate }}
                 </td>
                 <th class="bg-light text-nowrap">服務期間</th>
                 <td>
@@ -143,6 +143,7 @@ export default {
       orderData: {
         servicePeriod: []
       },
+      orderInitDate:'',
       Attendants: {},
       Elders: {},
       identity: '',
@@ -168,7 +169,7 @@ export default {
           vm.Elders.equipment = res.data.EldersEquipment.toString();
           vm.Elders.serviceItems = res.data.EldersServiceItems.toString();
           vm.orderData.servicePeriod = res.data.date;
-
+          vm.orderInitDate = res.data.initTime;
           vm.isLoading = false;
         })
         .catch(err => {

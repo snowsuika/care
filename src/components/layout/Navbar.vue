@@ -29,9 +29,17 @@
               >尋找日照服務
             </router-link>
           </li>
-          <li class="nav-item" v-if="userInfo.token">
+          <!-- <li class="nav-item" v-if="userInfo.token">
             <router-link class="nav-link" to="/chat"
               ><i class="fas fa-comment-dots"></i> 訊息</router-link
+            >
+          </li> -->
+          <li
+            class="nav-item"
+            v-if="userInfo.token && userInfo.identity == 'attendant'"
+          >
+            <router-link class="nav-link" :to="'/carePage/' + userInfo.userId"
+              ><i class="fas fa-bell"></i> ({{ notification }})</router-link
             >
           </li>
 
@@ -146,7 +154,8 @@ export default {
         mail: '',
         userId: '',
         identity: ''
-      }
+      },
+      notification: ''
     };
   },
   created() {
@@ -174,6 +183,11 @@ export default {
         vm.userInfo.identity = identity;
         if (vm.userInfo.token) {
           this.$parent.$data.isLogin = true;
+          this.$parent.$data.identity = identity;
+          this.$parent.$data.userId = userId;
+        }
+        if (vm.userInfo.identity == 'attendant') {
+          vm.getQuizQuantity(userId);
         }
       });
     },
@@ -197,7 +211,30 @@ export default {
         title: '已登出'
       });
       this.$parent.$data.isLogin = false;
+      this.$parent.$data.identity = '';
+      this.$parent.$data.userId = '';
       this.$route.path !== '/' ? this.$router.push('/') : false;
+    },
+    getQuizQuantity(userId) {
+      const vm = this;
+
+      vm.isLoading = true;
+      const api = `${process.env.VUE_APP_APIPATH}AttendantsGetQuiz?id=${userId}`;
+      vm.$http
+        .get(api)
+        .then(res => {
+          let allQuizs = res.data; // 問與答
+          let filterUnReplay = allQuizs.filter(item => {
+            return (item.QuestionAnswers.length = 0);
+          });
+          console.log('allQuizs', allQuizs); //所有問與答
+          console.log('filterUnReplay', filterUnReplay);
+          vm.notification = filterUnReplay.length;
+          vm.isLoading = false;
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
   }
 };

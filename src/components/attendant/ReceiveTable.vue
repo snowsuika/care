@@ -15,11 +15,11 @@
       <tbody>
         <tr v-for="(order, index) in orders" :key="index">
           <td class="text-center text-nowrap">{{ order.x.Elders.Name }}</td>
-          <td class="text-nowrap">等後端</td>
+          <td class="text-nowrap">{{ order.initTime }}</td>
           <td class="text-nowrap">
             <p>
-              等後端 <br />
-              等後端
+              {{ order.startTime }} <br />
+              {{ order.endTime }}
             </p>
           </td>
           <td class="text-nowrap">{{ order.x.Total | currency }}</td>
@@ -126,7 +126,7 @@ export default {
   data() {
     return {
       isLoading: false,
-      orders: []
+      orders: [],
     };
   },
   props: ['user-id', 'identity'],
@@ -141,8 +141,8 @@ export default {
     getProcessingData() {
       const vm = this;
       vm.isLoading = true;
-      // const api = `${process.env.VUE_APP_APIPATH}AttendantsOrder04?id=${vm.userId}`;
-      const api = `${process.env.VUE_APP_APIPATH}AttendantsOrder04?id=1`;
+      const api = `${process.env.VUE_APP_APIPATH}AttendantsOrder04?id=${vm.userId}`;
+      // const api = `${process.env.VUE_APP_APIPATH}AttendantsOrder04?id=1`;
 
       vm.$http
         .get(api)

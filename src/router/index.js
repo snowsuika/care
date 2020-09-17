@@ -52,6 +52,7 @@ const routes = [
         component: () =>
           import('@/views/backendAttendant/AttendantDashboardOrder.vue')
       },
+
       {
         path: 'profire',
         component: () =>
