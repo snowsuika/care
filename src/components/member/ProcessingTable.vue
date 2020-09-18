@@ -19,7 +19,7 @@
 
     <table
       class="table table-radius"
-      v-if="orders.message !== '尚無待處理訂單'"
+      v-if="orders"
     >
       <tr class="table-light">
         <th class="text-center text-nowrap">被服務對象</th>
@@ -129,7 +129,7 @@ export default {
         .get(api)
         .then(res => {
           console.log(res);
-          vm.orders = res.data;
+          vm.orders = res.data.order;
           vm.isLoading = false;
         })
         .catch(err => {

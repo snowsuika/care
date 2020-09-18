@@ -217,19 +217,23 @@ export default {
     },
     getQuizQuantity(userId) {
       const vm = this;
-
       vm.isLoading = true;
       const api = `${process.env.VUE_APP_APIPATH}AttendantsGetQuiz?id=${userId}`;
+      // const api = `http://careup.rocket-coding.com/AttendantsGetQuiz?id=1`;
       vm.$http
         .get(api)
         .then(res => {
+          console.log(res.data);
           let allQuizs = res.data; // 問與答
-          let filterUnReplay = allQuizs.filter(item => {
-            return (item.QuestionAnswers.length = 0);
+
+          let UnReplayNum = 0;
+          allQuizs.forEach(element => {
+            if (element.QuestionAnswers.length < 1) {
+              UnReplayNum = UnReplayNum + 1
+            }
           });
-          console.log('allQuizs', allQuizs); //所有問與答
-          console.log('filterUnReplay', filterUnReplay);
-          vm.notification = filterUnReplay.length;
+
+          vm.notification = UnReplayNum;
           vm.isLoading = false;
         })
         .catch(err => {

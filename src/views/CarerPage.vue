@@ -254,6 +254,7 @@
                               <textarea
                                 class="form-control w-10"
                                 id="attentandContent"
+                                ref="attentandContent"
                                 v-model="attentandQuizContent"
                                 rows="3"
                               ></textarea>
@@ -378,7 +379,7 @@ export default {
       vm.$http
         .get(api)
         .then(res => {
-          console.log(res);
+          // console.log(res);
           vm.resume = res.data.attendantDetails;
           vm.resume.servierCity =
             res.data.attendantDetails.Locationses[0].Cities.City;
@@ -410,7 +411,7 @@ export default {
       vm.$http
         .get(api)
         .then(res => {
-          console.log('取得Q&A列表', res);
+          // console.log('取得Q&A列表', res);
           if (!res.data.message) {
             vm.quizs = res.data; // 問與答
           }
@@ -471,9 +472,10 @@ export default {
             MemberAccount: userMail,
             Quiz: vm.memberQuizContent
           })
-          .then(res => {
-            console.log(res);
+          .then(() => {
+            // console.log(res);
             vm.memberQuizContent = '';
+            vm.$refs.memberQuizContent.observer.reset();
             vm.getQuizData();
           })
           .catch(err => {
@@ -507,8 +509,9 @@ export default {
       };
       vm.$http
         .post(api, postObj)
-        .then(res => {
-          console.log('照服員送出回覆', res);
+        .then(() => {
+          // console.log('照服員送出回覆', res);
+          vm.$refs.attentandContent.observer.reset();
           vm.getQuizData();
         })
         .catch(err => {
