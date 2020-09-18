@@ -88,7 +88,8 @@ export default {
   data() {
     return {
       isLoading: false,
-      orders: []
+      orders: [],
+      statusCount: 0
     };
   },
   props: ['user-id', 'identity'],
@@ -109,9 +110,11 @@ export default {
       vm.$http
         .get(api)
         .then(res => {
-          console.log(res);
-          vm.$emit('getOrderStatusCount'); //更新未處理筆數數量
+          console.log('服務中', res);
           vm.orders = res.data.orders;
+          vm.statusCount = res.data.count;
+          vm.$emit('updateStatusCount', vm.statusCount); //更新未處理筆數數量
+
           vm.isLoading = false;
         })
         .catch(err => {

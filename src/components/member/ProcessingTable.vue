@@ -106,6 +106,7 @@ export default {
     return {
       isLoading: false,
       orders: [],
+      statusCount: 0,
       NewebpayData: []
     };
   },
@@ -127,7 +128,8 @@ export default {
         .then(res => {
           console.log('家屬處理中', res);
           vm.orders = res.data.orders;
-          vm.$emit('getOrderStatusCount'); //更新未處理筆數數量
+          vm.statusCount = res.data.count;
+          vm.$emit('updateStatusCount', vm.statusCount); //更新未處理筆數數量
           vm.isLoading = false;
         })
         .catch(err => {

@@ -94,19 +94,18 @@
                           <div class="input-container w-75">
                             <input
                               type="radio"
-id="hand"
-name="getElderMethod"
+                              id="hand"
+                              name="getElderMethod"
                               class="custom-control-input radio-button"
                               value="0"
                               @click="checkImportMethod('hand')"
-checked
+                              checked
                             />
                             <div class="radio-tile">
                               <label for="hand" class="radio-tile-label"
-                                ><i class="fas fa-wheelchair"></i> 手動輸入</label
+                                ><i class="fas fa-wheelchair"></i>
+                                手動輸入</label
                               >
-                            
-                              
                             </div>
                           </div>
 
@@ -118,28 +117,26 @@ checked
                               @click="checkImportMethod('auto')"
                               name="getElderMethod"
                               class="custom-control-input radio-button"
-
-                             
                             />
                             <div class="radio-tile">
-                             
-                             
-                              <select class="form-control"
-                              id="auto"
-@change="importElderData()"
-v-model="orderInfo.ElderId"
-v-if="elders"
->
+                              <select
+                                class="form-control"
+                                id="auto"
+                                @change="importElderData()"
+                                v-model="orderInfo.ElderId"
+                                v-if="elders"
+                              >
                                 <option selected>請選擇欲照護對象</option>
-<option
-v-for="(elder, index) in elders"
-:value="elder.x.Id"
-:key="index"
->{{ elder.x.Name }}</option
->
+                                <option
+                                  v-for="(elder, index) in elders"
+                                  :value="elder.x.Id"
+                                  :key="index"
+                                  >{{ elder.x.Name }}</option
+                                >
                               </select>
-                               <label for="auto" class="radio-tile-label"
-                                >  <i class="far fa-id-card"></i> 自現有資料帶入</label
+                              <label for="auto" class="radio-tile-label">
+                                <i class="far fa-id-card"></i>
+                                自現有資料帶入</label
                               >
                             </div>
                           </div>
@@ -1080,7 +1077,6 @@ $primary-color: #6a9232;
       color: white;
       transform: scale(1.05, 1.05);
 
-     
       .radio-tile-label {
         color: $primary-color;
         // background-color: $primary-color;

@@ -27,7 +27,7 @@
                 :is="orderStatus"
                 :user-id="userId"
                 :identity="identity"
-                @getOrderStatusCount="getOrderStatusCount()"
+                @updateStatusCount="updateStatusCount"
               ></div>
             </div>
           </div>
@@ -67,20 +67,18 @@ export default {
     Finish
   },
   created() {
-    this.$bus.$on('getOrderStatusCount', () => {
-      this.getOrderStatusCount();
-    });
+    this.getOrderStatusCount();
   },
   methods: {
     getOrderStatusCount() {
       const vm = this;
-
-      let Waitconfirm = `${process.env.VUE_APP_APIPATH}MemberOrder01?id=${vm.userId}`;
-      let Processing = `${process.env.VUE_APP_APIPATH}MemberOrder02?id=${vm.userId}`;
-      let Serviceing = `${process.env.VUE_APP_APIPATH}MemberOrder03?id=${vm.userId}`;
-      let Rating = `${process.env.VUE_APP_APIPATH}MemberOrder04?id=${vm.userId}`;
-      let Finish = `${process.env.VUE_APP_APIPATH}MemberOrder05?id=${vm.userId}`;
-
+      let APIarr = [];
+      for (let i = 1; i < 6; i++) {
+        APIarr.push(
+          `${process.env.VUE_APP_APIPATH}MemberOrder0${i}?id=${vm.userId}`
+        );
+      }
+      const [Waitconfirm, Processing, Serviceing, Rating, Finish] = APIarr;
       const requestWaitconfirm = vm.$http.get(Waitconfirm);
       const requestProcessing = vm.$http.get(Processing);
       const requestServiceing = vm.$http.get(Serviceing);
@@ -106,6 +104,14 @@ export default {
             vm.isLoading = false;
           })
         );
+    },
+    updateStatusCount(count) {
+      const vm = this;
+      vm.tabStatus.forEach(item => {
+        if (item.orderStatus == vm.orderStatus) {
+          item.badge = count;
+        }
+      });
     },
     changeStatus(orderStatus) {
       this.orderStatus = orderStatus;

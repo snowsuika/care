@@ -141,7 +141,8 @@ export default {
   data() {
     return {
       isLoading: false,
-      orders: []
+      orders: [],
+      statusCount: 0
     };
   },
   props: ['user-id', 'identity'],
@@ -165,6 +166,8 @@ export default {
         .then(res => {
           console.log('待評價', res);
           vm.orders = res.data.order;
+          vm.statusCount = res.data.count;
+          vm.$emit('updateStatusCount', vm.statusCount); //更新未處理筆數數量
           vm.isLoading = false;
         })
         .catch(err => {

@@ -411,9 +411,13 @@ export default {
         .get(api)
         .then(res => {
           console.log('取得Q&A列表', res.data);
-          vm.quizs = res.data.filter(element => {
-            return element.QuestionAnswers.length > 0 &&  !res.data.message;
-          });
+          // vm.quizs = res.data.filter(element => {
+          //   return element.QuestionAnswers.length > 0 &&  !res.data.message;
+          // });
+
+          if (!res.data.message) {
+            vm.quizs = res.data;
+          }
 
           vm.isLoading = false;
         })

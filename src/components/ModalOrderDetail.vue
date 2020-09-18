@@ -23,8 +23,8 @@
             <tbody>
               <tr>
                 <th class="bg-light text-nowrap">訂單狀態</th>
-                <td colspan="3" class="text-danger">
-                  (記得跟後端討論呈現方式){{ orderData.Status }}
+                <td colspan="3">
+                  {{ orderData.OrderStatus }}
                 </td>
               </tr>
               <tr v-if="orderData.Cancel">
@@ -45,10 +45,8 @@
                 </td>
                 <th class="bg-light text-nowrap">服務期間</th>
                 <td>
-                  {{ orderData.servicePeriod[0] }}<br />
-                  {{
-                    orderData.servicePeriod[orderData.servicePeriod.length - 1]
-                  }}
+                  {{ orderData.StartDate.substr(0, 10) }}~
+                  {{ orderData.EndDate.substr(0, 10) }}
                 </td>
               </tr>
               <tr>
@@ -143,7 +141,7 @@ export default {
       orderData: {
         servicePeriod: []
       },
-      orderInitDate:'',
+      orderInitDate: '',
       Attendants: {},
       Elders: {},
       identity: '',

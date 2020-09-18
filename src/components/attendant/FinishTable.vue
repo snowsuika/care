@@ -15,11 +15,11 @@
       <tbody>
         <tr v-for="(order, index) in orders" :key="index">
           <td class="text-center text-nowrap">{{ order.x.Elders.Name }}</td>
-          <td class="text-nowrap">{{ order.x.InitDate }}</td>
+          <td class="text-nowrap">{{ order.initTime }}</td>
           <td class="text-nowrap">
             <p>
-              {{ order.x.StartDate }} <br />
-              {{ order.x.EndDate }}
+              {{ order.startTime }} <br />
+              {{ order.endTime }}
             </p>
           </td>
           <td class="text-nowrap">{{ order.x.Total | currency }}</td>
@@ -157,7 +157,8 @@ export default {
   data() {
     return {
       isLoading: false,
-      orders: []
+      orders: [],
+      statusCount: 0
     };
   },
   props: ['user-id', 'identity'],
@@ -178,8 +179,10 @@ export default {
       vm.$http
         .get(api)
         .then(res => {
-          console.log(res);
+          console.log('已完成', res);
           vm.orders = res.data.order;
+          vm.statusCount = res.data.count;
+          vm.$emit('updateStatusCount', vm.statusCount); //更新未處理筆數數量
           vm.isLoading = false;
         })
         .catch(err => {

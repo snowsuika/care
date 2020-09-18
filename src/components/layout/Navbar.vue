@@ -229,7 +229,7 @@ export default {
           let UnReplayNum = 0;
           allQuizs.forEach(element => {
             if (element.QuestionAnswers.length < 1) {
-              UnReplayNum = UnReplayNum + 1
+              UnReplayNum = UnReplayNum + 1;
             }
           });
 
