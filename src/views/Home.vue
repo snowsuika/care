@@ -1,38 +1,42 @@
 <template>
   <div class="home">
     <!-- banner -->
-    <!-- <div
+
+    <div
       id="carouselExampleFade"
-      class="carousel slide carousel-fade"
+      class="banner carousel slide carousel-fade"
       data-ride="carousel"
     >
       <div class="carousel-inner">
-        <div class="carousel-item">
-          <img
-            src="@/assets/images/banner/2886626_m.jpg"
-            class="d-block w-100 img-fluid"
-            style="object-fit: cover;"
-            alt="..."
-          />
+        <div
+          class="carousel-item active"
+          :style="{
+            backgroundImage:
+              'url(' + require('@/assets/images/banner/2886679_l.jpg') + ')'
+          }"
+        >
+          1
         </div>
-        <div class="carousel-item active">
-          <img
-            src="@/assets/images/banner/2886643_l.jpg"
-            class="d-block w-100 img-fluid"
-            style="object-fit: cover;"
-            alt="..."
-          />
+        <div
+          class="carousel-item"
+          :style="{
+            backgroundImage:
+              'url(' + require('@/assets/images/banner/2886626_m.jpg') + ')'
+          }"
+        >
+          2
         </div>
-        <div class="carousel-item">
-          <img
-            src="@/assets/images/banner/2886679_l.jpg"
-            class="d-block w-100 img-fluid"
-            style="object-fit: cover;"
-            alt="..."
-          />
+        <div
+          class="carousel-item"
+          :style="{
+            backgroundImage:
+              'url(' + require('@/assets/images/banner/2886668_m.jpg') + ')'
+          }"
+        >
+          2
         </div>
       </div>
-      <a
+      <!-- <a
         class="carousel-control-prev"
         href="#carouselExampleFade"
         role="button"
@@ -49,105 +53,63 @@
       >
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="sr-only">Next</span>
-      </a>
-    </div> -->
-    <div
-      class="banner d-flex justify-content-center align-items-center text-white"
-    >
-      <div class="container">
-        <div class="row">
-          <div class="col-12 col-md-4 offset-md-8">
-            <h2>日日照你</h2>
+      </a> -->
+      <img
+        src="@/assets/images/sun1_0.png"
+        width="50"
+        class="sun"
+        alt=""
+        style="    position: absolute;
+    z-index: 2;
+    top: 15%;
+    left: 27%;"
+      />
+      <div class="text">日日照你</div>
+      <div class="position-absolute" style="z-index:1;bottom:-1px">
+        <img
+          class="img-fluid"
+          src="http://www.tamanabokujo.jp/common/images/bg_header_wh.png"
+        />
+      </div>
+    </div>
+    <section class="bg-white">
+      <div class="container py-5">
+        <h2 class="text-center text-primary" style="margin-bottom:60px">
+          平台流程
+        </h2>
+
+        <div class="row text-center">
+          <div class="col-md-3">
+            <h5>預約照服人員</h5>
+            <img src="@/assets/images/Image.png" alt="" />
+            <p>
+              家屬可於快速媒合合適的照服員，並可與照服員進行即時聊天溝通是否合適。
+            </p>
+          </div>
+          <div class="col-md-3">
+            <h5>待雙方進行確認</h5>
+            <img src="@/assets/images/Image.png" alt="" />
+            <p>
+              家屬下訂單後，必須於照服員端做確認且家屬這邊支付款項後訂單得以成立。
+            </p>
+          </div>
+          <div class="col-md-3">
+            <h5>開始進行照顧</h5>
+            <img src="@/assets/images/Image.png" alt="" />
+            <p>
+              於指定服務期間，照服人員到場進行照顧。並且需填寫照護日誌，作為照服依據。
+            </p>
+          </div>
+          <div class="col-md-3">
+            <h5>填寫評價</h5>
+            <img src="@/assets/images/Image.png" alt="" />
+            <p>
+              於服務期間結束後，家屬可填寫評價。並且於每週三進行照服員薪資核發。
+            </p>
           </div>
         </div>
       </div>
-    </div>
-    <div class="container my-4">
-      <h2 class="text-center">平台流程</h2>
-
-      <div class="row text-center">
-        <div class="col-md-3">
-          <h5>預約照服人員</h5>
-          <svg
-            class="bd-placeholder-img rounded-circle"
-            width="140"
-            height="140"
-            xmlns="http://www.w3.org/2000/svg"
-            preserveAspectRatio="xMidYMid slice"
-            focusable="false"
-            role="img"
-            aria-label="Placeholder: 140x140"
-          >
-            <title>Placeholder</title>
-            <rect width="100%" height="100%" fill="#777"></rect>
-            <text x="50%" y="50%" fill="#777" dy=".3em">140x140</text>
-          </svg>
-          <p>
-            家屬可於快速媒合合適的照服員，並可與照服員進行即時聊天溝通是否合適。
-          </p>
-        </div>
-        <div class="col-md-3">
-          <h5>待雙方進行確認</h5>
-          <svg
-            class="bd-placeholder-img rounded-circle"
-            width="140"
-            height="140"
-            xmlns="http://www.w3.org/2000/svg"
-            preserveAspectRatio="xMidYMid slice"
-            focusable="false"
-            role="img"
-            aria-label="Placeholder: 140x140"
-          >
-            <title>Placeholder</title>
-            <rect width="100%" height="100%" fill="#777"></rect>
-            <text x="50%" y="50%" fill="#777" dy=".3em">140x140</text>
-          </svg>
-          <p>
-            家屬下訂單後，必須於照服員端做確認且家屬這邊支付款項後訂單得以成立。
-          </p>
-        </div>
-        <div class="col-md-3">
-          <h5>開始進行照顧</h5>
-          <svg
-            class="bd-placeholder-img rounded-circle"
-            width="140"
-            height="140"
-            xmlns="http://www.w3.org/2000/svg"
-            preserveAspectRatio="xMidYMid slice"
-            focusable="false"
-            role="img"
-            aria-label="Placeholder: 140x140"
-          >
-            <title>Placeholder</title>
-            <rect width="100%" height="100%" fill="#777"></rect>
-            <text x="50%" y="50%" fill="#777" dy=".3em">140x140</text>
-          </svg>
-          <p>
-            於指定服務期間，照服人員到場進行照顧。並且需填寫照護日誌，作為照服依據。
-          </p>
-        </div>
-        <div class="col-md-3">
-          <h5>填寫評價</h5>
-          <svg
-            class="bd-placeholder-img rounded-circle"
-            width="140"
-            height="140"
-            xmlns="http://www.w3.org/2000/svg"
-            preserveAspectRatio="xMidYMid slice"
-            focusable="false"
-            role="img"
-            aria-label="Placeholder: 140x140"
-          >
-            <title>Placeholder</title>
-            <rect width="100%" height="100%" fill="#777"></rect>
-            <text x="50%" y="50%" fill="#777" dy=".3em">140x140</text>
-          </svg>
-          <p>
-            於服務期間結束後，家屬可填寫評價。並且於每週三進行照服員薪資核發。
-          </p>
-        </div>
-      </div>
-    </div>
+    </section>
     <div class="clientEvaluation container-fluid bg-light">
       <div class="container">
         <h4 class="text-center text-primary py-1">顧客評價</h4>
@@ -452,27 +414,45 @@
   </div>
 </template>
 
-<style lang="scss">
-.banner {
-  background-color: gray;
+<style lang="scss" scope>
+.banner .carousel-item {
   height: 570px;
-  background-position: center;
+  background-position: 50% 30%;
   background-size: cover;
+  animation: scale 10s linear 0s forwards, fade 1.5s ease-in 6s forwards;
 }
 
-.carousel-item img {
-  height: 570px;
+.banner .text {
+  text-shadow: 0px 0px 30px rgba(106, 146, 50, 1);
+  -webkit-text-shadow: 0px 0px 30px rgba(106, 146, 50, 1);
+  -moz-text-shadow: 0px 0px 30px rgba(106, 146, 50, 1);
+  z-index: 2;
+  position: absolute;
+  top: 25%;
+  left: 15%;
+  color: white;
+  font-size: 45px;
 }
 
-.carousel-item.active img {
-  transition: -webkit-transform 10s cubic-bezier(0.455, 0.03, 0.515, 0.955) 0s;
-  transition: transform 10s ease-in-out 0s;
+.sun {
+  animation: rotate 4s linear infinite;
 }
 
-.carousel-item.active img {
-  -webkit-transform: scale(1.1);
-  -ms-transform: scale(1.1);
-  transform: scale(1.1);
+@keyframes scale {
+  0% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+  100% {
+    -webkit-transform: scale(1.13);
+    transform: scale(1.13);
+  }
+}
+@keyframes rotate {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
 }
 </style>
 

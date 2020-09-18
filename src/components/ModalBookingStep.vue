@@ -28,7 +28,7 @@
                     <div class="row justify-content-center mt-4">
                       <div class="col-12 col-lg-6">
                         <h5 class="text-primary">請選擇資料帶入方式</h5>
-                        <div class="form-row">
+                        <!-- <div class="form-row">
                           <div class="card w-100 mb-3">
                             <div class="card-body">
                               <div
@@ -86,6 +86,61 @@
                                   </select>
                                 </div>
                               </div>
+                            </div>
+                          </div>
+                        </div> -->
+
+                        <div class="radio-tile-group">
+                          <div class="input-container w-75">
+                            <input
+                              type="radio"
+id="hand"
+name="getElderMethod"
+                              class="custom-control-input radio-button"
+                              value="0"
+                              @click="checkImportMethod('hand')"
+checked
+                            />
+                            <div class="radio-tile">
+                              <label for="hand" class="radio-tile-label"
+                                ><i class="fas fa-wheelchair"></i> 手動輸入</label
+                              >
+                            
+                              
+                            </div>
+                          </div>
+
+                          <div class="input-container w-75">
+                            <input
+                              type="radio"
+                              id="auto"
+                              value="1"
+                              @click="checkImportMethod('auto')"
+                              name="getElderMethod"
+                              class="custom-control-input radio-button"
+
+                             
+                            />
+                            <div class="radio-tile">
+                             
+                             
+                              <select class="form-control"
+                              id="auto"
+@change="importElderData()"
+v-model="orderInfo.ElderId"
+v-if="elders"
+>
+                                <option selected>請選擇欲照護對象</option>
+<option
+v-for="(elder, index) in elders"
+:value="elder.x.Id"
+:key="index"
+>{{ elder.x.Name }}</option
+>
+                              </select>
+                               <label for="auto" class="radio-tile-label"
+                                >  <i class="far fa-id-card"></i> 自現有資料帶入</label
+                              >
                             </div>
                           </div>
                         </div>
@@ -963,3 +1018,74 @@ export default {
   }
 };
 </script>
+
+<style lang="scss">
+$primary-color: #6a9232;
+
+.radio-tile-group {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: left;
+
+  //set dimensions for invisible container
+  .input-container {
+    position: relative;
+    height: 50x;
+    width: 150px;
+    margin: 0.5rem;
+
+    //make actual radio input invisible
+    // + stretch to fill container
+    .radio-button {
+      opacity: 0;
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      margin: 0;
+      cursor: pointer;
+    }
+
+    //default tile styles
+    .radio-tile {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      border: 1px solid $primary-color;
+      border-radius: 5px;
+      padding: 1rem;
+      transition: transform 300ms ease;
+    }
+    .icon svg {
+      fill: $primary-color;
+      width: 3rem;
+      height: 3rem;
+    }
+    .radio-tile-label {
+      text-align: center;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: $primary-color;
+    }
+
+    //active tile styles
+    .radio-button:checked + .radio-tile {
+      background-color: rgba($color: $primary-color, $alpha: 0.3);
+      border: 1px solid $primary-color;
+      color: white;
+      transform: scale(1.05, 1.05);
+
+     
+      .radio-tile-label {
+        color: $primary-color;
+        // background-color: $primary-color;
+      }
+    }
+  }
+}
+</style>
