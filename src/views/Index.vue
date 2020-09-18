@@ -6,7 +6,11 @@
         <navbar></navbar>
       </header>
       <main>
-        <router-view></router-view>
+        <router-view
+          :is-login="isLogin"
+          :identity="identity"
+          :user-id="userId"
+        ></router-view>
       </main>
       <footer-bar></footer-bar>
       <modal-register-login :action="navModalAction"></modal-register-login>
@@ -23,13 +27,16 @@ export default {
   data() {
     return {
       navModalAction: '',
-      isLogin: false
+      isLogin: false,
+      identity: '',
+      userId: ''
     };
   },
   components: {
     Navbar,
     FooterBar,
     ModalRegisterLogin
-  }
+  },
+  methods: {}
 };
 </script>

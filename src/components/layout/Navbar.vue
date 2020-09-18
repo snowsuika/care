@@ -1,6 +1,6 @@
 <template>
   <nav
-    class="navbar fixed-top navbar-expand-lg navbar-light bg-white-opacity-7"
+    class="navbar fixed-top navbar-expand-lg navbar-light shadow bg-white-opacity-7"
   >
     <div class="container">
       <router-link class="navbar-brand" to="/">
@@ -26,12 +26,20 @@
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
             <router-link class="nav-link" to="/searchCares"
-              >尋找日照服務</router-link
-            >
+              >尋找日照服務
+            </router-link>
           </li>
-          <li class="nav-item" v-if="userInfo.token">
+          <!-- <li class="nav-item" v-if="userInfo.token">
             <router-link class="nav-link" to="/chat"
               ><i class="fas fa-comment-dots"></i> 訊息</router-link
+            >
+          </li> -->
+          <li
+            class="nav-item"
+            v-if="userInfo.token && userInfo.identity == 'attendant'"
+          >
+            <router-link class="nav-link" :to="'/carePage/' + userInfo.userId"
+              ><i class="fas fa-bell"></i> ({{ notification }})</router-link
             >
           </li>
 
@@ -40,10 +48,13 @@
               >註冊新帳號</a
             >
           </li>
-          <li class="nav-item" v-if="!userInfo.token">
-            <a class="nav-link" @click="RegisterLoginModal('login')"
-              ><i class="fas fa-user-circle"></i> 會員登入</a
+          <li class="nav-item ml-lg-4" v-if="!userInfo.token">
+            <button
+              class="btn btn-primary text-white radius-4 nav-link"
+              @click="RegisterLoginModal('login')"
             >
+              會員登入
+            </button>
           </li>
           <li class="nav-item dropdown" v-if="userInfo.token">
             <a
@@ -143,7 +154,8 @@ export default {
         mail: '',
         userId: '',
         identity: ''
-      }
+      },
+      notification: ''
     };
   },
   created() {
@@ -171,6 +183,11 @@ export default {
         vm.userInfo.identity = identity;
         if (vm.userInfo.token) {
           this.$parent.$data.isLogin = true;
+          this.$parent.$data.identity = identity;
+          this.$parent.$data.userId = userId;
+        }
+        if (vm.userInfo.identity == 'attendant') {
+          vm.getQuizQuantity(userId);
         }
       });
     },
@@ -194,7 +211,34 @@ export default {
         title: '已登出'
       });
       this.$parent.$data.isLogin = false;
+      this.$parent.$data.identity = '';
+      this.$parent.$data.userId = '';
       this.$route.path !== '/' ? this.$router.push('/') : false;
+    },
+    getQuizQuantity(userId) {
+      const vm = this;
+      vm.isLoading = true;
+      const api = `${process.env.VUE_APP_APIPATH}AttendantsGetQuiz?id=${userId}`;
+      // const api = `http://careup.rocket-coding.com/AttendantsGetQuiz?id=1`;
+      vm.$http
+        .get(api)
+        .then(res => {
+          console.log(res.data);
+          let allQuizs = res.data; // 問與答
+
+          let UnReplayNum = 0;
+          allQuizs.forEach(element => {
+            if (element.QuestionAnswers.length < 1) {
+              UnReplayNum = UnReplayNum + 1
+            }
+          });
+
+          vm.notification = UnReplayNum;
+          vm.isLoading = false;
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
   }
 };

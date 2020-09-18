@@ -17,7 +17,10 @@
       />
     </form>
 
-    <table class="table table-radius">
+    <table
+      class="table table-radius"
+      v-if="orders"
+    >
       <tr class="table-light">
         <th class="text-center text-nowrap">被服務對象</th>
         <th class="text-center text-nowrap">照服人員</th>
@@ -31,8 +34,28 @@
 
       <tbody>
         <tr v-for="(order, index) in orders" :key="index">
-          <td class="text-center">{{ order.x.Attendants.Name }}</td>
           <td class="text-center">{{ order.x.Elders.Name }}</td>
+          <td class="text-center">
+            <img
+              width="40"
+              height="40"
+              v-if="order.x.Attendants.Photo"
+              :src="
+                `http://careup.rocket-coding.com/Uploads/` +
+                  `${order.x.Attendants.Photo}`
+              "
+              alt="..."
+              class="rounded-circle objectFit"
+            />
+            <img
+              width="40"
+              height="40"
+              v-else
+              src="@/assets/images/noPhoto.png"
+              alt="..."
+              class="rounded-circle"
+            />{{ order.x.Attendants.Name }}
+          </td>
           <td class="text-center">
             <p>
               {{ order.startDate }} <br />
@@ -40,7 +63,7 @@
             </p>
           </td>
           <td class="text-center">{{ order.x.Total | currency }}</td>
-          <td class="text-center">{{ order.OrderStatus }}</td>
+          <td class="text-center">{{ order.x.Status }}</td>
           <td class="text-center">
             <button
               type="button"
@@ -73,6 +96,7 @@
         </tr>
       </tbody>
     </table>
+    <p v-else>目前沒有處理中訂單</p>
     <modal-order-detail ref="orderDetailModal"></modal-order-detail>
   </div>
 </template>
@@ -105,7 +129,7 @@ export default {
         .get(api)
         .then(res => {
           console.log(res);
-          vm.orders = res.data;
+          vm.orders = res.data.order;
           vm.isLoading = false;
         })
         .catch(err => {
@@ -116,7 +140,9 @@ export default {
       this.$refs.orderDetailModal.getOrderData(orderId, this.identity);
     },
     payInfoToBack(orderId) {
+      console.log(orderId);
       const vm = this;
+      // const api = `http://36b2fa41bb08.ngrok.io/SpgatewayPayBill`;
       const api = `http://careup.rocket-coding.com/SpgatewayPayBill`;
       vm.$http
         .post(api, {
@@ -155,7 +181,7 @@ export default {
             icon: 'success',
             title: `成功取消訂單`
           });
-          vm.getWaitConfirmData();
+          vm.getProcessingData();
           vm.isLoading = false;
         })
         .catch(err => {

@@ -31,6 +31,10 @@ a.nav-link.active {
   background-color: #ecf3e2;
 }
 
+.navbar-light .navbar-nav .nav-link{
+  color:#735933;
+}
+
 //table
 table{
   color:#585851 !important;
@@ -51,10 +55,9 @@ table{
 }
 
 .navbar.bg-white-opacity-7{
-background-color:rgba(255,255,255,0.7)!important
+background-color:rgba(255,255,255,0.8)!important
 
 }
-
 
 // index.html
 .qablock{
@@ -65,18 +68,15 @@ background-color:rgba(255,255,255,0.7)!important
 }
 
 
-
-.rating>.checked {
-  color:orange;
-}
-
-
 .profirePhoto{
   width: 120px;
   height: 120px;
   object-fit: cover;
 }
 
+.objectFit{
+  object-fit: cover;
+}
 
 table.table-radius {
 
@@ -200,3 +200,4 @@ $wizard-step-font-size: 24px !default;
     padding: 11px 16px;
   }
 }
+

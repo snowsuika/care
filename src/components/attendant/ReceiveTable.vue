@@ -15,11 +15,11 @@
       <tbody>
         <tr v-for="(order, index) in orders" :key="index">
           <td class="text-center text-nowrap">{{ order.x.Elders.Name }}</td>
-          <td class="text-nowrap">等後端</td>
+          <td class="text-nowrap">{{ order.initTime }}</td>
           <td class="text-nowrap">
             <p>
-              等後端 <br />
-              等後端
+              {{ order.startTime }} <br />
+              {{ order.endTime }}
             </p>
           </td>
           <td class="text-nowrap">{{ order.x.Total | currency }}</td>
@@ -29,7 +29,7 @@
               type="button"
               class="btn btn-primary-soft text-primary"
               data-toggle="modal"
-              data-target="#careRecord"
+              @click="showCareDetail(order.x.Id)"
             >
               照護紀錄
             </button>
@@ -114,20 +114,25 @@
     </table>
     <p v-else>目前尚無進行中訂單</p>
     <modal-order-detail ref="orderDetailModal"></modal-order-detail>
+    <modal-care-record-detail
+      ref="orderCareDetailModal"
+    ></modal-care-record-detail>
   </div>
 </template>
 <script>
 import ModalOrderDetail from '@/components/ModalOrderDetail.vue';
+import ModalCareRecordDetail from '@/components/ModalCareRecordDetail.vue';
 export default {
   data() {
     return {
       isLoading: false,
-      orders: []
+      orders: [],
     };
   },
   props: ['user-id', 'identity'],
   components: {
-    ModalOrderDetail
+    ModalOrderDetail,
+    ModalCareRecordDetail
   },
   created() {
     this.getProcessingData();
@@ -136,8 +141,8 @@ export default {
     getProcessingData() {
       const vm = this;
       vm.isLoading = true;
-      // const api = `${process.env.VUE_APP_APIPATH}AttendantsOrder04?id=${vm.userId}`;
-      const api = `${process.env.VUE_APP_APIPATH}AttendantsOrder04?id=1`;
+      const api = `${process.env.VUE_APP_APIPATH}AttendantsOrder04?id=${vm.userId}`;
+      // const api = `${process.env.VUE_APP_APIPATH}AttendantsOrder04?id=1`;
 
       vm.$http
         .get(api)
@@ -152,6 +157,9 @@ export default {
     },
     showOrderDetail(orderId) {
       this.$refs.orderDetailModal.getOrderData(orderId, this.identity);
+    },
+    showCareDetail(orderId) {
+      this.$refs.orderCareDetailModal.getCardRecordData(orderId);
     }
   }
 };

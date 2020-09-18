@@ -16,7 +16,7 @@
             <button
               type="button"
               class="close"
-              data-dismiss="modal"
+              @click="colseModal()"
               aria-label="Close"
             >
               <span aria-hidden="true">&times;</span>
@@ -57,71 +57,74 @@
                 >
               </li>
             </ul>
+            <validation-observer ref="observer" v-slot="{ invalid }">
+              <form>
+                <div class="form-group">
+                  <validation-provider
+                    rules="required|email"
+                    v-slot="{ errors, classes }"
+                  >
+                    <label for="loginEmail">電子信箱：</label>
+                    <input
+                      type="email"
+                      class="form-control"
+                      :class="classes"
+                      v-model="email"
+                      placeholder="請輸入電子信箱"
+                      name="電子信箱"
+                      id="loginEmail"
+                      autocomplete="on"
+                      aria-describedby="emailHelp"
+                    />
+                    <span class="invalid-feedback">{{ errors[0] }}</span>
+                  </validation-provider>
+                </div>
 
-            <form>
-              <div class="form-group">
-                <validation-provider
-                  rules="required|email"
-                  v-slot="{ errors, classes }"
-                >
-                  <label for="loginEmail">電子信箱：</label>
+                <div class="form-group">
+                  <label for="loginPassword">會員密碼：</label>
                   <input
-                    type="email"
+                    type="password"
                     class="form-control"
-                    :class="classes"
-                    value=""
-                    v-model="email"
-                    placeholder="請輸入電子信箱"
-                    name="電子信箱"
-                    id="loginEmail"
+                    v-model="password"
                     autocomplete="on"
-                    aria-describedby="emailHelp"
+                    placeholder="請輸入會員密碼"
+                    id="loginPassword"
                   />
-                  <span class="invalid-feedback">{{ errors[0] }}</span>
-                </validation-provider>
-              </div>
-
-              <div class="form-group">
-                <label for="loginPassword">會員密碼：</label>
-                <input
-                  type="password"
-                  class="form-control"
-                  v-model="password"
-                  autocomplete="on"
-                  placeholder="請輸入會員密碼"
-                  id="loginPassword"
-                />
-              </div>
-              <div class="form-group" v-if="action == 'register'">
-                <label for="registerPasswordAgain">請再次輸入密碼：</label>
-                <input
-                  type="password"
-                  class="form-control"
-                  v-model="passwordAgain"
-                  autocomplete="on"
-                  placeholder="請再次輸入密碼"
-                  id="registerPasswordAgain"
-                />
-              </div>
-              <div class="text-center mt-5">
-                <button
-                  class="btn btn-primary w-25"
-                  data-dismiss="modal"
-                  v-if="action == 'register'"
-                  @click="register()"
-                >
-                  註冊
-                </button>
-                <button
-                  class="btn btn-primary w-25"
-                  data-dismiss="modal"
-                  v-else
-                  @click="login()"
-                >
-                  登入
-                </button>
-              </div>
-            </form>
+                </div>
+                <div class="form-group" v-if="action == 'register'">
+                  <label for="registerPasswordAgain">請再次輸入密碼：</label>
+                  <input
+                    type="password"
+                    class="form-control"
+                    v-model="passwordAgain"
+                    autocomplete="on"
+                    placeholder="請再次輸入密碼"
+                    id="registerPasswordAgain"
+                  />
+                </div>
+                <div class="text-center mt-5">
+                  <button
+                    class="btn btn-primary w-25"
+                    type="button"
+                    :disabled="invalid"
+                    v-if="action == 'register'"
+                    @click.prevent="register()"
+                  >
+                    註冊
+                  </button>
+                  <button
+                    class="btn btn-primary w-25"
+                    type="button"
+                    data-dismiss="modal"
+                    :disabled="invalid"
+                    v-else
+                    @click.prevent="login()"
+                  >
+                    登入
+                  </button>
+                </div>
+              </form>
+            </validation-observer>
           </div>
         </div>
       </div>
@@ -130,6 +133,7 @@
 </template>
 
 <script>
+/* global $ */
 export default {
   data() {
     return {
@@ -192,12 +196,14 @@ export default {
                 icon: 'success',
                 title: '已成功註冊，請先登入'
               });
+
               vm.isLoading = false;
             } else {
               vm.$swal({
                 icon: 'warning',
                 title: `格式${res.data.result}，請重新輸入`
               });
+
               vm.isLoading = false;
             }
           })
@@ -205,9 +211,11 @@ export default {
             console.log(err);
           });
       }
+      $('#registerLogin').modal('hide');
       vm.email = '';
       vm.password = '';
       vm.passwordAgain = '';
+      vm.$refs.observer.reset();
     },
     login() {
       const vm = this;
@@ -245,27 +253,38 @@ export default {
           } else {
             console.log(res.data.message);
             vm.$swal({
-              // toast: true,
-              // position: 'top-end',
-              // showConfirmButton: false,
-              // timer: 3000,
-              // timerProgressBar: false,
-              // onOpen: toast => {
-              //   toast.addEventListener('mouseenter', vm.$swal.stopTimer);
-              //   toast.addEventListener('mouseleave', vm.$swal.resumeTimer);
-              // },
+              toast: true,
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: false,
+              onOpen: toast => {
+                toast.addEventListener('mouseenter', vm.$swal.stopTimer);
+                toast.addEventListener('mouseleave', vm.$swal.resumeTimer);
+              },
               icon: 'error',
               title: `${res.data.message}，請重新登入`
             });
             vm.isLoading = false;
           }
-
+          $('#registerLogin').modal('hide');
           vm.email = '';
           vm.password = '';
+          vm.passwordAgain = '';
+          vm.$refs.observer.reset();
+
+          vm.isLoading = false;
         })
         .catch(err => {
           console.log(err);
         });
+    },
+    colseModal() {
+      $('#registerLogin').modal('hide');
+      this.email = '';
+      this.password = '';
+      this.passwordAgain = '';
+      this.$refs.observer.reset();
     }
   }
 };

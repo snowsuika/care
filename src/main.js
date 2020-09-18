@@ -13,6 +13,9 @@ import * as rules from 'vee-validate/dist/rules'; // 規則檔案（ex: email...
 import zhTW from 'vee-validate/dist/locale/zh_TW.json'; // 語系檔案
 import 'bootstrap';
 
+//starRating 套件
+import StarRating from 'vue-star-rating';
+
 //FormWizard 套件
 import VueFormWizard from 'vue-form-wizard';
 import 'vue-form-wizard/dist/vue-form-wizard.min.css';
@@ -28,7 +31,6 @@ import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
 
 //vue-loading-overlay
-
 Vue.component('Loading', Loading);
 Vue.use(Loading, {
   canCancel: false,
@@ -84,6 +86,9 @@ Vue.component('ValidationProvider', ValidationProvider);
 
 // register globally
 Vue.component('multiselect', Multiselect);
+
+//starRating
+Vue.component('star-rating', StarRating);
 
 Vue.use(VueAxios, axios);
 new Vue({
