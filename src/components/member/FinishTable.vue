@@ -39,8 +39,8 @@
           </td>
           <td>
             <p>
-              {{ order.x.StartDate }} <br />
-              {{ order.x.EndDate }}
+              {{ order.startTime }} <br />
+              {{ order.endTime }}
             </p>
           </td>
           <td>{{ order.x.Total | currency }}</td>
@@ -169,7 +169,8 @@ export default {
       vm.$http
         .get(api)
         .then(res => {
-          console.log(res);
+          console.log('已完成', res);
+          vm.$emit('getOrderStatusCount'); //更新未處理筆數數量
           vm.orders = res.data.order;
           vm.isLoading = false;
         })

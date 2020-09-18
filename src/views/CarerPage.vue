@@ -97,7 +97,7 @@
               <div
                 class="tab-content"
                 id="myTabContent"
-                style="max-height:350px;overflow-y: auto"
+                style="max-height:400px;overflow-y: auto"
               >
                 <div
                   class="tab-pane fade show active"
@@ -192,7 +192,7 @@
                   <div
                     class="card border-0 rounded m-4"
                     v-for="(quiz, index) in quizs"
-                    :key="index"
+                    :key="'quiz' + index"
                     style="background-color: rgb(239 247 247);"
                   >
                     <div class="card-body">
@@ -394,7 +394,6 @@ export default {
           vm.resume.serviceItems = res.data.服務項目;
           vm.bookedDate = res.data.已被預約的日期;
           vm.allComment = res.data.allcomment; // 訂單評論
-          // vm.quizs = res.data.quiz; // 問與答
 
           vm.isLoading = false;
         })
@@ -411,10 +410,10 @@ export default {
       vm.$http
         .get(api)
         .then(res => {
-          // console.log('取得Q&A列表', res);
-          if (!res.data.message) {
-            vm.quizs = res.data; // 問與答
-          }
+          console.log('取得Q&A列表', res.data);
+          vm.quizs = res.data.filter(element => {
+            return element.QuestionAnswers.length > 0 &&  !res.data.message;
+          });
 
           vm.isLoading = false;
         })

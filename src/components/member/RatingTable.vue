@@ -157,13 +157,13 @@ export default {
     getRatingData() {
       const vm = this;
       vm.isLoading = true;
-      // const api = `${process.env.VUE_APP_APIPATH}MemberOrder04?id=${vm.userId}`;
-      const api = `${process.env.VUE_APP_APIPATH}MemberOrder04?id=1`;
+      const api = `${process.env.VUE_APP_APIPATH}MemberOrder04?id=${vm.userId}`;
+      // const api = `${process.env.VUE_APP_APIPATH}MemberOrder04?id=1`;
 
       vm.$http
         .get(api)
         .then(res => {
-          console.log(res);
+          console.log('待評價', res);
           vm.orders = res.data.order;
           vm.isLoading = false;
         })

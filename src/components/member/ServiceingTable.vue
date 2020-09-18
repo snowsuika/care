@@ -2,10 +2,7 @@
   <div class="table-responsive">
     <loading :active.sync="isLoading"></loading>
 
-    <table
-      class="table table-radius"
-      v-if="orders"
-    >
+    <table class="table table-radius" v-if="orders">
       <tr class="table-light">
         <th class="text-center text-nowrap">被服務對象</th>
         <th class="text-center text-nowrap">照服人員</th>
@@ -113,7 +110,8 @@ export default {
         .get(api)
         .then(res => {
           console.log(res);
-          vm.orders = res.data.order;
+          vm.$emit('getOrderStatusCount'); //更新未處理筆數數量
+          vm.orders = res.data.orders;
           vm.isLoading = false;
         })
         .catch(err => {

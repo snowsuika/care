@@ -1,5 +1,6 @@
 <template>
   <div>
+    <loading :active.sync="isLoading"></loading>
     <div class="card shadow-sm">
       <div class="card-header">
         <ul class="nav nav-tabs card-header-tabs" id="nav-tab" role="tablist">
@@ -26,6 +27,7 @@
                 :is="orderStatus"
                 :user-id="userId"
                 :identity="identity"
+                @getOrderStatusCount="getOrderStatusCount()"
               ></div>
             </div>
           </div>
@@ -46,11 +48,12 @@ export default {
   data() {
     return {
       orderStatus: 'waitconfirm',
+      isLoading: false,
       tabStatus: [
-        { tabName: '待照服員確認中', orderStatus: 'waitconfirm', badge: 2 },
-        { tabName: '訂單處理中', orderStatus: 'processing', badge: 2 },
-        { tabName: '服務進行中', orderStatus: 'serviceing', badge: 2 },
-        { tabName: '待評價中', orderStatus: 'rating', badge: 2 },
+        { tabName: '待照服員確認中', orderStatus: 'waitconfirm', badge: 0 },
+        { tabName: '訂單處理中', orderStatus: 'processing', badge: 0 },
+        { tabName: '服務進行中', orderStatus: 'serviceing', badge: 0 },
+        { tabName: '待評價中', orderStatus: 'rating', badge: 0 },
         { tabName: '已完成', orderStatus: 'finish', badge: 0 }
       ]
     };
@@ -63,8 +66,47 @@ export default {
     Rating,
     Finish
   },
-  created() {},
+  created() {
+    this.$bus.$on('getOrderStatusCount', () => {
+      this.getOrderStatusCount();
+    });
+  },
   methods: {
+    getOrderStatusCount() {
+      const vm = this;
+
+      let Waitconfirm = `${process.env.VUE_APP_APIPATH}MemberOrder01?id=${vm.userId}`;
+      let Processing = `${process.env.VUE_APP_APIPATH}MemberOrder02?id=${vm.userId}`;
+      let Serviceing = `${process.env.VUE_APP_APIPATH}MemberOrder03?id=${vm.userId}`;
+      let Rating = `${process.env.VUE_APP_APIPATH}MemberOrder04?id=${vm.userId}`;
+      let Finish = `${process.env.VUE_APP_APIPATH}MemberOrder05?id=${vm.userId}`;
+
+      const requestWaitconfirm = vm.$http.get(Waitconfirm);
+      const requestProcessing = vm.$http.get(Processing);
+      const requestServiceing = vm.$http.get(Serviceing);
+      const requestRating = vm.$http.get(Rating);
+      const requestFinish = vm.$http.get(Finish);
+      vm.isLoading = true;
+      vm.$http
+        .all([
+          requestWaitconfirm,
+          requestProcessing,
+          requestServiceing,
+          requestRating,
+          requestFinish
+        ])
+        .then(
+          vm.$http.spread((...res) => {
+            const statusCount = res.map(item => {
+              return item.data.count;
+            });
+            vm.tabStatus.forEach((item, index) => {
+              item.badge = statusCount[index];
+            });
+            vm.isLoading = false;
+          })
+        );
+    },
     changeStatus(orderStatus) {
       this.orderStatus = orderStatus;
     }

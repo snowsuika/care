@@ -17,10 +17,7 @@
       />
     </form>
 
-    <table
-      class="table table-radius"
-      v-if="orders"
-    >
+    <table class="table table-radius" v-if="orders">
       <tr class="table-light">
         <th class="text-center text-nowrap">被服務對象</th>
         <th class="text-center text-nowrap">照服人員</th>
@@ -63,7 +60,7 @@
             </p>
           </td>
           <td class="text-center">{{ order.x.Total | currency }}</td>
-          <td class="text-center">{{ order.x.Status }}</td>
+          <td class="text-center">{{ order.OrderStatus }}</td>
           <td class="text-center">
             <button
               type="button"
@@ -128,8 +125,9 @@ export default {
       vm.$http
         .get(api)
         .then(res => {
-          console.log(res);
-          vm.orders = res.data.order;
+          console.log('家屬處理中', res);
+          vm.orders = res.data.orders;
+          vm.$emit('getOrderStatusCount'); //更新未處理筆數數量
           vm.isLoading = false;
         })
         .catch(err => {

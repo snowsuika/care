@@ -89,6 +89,7 @@ export default {
       vm.$http
         .get(api)
         .then(res => {
+          console.log('家屬管理', res);
           vm.isLoading = false;
           vm.elders = res.data.elders;
         })

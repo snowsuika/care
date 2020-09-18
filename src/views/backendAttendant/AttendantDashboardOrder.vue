@@ -59,6 +59,9 @@ export default {
     Receive,
     Finish
   },
+  created() {
+    this.getOrderStatusCount();
+  },
   methods: {
     changeStatus(orderStatus) {
       this.orderStatus = orderStatus;
