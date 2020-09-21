@@ -1,5 +1,5 @@
 <template>
-  <div class="innerBg">
+  <div class="clientPage">
     <loading :active.sync="isLoading"></loading>
     <div
       class="innerBanner d-flex justify-content-center align-items-center text-white"
@@ -212,10 +212,6 @@ export default {
 </script>
 
 <style lang="scss">
-.innerBg {
-  background-color: #f6f3ee;
-}
-
 .innerBanner {
   background-color: gray;
   height: 300px;

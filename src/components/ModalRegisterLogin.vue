@@ -229,7 +229,7 @@ export default {
           password: vm.password
         })
         .then(res => {
-          console.log(res);
+          console.log('登入function',res);
           if (res.data.message == '登入成功') {
             vm.$swal({
               toast: true,
@@ -249,6 +249,9 @@ export default {
             localStorage.setItem('userId', `${res.data.Id}`);
             localStorage.setItem('userMail', `${res.data.Email}`);
             localStorage.setItem('identity', this.identity);
+            if (this.identity == "attendant") {
+              localStorage.setItem('photo', `${res.data.Photo}`);
+            }
             this.$bus.$emit('checkLogin');
           } else {
             console.log(res.data.message);

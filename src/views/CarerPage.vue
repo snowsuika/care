@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="ClientPage">
     <loading :active.sync="isLoading"></loading>
     <div
       class="innderBanner d-flex justify-content-center align-items-center text-white"

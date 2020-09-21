@@ -1,7 +1,7 @@
 <template>
   <div class="table-responsive-md">
     <loading :active.sync="isLoading"></loading>
-    <table class="table table-radius" v-if="orders.length">
+    <table class="table table-radius" v-if="orders">
       <tr class="table-light">
         <th class="text-center text-nowrap" scope="col">家屬姓名</th>
         <th class="text-center text-nowrap" scope="col">下單日期</th>

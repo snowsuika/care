@@ -1,15 +1,15 @@
 <template>
-  <footer>
+  <footer class="mt-auto">
     <div
-      class="position-relative d-flex flex-column align-items-center mt-5"
-      style="top:50px"
+      class="treeImage position-relative d-flex flex-column align-items-center"
     >
       <img src="@/assets/images/footerImg.png" class="img-fluid" alt="" />
     </div>
     <svg
+      class="img-fluid w-100"
       xmlns="http://www.w3.org/2000/svg"
-      width="100%"
-      height="100%"
+      width="1373.848"
+      height="51.183"
       viewBox="0 0 1373.848 51.183"
     >
       <path
@@ -22,7 +22,7 @@
     </svg>
 
     <div class="bg-primary text-white" style="margin-top:-1px">
-      <div class="container">
+      <div class="container py-4">
         <div class="row">
           <div class="col-md-4">
             <p style="font-size:30px">日日照你</p>

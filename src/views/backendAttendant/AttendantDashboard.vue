@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="adminPage">
     <loading :active.sync="isLoading"></loading>
     <navbar></navbar>
     <main>
