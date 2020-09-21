@@ -3,24 +3,11 @@
 @import "./helpers/vue-multiselect";  //自定義的變數
 @import "~bootstrap/scss/bootstrap";
 
-
-@font-face {
-  font-family: FakePearl-Regular;
-  src: url(https://cdn.jsdelivr.net/gh/max32002/FakePearl@1.1/webfont/FakePearl-Regular.woff2) format("woff2")
-  , url(https://cdn.jsdelivr.net/gh/max32002/FakePearl@1.1/webfont/FakePearl-Regular.woff) format("woff");
-}
-
+//page
+@import "./scss/layout";
 //page
 @import "./scss/index";
-//通用設定
-body{
-  color:#585851;
-  font-family: 'FakePearl-Regular', serif;
-}
-main{
-min-height: calc(100vh - 120px) ;
-flex: 1;
-}
+
 
 a{
   cursor: pointer;
@@ -32,7 +19,7 @@ a.nav-link.active {
 }
 
 .navbar-light .navbar-nav .nav-link{
-  color:#735933;
+  color:#4E4E4E;
 }
 
 //table
@@ -44,13 +31,23 @@ table{
   background-position: center;
   background-size: cover;
 }
+
+.radius-0{
+  border-radius: 0rem !important;
+}
+.radius-1{
+  border-radius: 0.25rem !important;
+}
 .radius-2{
-  border-radius: 0.75rem !important;
+  border-radius: 0.5rem !important;
 }
 .radius-3{
-  border-radius: 1rem !important;
+  border-radius: 0.75rem !important;
 }
 .radius-4{
+  border-radius: 1rem !important;
+}
+.radius-5{
   border-radius: 1.5rem !important;
 }
 
