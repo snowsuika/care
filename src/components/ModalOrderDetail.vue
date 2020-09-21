@@ -57,7 +57,13 @@
               </tr>
               <tr>
                 <th class="bg-light text-nowrap">付款狀態</th>
-                <td>{{ (orderData.Status == '10'||'11') ? '未付款':'已付款'}}</td>
+                <td>
+                  {{
+                    orderData.Status == '11' || orderData.Status == '10'
+                      ? '未付款'
+                      : '已付款'
+                  }}
+                </td>
                 <th class="bg-light text-nowrap">雇用照服員</th>
                 <td>
                   {{ attendantsData.Name }}
@@ -65,7 +71,6 @@
                     >檢視照服員個人資料</router-link
                   >
                 </td>
-                
               </tr>
               <tr>
                 <th class="bg-light text-nowrap">訂單備註</th>
@@ -104,7 +109,10 @@
               </tr>
               <tr>
                 <th class="bg-light text-nowrap">照護地點</th>
-                <td colspan="3">{{ elderData.Place == '1' ? '居家照顧' : '醫院照護' }}{{ elderData.Address }}</td>
+                <td colspan="3">
+                  ( {{ elderData.Place == '1' ? '居家照顧' : '醫院照護' }})
+                  {{ elderData.Address }}
+                </td>
               </tr>
               <tr>
                 <th class="bg-light text-nowrap">身體狀況</th>
@@ -140,8 +148,8 @@ export default {
   data() {
     return {
       orderData: '',
-      attendantsData:'',
-      elderData:'',
+      attendantsData: '',
+      elderData: '',
       identity: '',
       isLoading: false
     };
@@ -156,29 +164,28 @@ export default {
       vm.$http
         .get(api)
         .then(res => {
-          console.log('res.data',res.data);
+          console.log('res.data', res.data);
           //訂單資訊
           vm.orderData = {
-            OrderStatus:res.data.OrderStatus,
-            initTime : res.data.initTime,
-            ...res.data.order,
-          }
+            OrderStatus: res.data.OrderStatus,
+            initTime: res.data.initTime,
+            ...res.data.order
+          };
           //照服員資訊
           vm.attendantsData = {
-             AttendantsService:res.data.AttendantsService,
-            AttendantsServiceTime : res.data.AttendantsServiceTime,
+            AttendantsService: res.data.AttendantsService,
+            AttendantsServiceTime: res.data.AttendantsServiceTime,
             ...res.data.order.Attendants
-          }
+          };
           //病患資訊
           vm.elderData = {
-            EldersBody:res.data.EldersBody,
-            EldersEquipment:res.data.EldersEquipment,
-            EldersServiceItems:res.data.EldersServiceItems,
+            EldersBody: res.data.EldersBody.toString(),
+            EldersEquipment: res.data.EldersEquipment.toString(),
+            EldersServiceItems: res.data.EldersServiceItems.toString(),
 
-           ...res.data.order.Elders
-          }
+            ...res.data.order.Elders
+          };
 
-         
           vm.isLoading = false;
         })
         .catch(err => {

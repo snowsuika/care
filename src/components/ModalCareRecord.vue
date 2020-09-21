@@ -91,9 +91,10 @@ export default {
   created() {},
   methods: {
     getCardRecordData(orderId) {
+      // console.log(orderId);
       const vm = this;
       vm.isLoading = true;
-      vm.orderId = orderId;
+
       const api = `${process.env.VUE_APP_APIPATH}GetLog?id=${orderId}`; //參數是訂單的id
       // const api = `${process.env.VUE_APP_APIPATH}GetLog?id=27`; //參數是訂單的id
 
@@ -103,6 +104,8 @@ export default {
           console.log(res);
           vm.orderCardRecords = res.data;
           $('#orderCareRecord').modal('show');
+          vm.orderId = orderId;
+          console.log(vm.orderId);
           vm.isLoading = false;
         })
         .catch(err => {
@@ -116,7 +119,7 @@ export default {
       const api = `${process.env.VUE_APP_APIPATH}WriteLog`;
       vm.$http
         .post(api, {
-          OrdersID: vm.OrderId,
+          OrdersID: vm.orderId,
           Mood: vm.Mood,
           Remark: vm.Remark
         })
@@ -133,11 +136,12 @@ export default {
               toast.addEventListener('mouseenter', vm.$swal.stopTimer);
               toast.addEventListener('mouseleave', vm.$swal.resumeTimer);
             },
-            // icon: '',
+            icon: 'success',
             title: `${res.data.message}`
           });
-
           $('#orderCareRecord').modal('hide');
+          vm.Mood = '';
+          vm.Remark = '';
           vm.isLoading = false;
         })
         .catch(err => {

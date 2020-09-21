@@ -65,6 +65,7 @@
             <button
               type="button"
               class="btn btn-primary"
+              :disabled="order.x.Status == '12'"
               @click="payInfoToBack(order.x.Id)"
             >
               付款

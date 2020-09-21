@@ -153,6 +153,7 @@ export default {
             title: `已完成評價`
           });
           $('#evaluation').modal('hide');
+          vm.isLoading = false;
           vm.$emit('get-rateing-data'); //重新渲染畫面
         })
         .catch(err => {

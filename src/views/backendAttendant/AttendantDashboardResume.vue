@@ -448,7 +448,7 @@ export default {
             vm.resume.serviceTime = resUserData.ServiceTime;
             vm.resume.experience = resUserData.Experience;
             vm.resume.service = resUserData.Service.split(',');
-            vm.resume.isopenMatch = resUserData.Status == '01' ? true : false;
+            vm.resume.isopenMatch = resUserData.Status == '02' ? true : false;
             vm.photoPreview = `${process.env.VUE_APP_APIPATH}Uploads/${resUserData.Photo}`;
             vm.photoName = resUserData.Photo;
 
@@ -482,7 +482,7 @@ export default {
       postForms.append('Service', vm.resume.service);
       postForms.append('ServiceTime', vm.resume.serviceTime);
       postForms.append('Experience', vm.resume.experience);
-      postForms.append('Status', vm.resume.isopenMatch ? '01' : '02');
+      postForms.append('Status', vm.resume.isopenMatch ? '02' : '01');
 
       if (vm.photoIns) {
         postForms.append('Photo', vm.photoIns);

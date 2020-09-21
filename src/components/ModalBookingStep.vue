@@ -119,25 +119,29 @@
                               class="custom-control-input radio-button"
                             />
                             <div class="radio-tile">
-                              <select
-                                class="form-control"
-                                id="auto"
-                                @change="importElderData()"
-                                v-model="orderInfo.ElderId"
-                                v-if="elders"
-                              >
-                                <option selected>請選擇欲照護對象</option>
-                                <option
-                                  v-for="(elder, index) in elders"
-                                  :value="elder.x.Id"
-                                  :key="index"
-                                  >{{ elder.x.Name }}</option
-                                >
-                              </select>
                               <label for="auto" class="radio-tile-label">
                                 <i class="far fa-id-card"></i>
-                                自現有資料帶入</label
-                              >
+                                自現有資料帶入
+
+                                <select
+                                  class="form-control"
+                                  @change="importElderData()"
+                                  v-model="orderInfo.ElderId"
+                                  v-if="elders"
+                                >
+                                  <option selected>請選擇欲照護對象</option>
+                                  <option
+                                    v-for="(elder, index) in elders"
+                                    :value="elder.x.Id"
+                                    :key="index"
+                                    >{{ elder.x.Name }}</option
+                                  >
+                                </select>
+
+                                <small v-else class="text-danger mb-0">
+                                  <br />目前尚無家屬資<br />請先新增後才可使用
+                                </small>
+                              </label>
                             </div>
                           </div>
                         </div>
@@ -718,7 +722,7 @@
                                 class="form-control"
                                 name=""
                                 id="remark"
-                                v-model="elderInfo.remark"
+                                v-model="elderInfo.Remark"
                                 rows="3"
                               ></textarea>
                             </div>
@@ -793,8 +797,8 @@ export default {
         ServiceItems: [], //後端要字串
         Urgent: '',
         Relationship: '',
-        Phone: ''
-        // remark: ''
+        Phone: '',
+        Remark: ''
       },
 
       orderInfo: {

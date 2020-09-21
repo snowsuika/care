@@ -150,7 +150,10 @@
                   aria-labelledby="profile-tab"
                 >
                   <div class="m-4">
-                    <validation-observer ref="observer" v-slot="{ invalid }">
+                    <validation-observer
+                      ref="memberQuizContent"
+                      v-slot="{ invalid }"
+                    >
                       <form @submit.prevent="submitForm">
                         <div
                           class="form-group"
@@ -167,7 +170,6 @@
                               class="form-control"
                               :class="classes"
                               name="內容"
-                              ref="memberQuizContent"
                               id="memberQuizContent"
                               v-model="memberQuizContent"
                               rows="3"
@@ -254,7 +256,6 @@
                               <textarea
                                 class="form-control w-10"
                                 id="attentandContent"
-                                ref="attentandContent"
                                 v-model="attentandQuizContent"
                                 rows="3"
                               ></textarea>
@@ -379,7 +380,7 @@ export default {
       vm.$http
         .get(api)
         .then(res => {
-          // console.log(res);
+          console.log('照服員個人頁面', res);
           vm.resume = res.data.attendantDetails;
           vm.resume.servierCity =
             res.data.attendantDetails.Locationses[0].Cities.City;
@@ -478,7 +479,7 @@ export default {
           .then(() => {
             // console.log(res);
             vm.memberQuizContent = '';
-            vm.$refs.memberQuizContent.observer.reset();
+            vm.$refs.memberQuizContent.reset();
             vm.getQuizData();
           })
           .catch(err => {
@@ -512,9 +513,9 @@ export default {
       };
       vm.$http
         .post(api, postObj)
-        .then(() => {
-          // console.log('照服員送出回覆', res);
-          vm.$refs.attentandContent.observer.reset();
+        .then(res => {
+          console.log('照服員送出回覆', res);
+          // vm.$refs.attentandContent.reset();
           vm.getQuizData();
         })
         .catch(err => {

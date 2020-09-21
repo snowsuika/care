@@ -106,6 +106,7 @@ export default {
       this.$refs.orderDetailModal.getOrderData(orderId, this.identity);
     },
     showCardRecord(orderId) {
+      // console.log(orderId);
       this.$refs.orderCardRecordModal.getCardRecordData(orderId);
     }
   }

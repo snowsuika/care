@@ -50,7 +50,7 @@
           </li>
           <li class="nav-item ml-lg-4" v-if="!userInfo.token">
             <button
-              class="btn btn-primary text-white radius-4 nav-link"
+              class="btn btn-primary text-white radius-5 nav-link"
               @click="RegisterLoginModal('login')"
             >
               會員登入
