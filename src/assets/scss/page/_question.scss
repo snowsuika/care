@@ -1,0 +1,23 @@
+.p-QandA{
+
+  &__content{
+padding-top: 100px;
+&__block{
+  background-color: $white;
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 10px;
+
+  h3{
+    font-size: 1.05rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    // color:$primary;
+    font-weight: bold;
+    margin: 0;
+  }
+}
+  }
+  
+}

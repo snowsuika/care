@@ -1,0 +1,71 @@
+@font-face {
+  font-family: FakePearl-Regular;
+  src: url(https://cdn.jsdelivr.net/gh/max32002/FakePearl@1.1/webfont/FakePearl-Regular.woff2) format("woff2")
+  , url(https://cdn.jsdelivr.net/gh/max32002/FakePearl@1.1/webfont/FakePearl-Regular.woff) format("woff");
+}
+
+body{
+  color:$text-default-color;
+  background-color: $care-light-yellow;
+  // font-family: 'FakePearl-Regular',-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+
+  font-family: 'FakePearl-Regular', serif;
+  // font-family: 'Noto Sans', serif;
+}
+
+#app{
+  height: 100%;
+}
+.mainTemplate{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+// navbar
+.l-nav.navbar{
+  padding:0;
+}
+
+.l-nav{
+  background-color: rgba($color:$white, $alpha: 0.9);
+  .bageReply{
+    position: absolute;
+    top: 2px;
+    left: 90px;
+  }
+  .nav-link{
+    font-weight: 500;
+    .l-nav__enTitle{
+      color: $text-default-gray;
+      font-weight: 500;
+      font-size: 11px;
+    }
+    &:hover{
+      background-color: $care-light-green;
+    }
+  }
+}
+
+@media (min-width: 992px){
+.navbar-expand-lg .navbar-nav .nav-link {
+    padding: .75rem 1rem;
+    height: 100%;
+}
+}
+
+// .dropdown-menu li:hover {
+//   visibility: visible;
+// }
+// .dropdown:hover .dropdown-menu {
+//   display: block;
+// }
+
+
+footer{
+  .treeImage{
+    top: -60px;
+    height: 0px;
+    margin-top: 60px;
+  }
+}

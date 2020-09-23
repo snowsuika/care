@@ -20,7 +20,7 @@
           <th class="text-nowrap">需服務項目</th>
           <th class="text-nowrap">身體狀況</th>
           <th class="text-center text-nowrap">編輯</th>
-          <th class="text-center text-nowrap">刪除</th>
+          <!-- <th class="text-center text-nowrap">刪除</th> -->
         </tr>
         <tbody>
           <tr v-for="(elder, index) in elders" :key="index">
@@ -39,14 +39,14 @@
                 <i class="fas fa-pen"></i> 編輯
               </button>
             </td>
-            <td class="text-center text-nowrap">
+            <!-- <td class="text-center text-nowrap">
               <button
                 class="btn btn-primary-soft text-primary"
                 @click="delElder(elder.x.Id)"
               >
                 <i class="fas fa-trash-alt"></i> 刪除
               </button>
-            </td>
+            </td> -->
           </tr>
         </tbody>
       </table>
@@ -89,6 +89,7 @@ export default {
       vm.$http
         .get(api)
         .then(res => {
+          console.log('家屬管理', res);
           vm.isLoading = false;
           vm.elders = res.data.elders;
         })
@@ -105,40 +106,40 @@ export default {
       $('#familyManage').modal('show');
       this.isNew = false;
       this.$refs.familyModal.getElderData(ElderId);
-    },
-
-    delElder(elderId) {
-      const vm = this;
-      vm.isLoading = true;
-
-      const api = `${process.env.VUE_APP_APIPATH}DeleteElder?id=${elderId}`;
-
-      vm.$http
-        .delete(api)
-        .then(res => {
-          if (res.data.result == '刪除成功') {
-            vm.$swal({
-              toast: true,
-              position: 'top-end',
-              showConfirmButton: false,
-              timer: 3000,
-              timerProgressBar: false,
-              onOpen: toast => {
-                toast.addEventListener('mouseenter', vm.$swal.stopTimer);
-                toast.addEventListener('mouseleave', vm.$swal.resumeTimer);
-              },
-              icon: 'success',
-              title: `已成功刪除照護對象`
-            });
-
-            vm.getEldersData();
-            vm.isLoading = false;
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        });
     }
+
+    // delElder(elderId) {
+    //   const vm = this;
+    //   vm.isLoading = true;
+
+    //   const api = `${process.env.VUE_APP_APIPATH}DeleteElder?id=${elderId}`;
+
+    //   vm.$http
+    //     .delete(api)
+    //     .then(res => {
+    //       if (res.data.result == '刪除成功') {
+    //         vm.$swal({
+    //           toast: true,
+    //           position: 'top-end',
+    //           showConfirmButton: false,
+    //           timer: 3000,
+    //           timerProgressBar: false,
+    //           onOpen: toast => {
+    //             toast.addEventListener('mouseenter', vm.$swal.stopTimer);
+    //             toast.addEventListener('mouseleave', vm.$swal.resumeTimer);
+    //           },
+    //           icon: 'success',
+    //           title: `已成功刪除照護對象`
+    //         });
+
+    //         vm.getEldersData();
+    //         vm.isLoading = false;
+    //       }
+    //     })
+    //     .catch(err => {
+    //       console.log(err);
+    //     });
+    // }
   }
 };
 </script>

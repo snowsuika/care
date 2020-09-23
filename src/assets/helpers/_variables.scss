@@ -44,6 +44,10 @@ $green:   #28a745 !default;
 $teal:    #20c997 !default;
 $cyan:    #17a2b8 !default;
 //自定義色彩
+$text-default-color:#666666;
+$text-default-gray:#ACACAC;
+
+// $care-green:         #3b751b ;
 $care-green:         #6A9232 ;
 $care-green-gray:    #e3ead8 ;
 $care-brown:         #735933 ;
@@ -51,6 +55,7 @@ $care-orange:        #FF9C39 ;
 $care-yellow:        #FAE56D ;
 $care-light-yellow:  #F6F3EE ;
 $care-light-blue:    #E5EFEF ;
+$care-light-green:    #EFF3E9 ;
 // $care-green:    #35a44b !default;
 
 $colors: () !default;
@@ -80,8 +85,8 @@ $success:       $green !default;
 $info:          $cyan !default;
 $warning:       $yellow !default;
 $danger:        $red !default;
-// $light:      $gray-100 !default;
-$light:         $care-light-yellow !default;
+$light:      $gray-100 !default;
+// $light:         $care-light-yellow !default;
 $dark:          $gray-800 !default;
 
 $theme-colors: () !default;

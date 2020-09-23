@@ -1,16 +1,18 @@
 <template>
-  <div>
-    <div class="home">
-      <header class="bg-white border-bottom shadow-sm">
-        <!-- 上方選單 -->
-        <navbar></navbar>
-      </header>
-      <main>
-        <router-view></router-view>
-      </main>
-      <footer-bar></footer-bar>
-      <modal-register-login :action="navModalAction"></modal-register-login>
-    </div>
+  <div class="mainTemplate">
+    <header class="bg-white border-bottom shadow-sm">
+      <!-- 上方選單 -->
+      <navbar></navbar>
+    </header>
+    <main>
+      <router-view
+        :is-login="isLogin"
+        :identity="identity"
+        :user-id="userId"
+      ></router-view>
+    </main>
+    <footer-bar></footer-bar>
+    <modal-register-login :action="navModalAction"></modal-register-login>
   </div>
 </template>
 
@@ -23,13 +25,16 @@ export default {
   data() {
     return {
       navModalAction: '',
-      isLogin: false
+      isLogin: false,
+      identity: '',
+      userId: ''
     };
   },
   components: {
     Navbar,
     FooterBar,
     ModalRegisterLogin
-  }
+  },
+  methods: {}
 };
 </script>

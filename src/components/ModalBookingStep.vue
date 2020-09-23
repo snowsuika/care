@@ -10,7 +10,7 @@
       aria-labelledby="staticBackdropLabel"
       aria-hidden="true"
     >
-      <div class="modal-dialog modal-lg">
+      <div class="modal-dialog modal-lg ">
         <div class="modal-content border-0">
           <div class="modal-body">
             <div style="padding-bottom:20px">
@@ -27,54 +27,133 @@
                   <div v-show="currentstep == 1">
                     <div class="row justify-content-center mt-4">
                       <div class="col-12 col-lg-6">
-                        <div class="form-row">
-                          <div
-                            class="custom-control custom-radio custom-control-inline"
-                          >
+                        <h5 class="text-primary">請選擇資料帶入方式</h5>
+                        <!-- <div class="form-row">
+                          <div class="card w-100 mb-3">
+                            <div class="card-body">
+                              <div
+                                class="custom-control custom-radio custom-control-inline"
+                              >
+                                <input
+                                  type="radio"
+                                  id="hand"
+                                  name="getElderMethod"
+                                  class="custom-control-input"
+                                  value="0"
+                                  @click="checkImportMethod('hand')"
+                                  checked
+                                />
+                                <label class="custom-control-label" for="hand"
+                                  >手動輸入</label
+                                >
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="card w-100">
+                            <i class="fas fa-users-cog"></i>
+                            <div class="card-body">
+                              <div
+                                class="custom-control custom-radio custom-control-inline"
+                              >
+                                <div>
+                                  <input
+                                    type="radio"
+                                    id="auto"
+                                    value="1"
+                                    @click="checkImportMethod('auto')"
+                                    name="getElderMethod"
+                                    class="custom-control-input"
+                                  />
+                                  <label class="custom-control-label" for="auto"
+                                    >帶入現有家屬資料</label
+                                  >
+                                </div>
+                                <div>
+                                  <select
+                                    class="form-control"
+                                    @change="importElderData()"
+                                    v-model="orderInfo.ElderId"
+                                    v-if="elders"
+                                  >
+                                    <option selected>請選擇欲照護對象</option>
+                                    <option
+                                      v-for="(elder, index) in elders"
+                                      :value="elder.x.Id"
+                                      :key="index"
+                                      >{{ elder.x.Name }}</option
+                                    >
+                                  </select>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div> -->
+
+                        <div class="m-radioChooseGroup d-flex flex-column">
+                          <div class="m-radioChooseGroup__item">
                             <input
                               type="radio"
                               id="hand"
                               name="getElderMethod"
-                              class="custom-control-input"
+                              class="m-radioChooseGroup__item__radioBtn"
                               value="0"
                               @click="checkImportMethod('hand')"
                               checked
                             />
-                            <label class="custom-control-label" for="hand"
-                              >手動輸入</label
-                            >
+                            <div class="m-radioChooseGroup__item__radioCotent">
+                              <label
+                                for="hand"
+                                class="m-radioChooseGroup__item__label"
+                                ><i class="fas fa-wheelchair"></i>
+                                手動輸入</label
+                              >
+                            </div>
                           </div>
-                          <div
-                            class="custom-control custom-radio custom-control-inline"
-                          >
+
+                          <div class="m-radioChooseGroup__item">
                             <input
                               type="radio"
                               id="auto"
                               value="1"
                               @click="checkImportMethod('auto')"
                               name="getElderMethod"
-                              class="custom-control-input"
+                              class="m-radioChooseGroup__item__radioBtn"
                             />
-                            <label class="custom-control-label" for="auto"
-                              >帶入現有家屬資料</label
-                            >
-                            <select
-                              @change="importElderData()"
-                              v-model="orderInfo.ElderId"
-                              v-if="elders"
-                            >
-                              <option selected>請選擇欲照護對象</option>
-                              <option
-                                v-for="(elder, index) in elders"
-                                :value="elder.x.Id"
-                                :key="index"
-                                >{{ elder.x.Name }}</option
+                            <div class="m-radioChooseGroup__item__radioCotent">
+                              <label
+                                for="auto"
+                                class="m-radioChooseGroup__item__label"
                               >
-                            </select>
+                                <i class="far fa-id-card"></i>
+                                自現有資料帶入
+
+                                <select
+                                  class="form-control"
+                                  @change="importElderData()"
+                                  v-model="orderInfo.ElderId"
+                                  v-if="elders"
+                                >
+                                  <option selected>請選擇欲照護對象</option>
+                                  <option
+                                    v-for="(elder, index) in elders"
+                                    :value="elder.x.Id"
+                                    :key="index"
+                                    >{{ elder.x.Name }}</option
+                                  >
+                                </select>
+
+                                <small v-else class="text-danger mb-0">
+                                  <br />目前尚無家屬資<br />請先新增後才可使用
+                                </small>
+                              </label>
+                            </div>
                           </div>
                         </div>
-
+                      </div>
+                      <div class="col-12 col-lg-6">
                         <div class="form-row">
+                          <h5 class="text-primary">基本資料</h5>
                           <div class="form-group col-md-12">
                             <validation-provider
                               rules="required"
@@ -185,9 +264,8 @@
                             </validation-provider>
                           </div>
                         </div>
-                      </div>
-                      <div class="col-12 col-lg-6">
-                        <h4 class="mb-3">照護地點</h4>
+                        <hr />
+                        <h5 class="text-primary">照護地點</h5>
                         <div
                           class="custom-control custom-radio custom-control-inline"
                         >
@@ -252,6 +330,9 @@
                   <div v-show="currentstep == 2">
                     <div class="row mt-4">
                       <div class="col-md-6">
+                        <h4 class="mb-3">
+                          目前身體狀況
+                        </h4>
                         <div class="row">
                           <ul class="row no-gutters ml-4 list-unstyled">
                             <li class="col-12 col-md-6 mb-2">
@@ -649,7 +730,7 @@
                                 class="form-control"
                                 name=""
                                 id="remark"
-                                v-model="elderInfo.remark"
+                                v-model="elderInfo.Remark"
                                 rows="3"
                               ></textarea>
                             </div>
@@ -724,8 +805,8 @@ export default {
         ServiceItems: [], //後端要字串
         Urgent: '',
         Relationship: '',
-        Phone: ''
-        // remark: ''
+        Phone: '',
+        Remark: ''
       },
 
       orderInfo: {
@@ -740,7 +821,7 @@ export default {
         {
           id: 1,
           title: '服務對象基本資料',
-          icon_class: 'fa fa-user-circle-o'
+          icon_class: 'far fa-id-card'
         },
         {
           id: 2,
@@ -767,9 +848,13 @@ export default {
   },
   created() {
     this.attendantId = this.$route.params.id; //取得照服員id
-    this.getEldersData();
   },
   methods: {
+    modalshow() {
+      this.getEldersData();
+      $('#bookingCareer').modal('show');
+    },
+
     //確認使用者要手動/自動帶入病患資料
     checkImportMethod(getMethod) {
       const vm = this;
@@ -779,12 +864,21 @@ export default {
       if (vm.orderInfo.isManual) {
         vm.orderInfo.ElderId = '';
         vm.elderInfo = {
-          ...vm.elderInfo,
+          MemberId: '',
+          Name: '',
           Gender: '0', // 0 男 1 女
+          Age: '',
+          Height: '',
+          Weight: '',
           Place: '0', //0居家, 1醫院
+          Address: '',
           Body: [], //後端要字串
           Equipment: [], //後端要字串
-          ServiceItems: [] //後端要字串
+          ServiceItems: [], //後端要字串
+          Urgent: '',
+          Relationship: '',
+          Phone: '',
+          Remark: ''
         };
       }
     },

@@ -1,13 +1,11 @@
 <template>
-  <nav
-    class="navbar fixed-top navbar-expand-lg navbar-light bg-white-opacity-7"
-  >
+  <nav class="l-nav navbar fixed-top navbar-expand-lg navbar-light shadow">
     <div class="container">
       <router-link class="navbar-brand" to="/">
         <img
           width="100"
           class="img-fluid"
-          src="@/assets/images/logo.png"
+          src="@/assets/images/logo.svg"
           alt=""
         />
       </router-link>
@@ -26,24 +24,56 @@
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
             <router-link class="nav-link" to="/searchCares"
-              >尋找日照服務</router-link
-            >
+              >尋找日照服務
+              <span class="l-nav__enTitle text-center d-none d-md-block"
+                >FIND CARES</span
+              >
+            </router-link>
           </li>
-          <li class="nav-item" v-if="userInfo.token">
-            <router-link class="nav-link" to="/chat"
-              ><i class="fas fa-comment-dots"></i> 訊息</router-link
-            >
+          <li class="nav-item">
+            <router-link class="nav-link" to="/question"
+              >常見問題
+              <span class="l-nav__enTitle text-center d-none d-md-block"
+                >Q&A</span
+              >
+            </router-link>
+          </li>
+          <li
+            class="nav-item"
+            v-if="userInfo.token && userInfo.identity == 'attendant'"
+          >
+            <router-link
+              class="nav-link position-relative"
+              :to="'/carePage/' + userInfo.userId"
+              ><i class="fas fa-bell"></i> 未回訊息
+              <span
+                class="bageReply badge badge-pill badge-secondary text-white"
+                >{{ notification }}</span
+              >
+              <span class="l-nav__enTitle text-center d-none d-md-block"
+                >NO REPLY</span
+              >
+            </router-link>
           </li>
 
           <li class="nav-item" v-if="!userInfo.token">
             <a class="nav-link" @click="RegisterLoginModal('register')"
-              >註冊新帳號</a
+              >註冊新帳號
+              <span class="l-nav__enTitle text-center d-none d-md-block"
+                >SIGN IN</span
+              ></a
             >
           </li>
           <li class="nav-item" v-if="!userInfo.token">
-            <a class="nav-link" @click="RegisterLoginModal('login')"
-              ><i class="fas fa-user-circle"></i> 會員登入</a
+            <a
+              class="nav-link text-primary"
+              @click="RegisterLoginModal('login')"
             >
+              會員登入
+              <span class="l-nav__enTitle text-center d-none d-md-block"
+                >LOGIN IN</span
+              >
+            </a>
           </li>
           <li class="nav-item dropdown" v-if="userInfo.token">
             <a
@@ -55,7 +85,25 @@
               aria-haspopup="true"
               aria-expanded="false"
             >
-              <i class="fas fa-user-circle"></i>
+              <!-- <i class="fas fa-user-circle"></i> -->
+              <img
+                v-if="userInfo.photo && userInfo.photo !== 'null'"
+                width="30"
+                height="30"
+                :src="
+                  `http://careup.rocket-coding.com/Uploads/` +
+                    `${userInfo.photo}`
+                "
+                alt="..."
+                class="rounded-circle objectFit"
+              />
+              <img
+                class="rounded-circle objectFit"
+                width="30"
+                height="30"
+                v-else
+                src="@/assets/images/noPhoto.png"
+              />
               {{ this.userInfo.mail }}
             </a>
             <!-- 家屬端登入 -->
@@ -142,8 +190,10 @@ export default {
         token: '',
         mail: '',
         userId: '',
+        photo: '',
         identity: ''
-      }
+      },
+      notification: ''
     };
   },
   created() {
@@ -164,13 +214,20 @@ export default {
         const token = localStorage.getItem('token');
         const mail = localStorage.getItem('userMail');
         const userId = localStorage.getItem('userId');
+        const photo = localStorage.getItem('photo');
         const identity = localStorage.getItem('identity');
         vm.userInfo.token = token;
         vm.userInfo.mail = mail;
         vm.userInfo.userId = userId;
+        vm.userInfo.photo = photo;
         vm.userInfo.identity = identity;
         if (vm.userInfo.token) {
           this.$parent.$data.isLogin = true;
+          this.$parent.$data.identity = identity;
+          this.$parent.$data.userId = userId;
+        }
+        if (vm.userInfo.identity == 'attendant') {
+          vm.getQuizQuantity(userId);
         }
       });
     },
@@ -179,6 +236,7 @@ export default {
       this.userInfo.token = '';
       this.userInfo.mail = '';
       this.userInfo.userId = '';
+      this.userInfo.photo = '';
       this.userInfo.identity = '';
       this.$swal({
         toast: true,
@@ -194,18 +252,36 @@ export default {
         title: '已登出'
       });
       this.$parent.$data.isLogin = false;
+      this.$parent.$data.identity = '';
+      this.$parent.$data.userId = '';
       this.$route.path !== '/' ? this.$router.push('/') : false;
+    },
+    getQuizQuantity(userId) {
+      const vm = this;
+      vm.isLoading = true;
+      const api = `${process.env.VUE_APP_APIPATH}AttendantsGetQuiz?id=${userId}`;
+      vm.$http
+        .get(api)
+        .then(res => {
+          console.log(res.data);
+          if (!res.data.message) {
+            let allQuizs = res.data; // 問與答
+            let UnReplayNum = 0;
+            allQuizs.forEach(element => {
+              if (element.QuestionAnswers.length < 1) {
+                UnReplayNum = UnReplayNum + 1;
+              }
+            });
+
+            vm.notification = UnReplayNum;
+          }
+
+          vm.isLoading = false;
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
   }
 };
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="scss">
-// .dropdown-menu li:hover .sub-menu {
-//   visibility: visible;
-// }
-// .dropdown:hover .dropdown-menu {
-//   display: block;
-// }
-</style>

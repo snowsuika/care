@@ -19,52 +19,63 @@
             <span aria-hidden="true">&times;</span>
           </button>
           <h4 class="mb-3"><i class="fas fa-file-alt"></i> 訂單資訊</h4>
-          <table class="table table-bordered" v-if="orderData.Id">
+          <table class="table table-bordered" v-if="orderData">
             <tbody>
               <tr>
                 <th class="bg-light text-nowrap">訂單狀態</th>
-                <td colspan="3" class="text-danger">
-                  (記得跟後端討論呈現方式){{ orderData.Status }}
+                <td colspan="3">
+                  {{ orderData.OrderStatus }}
                 </td>
               </tr>
+              <tr v-if="orderData.Cancel !== null">
+                <th class="bg-light text-nowrap">拒接理由</th>
+                <td colspan="3">
+                  {{ orderData.Cancel }}
+                </td>
+              </tr>
+
               <tr>
                 <th class="bg-light text-nowrap">訂單金額</th>
                 <td colspan="3">{{ orderData.Total | currency }}</td>
               </tr>
               <tr>
                 <th class="bg-light text-nowrap ">下單時間</th>
-                <td class=" text-danger">
-                  {{ orderData.InitDate }}（再請後端幫忙）
+                <td>
+                  {{ orderData.initTime }}
                 </td>
                 <th class="bg-light text-nowrap">服務期間</th>
                 <td>
-                  {{ orderData.servicePeriod[0] }}<br />
-                  {{
-                    orderData.servicePeriod[orderData.servicePeriod.length - 1]
-                  }}
+                  {{ orderData.StartDate.substr(0, 10) }}~
+                  {{ orderData.EndDate.substr(0, 10) }}
                 </td>
               </tr>
               <tr>
-                <th class="bg-light text-nowrap">付款狀態</th>
+                <th class="bg-light text-nowrap">付款方式</th>
                 <td>信用卡</td>
+                <th class="bg-light text-nowrap">雇用時段</th>
+                <td>{{ attendantsData.AttendantsServiceTime }}</td>
+              </tr>
+              <tr>
+                <th class="bg-light text-nowrap">付款狀態</th>
+                <td>
+                  {{
+                    orderData.Status == '11' || orderData.Status == '10'
+                      ? '未付款'
+                      : '已付款'
+                  }}
+                </td>
                 <th class="bg-light text-nowrap">雇用照服員</th>
                 <td>
-                  {{ Attendants.Name }}
+                  {{ attendantsData.Name }}
                   <router-link to="/carePage/Attendants.Id"
                     >檢視照服員個人資料</router-link
                   >
                 </td>
               </tr>
               <tr>
-                <th class="bg-light text-nowrap">付款方式</th>
-                <td>尚未付款</td>
-                <th></th>
-                <td></td>
-              </tr>
-              <tr>
                 <th class="bg-light text-nowrap">訂單備註</th>
                 <td colspan="3">
-                  {{ orderData.Comment }}
+                  {{ orderData.Remark }}
                 </td>
               </tr>
             </tbody>
@@ -74,43 +85,46 @@
             <tbody>
               <tr>
                 <th class="bg-light text-nowrap">被服務對象姓名</th>
-                <td>{{ Elders.Name }}</td>
+                <td>{{ elderData.Name }}</td>
                 <th class="bg-light text-nowrap">年齡</th>
-                <td>{{ Elders.Age }}</td>
+                <td>{{ elderData.Age }}</td>
               </tr>
               <tr>
                 <th class="bg-light text-nowrap">性別</th>
-                <td>{{ Elders.Gender == '1' ? '男' : '女' }}</td>
+                <td>{{ elderData.Gender == '1' ? '男' : '女' }}</td>
                 <th class="bg-light text-nowrap">緊急聯絡人</th>
-                <td>{{ Elders.Urgent }}</td>
+                <td>{{ elderData.Urgent }}</td>
               </tr>
               <tr>
                 <th class="bg-light text-nowrap">身高</th>
-                <td>{{ Elders.Height }} 公分</td>
+                <td>{{ elderData.Height }} 公分</td>
                 <th class="bg-light text-nowrap">與被照顧對象關係</th>
-                <td>{{ Elders.Relationship }}</td>
+                <td>{{ elderData.Relationship }}</td>
               </tr>
               <tr>
                 <th class="bg-light text-nowrap">體重</th>
-                <td>{{ Elders.Weight }} 公斤</td>
+                <td>{{ elderData.Weight }} 公斤</td>
                 <th class="bg-light text-nowrap">緊急聯絡電話</th>
-                <td>{{ Elders.Phone }}</td>
+                <td>{{ elderData.Phone }}</td>
               </tr>
               <tr>
                 <th class="bg-light text-nowrap">照護地點</th>
-                <td colspan="3">{{ Elders.Place }}{{ Elders.Address }}</td>
+                <td colspan="3">
+                  ( {{ elderData.Place == '1' ? '居家照顧' : '醫院照護' }})
+                  {{ elderData.Address }}
+                </td>
               </tr>
               <tr>
                 <th class="bg-light text-nowrap">身體狀況</th>
-                <td colspan="3">{{ Elders.body }}</td>
+                <td colspan="3">{{ elderData.EldersBody }}</td>
               </tr>
               <tr>
                 <th class="bg-light text-nowrap">家中已有設備</th>
-                <td colspan="3">{{ Elders.equipment }}</td>
+                <td colspan="3">{{ elderData.EldersEquipment }}</td>
               </tr>
               <tr>
                 <th class="bg-light text-nowrap">需服務項目</th>
-                <td colspan="3">{{ Elders.serviceItems }}</td>
+                <td colspan="3">{{ elderData.EldersServiceItems }}</td>
               </tr>
             </tbody>
           </table>
@@ -133,33 +147,44 @@
 export default {
   data() {
     return {
-      orderData: {
-        servicePeriod: []
-      },
-      Attendants: {},
-      Elders: {},
+      orderData: '',
+      attendantsData: '',
+      elderData: '',
       identity: '',
       isLoading: false
     };
   },
-
   methods: {
     getOrderData(orderId, identity) {
       const vm = this;
+
       vm.isLoading = true;
       vm.identity = identity;
       const api = `${process.env.VUE_APP_APIPATH}CheckOrder?id=${orderId}`;
       vm.$http
         .get(api)
         .then(res => {
-          console.log(res);
-          vm.orderData = res.data.order;
-          vm.Attendants = res.data.order.Attendants;
-          vm.Elders = res.data.order.Elders;
-          vm.Elders.body = res.data.EldersBody.toString();
-          vm.Elders.equipment = res.data.EldersEquipment.toString();
-          vm.Elders.serviceItems = res.data.EldersServiceItems.toString();
-          vm.orderData.servicePeriod = res.data.date;
+          console.log('res.data', res.data);
+          //訂單資訊
+          vm.orderData = {
+            OrderStatus: res.data.OrderStatus,
+            initTime: res.data.initTime,
+            ...res.data.order
+          };
+          //照服員資訊
+          vm.attendantsData = {
+            AttendantsService: res.data.AttendantsService,
+            AttendantsServiceTime: res.data.AttendantsServiceTime,
+            ...res.data.order.Attendants
+          };
+          //病患資訊
+          vm.elderData = {
+            EldersBody: res.data.EldersBody.toString(),
+            EldersEquipment: res.data.EldersEquipment.toString(),
+            EldersServiceItems: res.data.EldersServiceItems.toString(),
+
+            ...res.data.order.Elders
+          };
 
           vm.isLoading = false;
         })
