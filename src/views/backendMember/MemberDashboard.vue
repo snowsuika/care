@@ -1,10 +1,13 @@
 <template>
-  <div class="adminPage">
+  <div class="p-adminPage">
     <navbar></navbar>
     <main>
       <div
         class="banner d-flex justify-content-center align-items-center bg-cover text-white"
-        style="height:250px;"
+        :style="{
+          backgroundImage:
+            'url(' + require('@/assets/images/banner/2886653_m.jpg') + ')'
+        }"
       ></div>
       <!-- 照服員 -->
       <div class="container py-5" style="margin-top: -120px">
@@ -63,9 +66,6 @@ export default {
 </script>
 
 <style lang="scss">
-body {
-  background-color: #f6f3ee;
-}
 .banner {
   background-color: gray;
   background-position: center;

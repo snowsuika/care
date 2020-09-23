@@ -20,11 +20,16 @@ const routes = [
         // name: 'home',
         component: () => import('@/views/Home.vue')
       },
+      // {
+      //   path: '/chat',
+      //   // name: 'chat',
+      //   component: () => import('@/views/Chat.vue'),
+      //   meta: { requiresAuth: true }
+      // },
       {
-        path: '/chat',
+        path: '/question',
         // name: 'chat',
-        component: () => import('@/views/Chat.vue'),
-        meta: { requiresAuth: true }
+        component: () => import('@/views/QandA.vue')
       },
       {
         path: '/searchCares',

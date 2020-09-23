@@ -90,36 +90,41 @@
                           </div>
                         </div> -->
 
-                        <div class="radio-tile-group">
-                          <div class="input-container w-75">
+                        <div class="m-radioChooseGroup d-flex flex-column">
+                          <div class="m-radioChooseGroup__item">
                             <input
                               type="radio"
                               id="hand"
                               name="getElderMethod"
-                              class="custom-control-input radio-button"
+                              class="m-radioChooseGroup__item__radioBtn"
                               value="0"
                               @click="checkImportMethod('hand')"
                               checked
                             />
-                            <div class="radio-tile">
-                              <label for="hand" class="radio-tile-label"
+                            <div class="m-radioChooseGroup__item__radioCotent">
+                              <label
+                                for="hand"
+                                class="m-radioChooseGroup__item__label"
                                 ><i class="fas fa-wheelchair"></i>
                                 手動輸入</label
                               >
                             </div>
                           </div>
 
-                          <div class="input-container w-75">
+                          <div class="m-radioChooseGroup__item">
                             <input
                               type="radio"
                               id="auto"
                               value="1"
                               @click="checkImportMethod('auto')"
                               name="getElderMethod"
-                              class="custom-control-input radio-button"
+                              class="m-radioChooseGroup__item__radioBtn"
                             />
-                            <div class="radio-tile">
-                              <label for="auto" class="radio-tile-label">
+                            <div class="m-radioChooseGroup__item__radioCotent">
+                              <label
+                                for="auto"
+                                class="m-radioChooseGroup__item__label"
+                              >
                                 <i class="far fa-id-card"></i>
                                 自現有資料帶入
 
@@ -325,6 +330,9 @@
                   <div v-show="currentstep == 2">
                     <div class="row mt-4">
                       <div class="col-md-6">
+                        <h4 class="mb-3">
+                          目前身體狀況
+                        </h4>
                         <div class="row">
                           <ul class="row no-gutters ml-4 list-unstyled">
                             <li class="col-12 col-md-6 mb-2">
@@ -813,7 +821,7 @@ export default {
         {
           id: 1,
           title: '服務對象基本資料',
-          icon_class: 'fa fa-user-circle-o'
+          icon_class: 'far fa-id-card'
         },
         {
           id: 2,
@@ -856,12 +864,21 @@ export default {
       if (vm.orderInfo.isManual) {
         vm.orderInfo.ElderId = '';
         vm.elderInfo = {
-          ...vm.elderInfo,
+          MemberId: '',
+          Name: '',
           Gender: '0', // 0 男 1 女
+          Age: '',
+          Height: '',
+          Weight: '',
           Place: '0', //0居家, 1醫院
+          Address: '',
           Body: [], //後端要字串
           Equipment: [], //後端要字串
-          ServiceItems: [] //後端要字串
+          ServiceItems: [], //後端要字串
+          Urgent: '',
+          Relationship: '',
+          Phone: '',
+          Remark: ''
         };
       }
     },
@@ -1019,73 +1036,3 @@ export default {
   }
 };
 </script>
-
-<style lang="scss">
-$primary-color: #6a9232;
-
-.radio-tile-group {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: left;
-
-  //set dimensions for invisible container
-  .input-container {
-    position: relative;
-    height: 50x;
-    width: 150px;
-    margin: 0.5rem;
-
-    //make actual radio input invisible
-    // + stretch to fill container
-    .radio-button {
-      opacity: 0;
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 100%;
-      width: 100%;
-      margin: 0;
-      cursor: pointer;
-    }
-
-    //default tile styles
-    .radio-tile {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      height: 100%;
-      border: 1px solid $primary-color;
-      border-radius: 5px;
-      padding: 1rem;
-      transition: transform 300ms ease;
-    }
-    .icon svg {
-      fill: $primary-color;
-      width: 3rem;
-      height: 3rem;
-    }
-    .radio-tile-label {
-      text-align: center;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: $primary-color;
-    }
-
-    //active tile styles
-    .radio-button:checked + .radio-tile {
-      background-color: rgba($color: $primary-color, $alpha: 0.3);
-      border: 1px solid $primary-color;
-      color: white;
-      transform: scale(1.05, 1.05);
-
-      .radio-tile-label {
-        color: $primary-color;
-        // background-color: $primary-color;
-      }
-    }
-  }
-}
-</style>

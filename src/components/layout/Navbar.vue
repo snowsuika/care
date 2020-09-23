@@ -1,13 +1,11 @@
 <template>
-  <nav
-    class="navbar fixed-top navbar-expand-lg navbar-light shadow bg-white-opacity-7"
-  >
+  <nav class="l-nav navbar fixed-top navbar-expand-lg navbar-light shadow">
     <div class="container">
       <router-link class="navbar-brand" to="/">
         <img
           width="100"
           class="img-fluid"
-          src="@/assets/images/logo.png"
+          src="@/assets/images/logo.svg"
           alt=""
         />
       </router-link>
@@ -27,34 +25,55 @@
           <li class="nav-item">
             <router-link class="nav-link" to="/searchCares"
               >尋找日照服務
+              <span class="l-nav__enTitle text-center d-none d-md-block"
+                >FIND CARES</span
+              >
             </router-link>
           </li>
-          <!-- <li class="nav-item" v-if="userInfo.token">
-            <router-link class="nav-link" to="/chat"
-              ><i class="fas fa-comment-dots"></i> 訊息</router-link
-            >
-          </li> -->
+          <li class="nav-item">
+            <router-link class="nav-link" to="/question"
+              >常見問題
+              <span class="l-nav__enTitle text-center d-none d-md-block"
+                >Q&A</span
+              >
+            </router-link>
+          </li>
           <li
             class="nav-item"
             v-if="userInfo.token && userInfo.identity == 'attendant'"
           >
-            <router-link class="nav-link" :to="'/carePage/' + userInfo.userId"
-              ><i class="fas fa-bell"></i> ({{ notification }})</router-link
-            >
+            <router-link
+              class="nav-link position-relative"
+              :to="'/carePage/' + userInfo.userId"
+              ><i class="fas fa-bell"></i> 未回訊息
+              <span
+                class="bageReply badge badge-pill badge-secondary text-white"
+                >{{ notification }}</span
+              >
+              <span class="l-nav__enTitle text-center d-none d-md-block"
+                >NO REPLY</span
+              >
+            </router-link>
           </li>
 
           <li class="nav-item" v-if="!userInfo.token">
             <a class="nav-link" @click="RegisterLoginModal('register')"
-              >註冊新帳號</a
+              >註冊新帳號
+              <span class="l-nav__enTitle text-center d-none d-md-block"
+                >SIGN IN</span
+              ></a
             >
           </li>
-          <li class="nav-item ml-lg-4" v-if="!userInfo.token">
-            <button
-              class="btn btn-primary text-white radius-5 nav-link"
+          <li class="nav-item" v-if="!userInfo.token">
+            <a
+              class="nav-link text-primary"
               @click="RegisterLoginModal('login')"
             >
               會員登入
-            </button>
+              <span class="l-nav__enTitle text-center d-none d-md-block"
+                >LOGIN IN</span
+              >
+            </a>
           </li>
           <li class="nav-item dropdown" v-if="userInfo.token">
             <a
@@ -83,7 +102,7 @@
                 width="30"
                 height="30"
                 v-else
-                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAMFBMVEXFxcX////CwsLGxsb7+/vT09PJycn19fXq6urb29ve3t7w8PDOzs7n5+f5+fnt7e30nlkBAAAFHUlEQVR4nO2dC5qqMAyFMTwUBdz/bq+VYYrKKJCkOfXmXwHna5uTpA+KwnEcx3Ecx3Ecx3Ecx3Ecx3Ecx3Ecx3Ecx3EcA2iO9cdIc5PUdO257y+BU39u66b4HplE3fk6VIcnqmNfl1+gksr6+iIucjl3WYukor7+re6Hoe1y1UhNO3zUd+fUFRmKpOa0Tt6dY5ubRCrOG/QFLk1WGmnt/JxzykcjdZ/jyxJDLlOV2l36AtcsJJb9boG3YcR3DuqODIE3ztYKPkDdmwRmpUToUaSaq++AvRgZMWbOpbQW8hdCAm8ZDugoikzREdCJ2okJPBx6azFLNOwoOgcxojJ98JkaTSJxMpklKrCAKhZGI0drTY/wU5lXoJYibannV9NYy4oozNEAkPHTjop+DTDxVGkIgYJNoyQQJtiIW+EMjGAjm649AjGIaqswcEFQKJ2QPlJbqytki6ZXAAZRJ52J2McaUowzAfs+uFzrYhnzaapphiPWdaJWShqxjqa6kTTQ205TVbsfMa6htL0iYOsXpJrQjHSmCkv1QGPtiHqlYcQ21Gj7fcDU8xOEUuNgSltPzexh+HqFlanCBHZ4OLhCV+gK/3OF6vWvucLv98MUOY2pwu/PS/+D2qJU7pYGbOvDFDW+bbON9p3o3oRxn0bfLgZTgSn6pSfrtr56qLHemtHPTK2319SzGvtjQ9qeb39WgS66Cm073nd0U1PzDdJCO3Gzn6TKpl9Zq7ujGWsQhlA3NwWIMwG9zM08Y/tBrR9VWeczv5CSQuuUNKIUTk23ZJ5RKfVhjnkXotfWIlgX2BSCDYbZR+QTcLhb3dKZDUY2M0d4KWItwhHRah/zsrOgKw4wycwjcgEVcgQDQo23CqSiWEJkFAfod2oE1uIFdA1OsCPqFXYNTjCfb8Ez+iX2x5sKLlVbhtqdDcar9ZevhnbZxoBUD35k23t0d304LYs1ELVbnfFaZ/REJJX9niP8Q19moZGo3m8XR/yBvOnjFfsXcI2c8ZuNo7WMP5HQh6yRGrlmFOJTnyTcT+zRlqPUBI2gTVWNUzUna1ERgecgF4GpNBQ38jGqxVLzQA1A31Rrhk6Yz9QEh/WND0GnuG9huhiTXJkxfAizTHLr6cbJKN6UCU6x/2DTRE1xEeEXi3O0ZUqBN4nJRzHhFB1JPlFTBZlI2kQ8zc3KJ1Le8DIRmFJiknuVS6RK4Ej/JtBfJErDSzOBiY4wJHX6Z1I4v1GUmdCPNirnLLeg3oJLcbX5PcpHNbRvOa1A956QmRPOUXVF+zkaUJynpkYR0bOMJH2nNej1pqyV/aKkz9jr5yj5vrXXz1F5SQLACiMapmierj2ikLyleKdlA/I/2oFxiglxx9B+mHwz0lf34IZQfhDRhlD6bhvgEAoPYooHkTczSIZTLC+cEExsoNKZiGBiY9cCfo/Y/SjIOBMQizWWTe73CMUasJx7jlD+DdKdWUKoY4PRYFtGpO0G1Lx4RaadgTtJhf4fiGqGIwKWCGuGIwKWqP+7IxYCzygjR9IAO5pC7Da9g70TBVpWRNgFBlgT8RV2WxHbKwJMv4BOaEaYaU2K16yZMN/qgV+G7IWIvwyZCxHeDQMsR8wg0DBDDXB5H2EV+hkEGmaoySHQsEJNFoGGFWrAq98JRhUMX1iMMMqLLEIpK5jCbd4vw9nSt/72lewXiN6jmdjfq8Hdknlk92ZwJnbIMMRM7JBhiFlUFoHd1UWaP1QKsPsHA5mkNB+Smn9JqV3wskatnQAAAABJRU5ErkJggg=="
+                src="@/assets/images/noPhoto.png"
               />
               {{ this.userInfo.mail }}
             </a>
@@ -266,13 +285,3 @@ export default {
   }
 };
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="scss">
-// .dropdown-menu li:hover .sub-menu {
-//   visibility: visible;
-// }
-// .dropdown:hover .dropdown-menu {
-//   display: block;
-// }
-</style>

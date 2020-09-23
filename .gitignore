@@ -22,3 +22,6 @@ pnpm-debug.log*
 *.sln
 *.sw?
 .env
+src/views/Home_old.vue
+src/assets/scss/page/_index拷貝.scss
+dist.zip

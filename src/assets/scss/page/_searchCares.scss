@@ -1,0 +1,40 @@
+.p-searchPage{
+  cursor: pointer;
+  &__banner{
+    height: 300px;
+    background-position: 0% 25%;
+    background-size: cover;
+  }
+  &__serachBar{
+    background-color: #EAE4DB;
+    border-radius: 10px;
+  }
+}
+
+.p-attendantCard{
+  transition: all 200ms ease;
+  &:hover{
+    box-shadow: 0 6px 31px -2px rgba(0, 0, 0, 0.1);
+    transform: translate(0px, -10px);
+  }
+  &__photo{
+    width: 110px;
+    height: 110px;
+    object-fit: cover;
+  }
+  &__name{
+    font-size: 1.25rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+  }
+  &__salary{
+    font-size: 1.25rem;
+  }
+  &__serviceItem{
+    .badge{
+      color:$text-default-color;
+    }
+  }
+  &__content{
+  }
+}

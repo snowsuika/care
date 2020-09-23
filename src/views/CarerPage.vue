@@ -1,33 +1,37 @@
 <template>
-  <div class="ClientPage">
+  <div class="p-attendResume">
     <loading :active.sync="isLoading"></loading>
-    <div
-      class="innderBanner d-flex justify-content-center align-items-center text-white"
-    ></div>
+
     <!-- 照服員 -->
     <div class="container py-5">
       <router-link to="/searchCares">回上一頁</router-link>
 
       <div class="row">
-        <div class="col-12 col-md-8">
+        <div class="col-12 col-lg-8 order-2 order-lg-1 ">
           <div class="bg-white p-4" style="border-radius: 10px">
-            <h4 class="my-3">照服員基本資料</h4>
-            <div class="d-flex mb-4">
+            <h4 class="py-3 mb-4">照服員基本資料<br /></h4>
+            <div class="p-attendResume__basicInfo d-flex mb-4">
               <img
                 v-if="resume.Photo"
                 :src="
                   `http://careup.rocket-coding.com/Uploads/` + `${resume.Photo}`
                 "
                 alt="..."
-                class="rounded-circle profirePhoto"
+                width="120"
+                height="120"
+                class="rounded-circle objectFit"
               />
               <img
-                class="rounded-circle profirePhoto"
+                class="rounded-circle objectFit"
                 v-else
-                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAMFBMVEXFxcX////CwsLGxsb7+/vT09PJycn19fXq6urb29ve3t7w8PDOzs7n5+f5+fnt7e30nlkBAAAFHUlEQVR4nO2dC5qqMAyFMTwUBdz/bq+VYYrKKJCkOfXmXwHna5uTpA+KwnEcx3Ecx3Ecx3Ecx3Ecx3Ecx3Ecx3Ecx3EcA2iO9cdIc5PUdO257y+BU39u66b4HplE3fk6VIcnqmNfl1+gksr6+iIucjl3WYukor7+re6Hoe1y1UhNO3zUd+fUFRmKpOa0Tt6dY5ubRCrOG/QFLk1WGmnt/JxzykcjdZ/jyxJDLlOV2l36AtcsJJb9boG3YcR3DuqODIE3ztYKPkDdmwRmpUToUaSaq++AvRgZMWbOpbQW8hdCAm8ZDugoikzREdCJ2okJPBx6azFLNOwoOgcxojJ98JkaTSJxMpklKrCAKhZGI0drTY/wU5lXoJYibannV9NYy4oozNEAkPHTjop+DTDxVGkIgYJNoyQQJtiIW+EMjGAjm649AjGIaqswcEFQKJ2QPlJbqytki6ZXAAZRJ52J2McaUowzAfs+uFzrYhnzaapphiPWdaJWShqxjqa6kTTQ205TVbsfMa6htL0iYOsXpJrQjHSmCkv1QGPtiHqlYcQ21Gj7fcDU8xOEUuNgSltPzexh+HqFlanCBHZ4OLhCV+gK/3OF6vWvucLv98MUOY2pwu/PS/+D2qJU7pYGbOvDFDW+bbON9p3o3oRxn0bfLgZTgSn6pSfrtr56qLHemtHPTK2319SzGvtjQ9qeb39WgS66Cm073nd0U1PzDdJCO3Gzn6TKpl9Zq7ujGWsQhlA3NwWIMwG9zM08Y/tBrR9VWeczv5CSQuuUNKIUTk23ZJ5RKfVhjnkXotfWIlgX2BSCDYbZR+QTcLhb3dKZDUY2M0d4KWItwhHRah/zsrOgKw4wycwjcgEVcgQDQo23CqSiWEJkFAfod2oE1uIFdA1OsCPqFXYNTjCfb8Ez+iX2x5sKLlVbhtqdDcar9ZevhnbZxoBUD35k23t0d304LYs1ELVbnfFaZ/REJJX9niP8Q19moZGo3m8XR/yBvOnjFfsXcI2c8ZuNo7WMP5HQh6yRGrlmFOJTnyTcT+zRlqPUBI2gTVWNUzUna1ERgecgF4GpNBQ38jGqxVLzQA1A31Rrhk6Yz9QEh/WND0GnuG9huhiTXJkxfAizTHLr6cbJKN6UCU6x/2DTRE1xEeEXi3O0ZUqBN4nJRzHhFB1JPlFTBZlI2kQ8zc3KJ1Le8DIRmFJiknuVS6RK4Ej/JtBfJErDSzOBiY4wJHX6Z1I4v1GUmdCPNirnLLeg3oJLcbX5PcpHNbRvOa1A956QmRPOUXVF+zkaUJynpkYR0bOMJH2nNej1pqyV/aKkz9jr5yj5vrXXz1F5SQLACiMapmierj2ikLyleKdlA/I/2oFxiglxx9B+mHwz0lf34IZQfhDRhlD6bhvgEAoPYooHkTczSIZTLC+cEExsoNKZiGBiY9cCfo/Y/SjIOBMQizWWTe73CMUasJx7jlD+DdKdWUKoY4PRYFtGpO0G1Lx4RaadgTtJhf4fiGqGIwKWCGuGIwKWqP+7IxYCzygjR9IAO5pC7Da9g70TBVpWRNgFBlgT8RV2WxHbKwJMv4BOaEaYaU2K16yZMN/qgV+G7IWIvwyZCxHeDQMsR8wg0DBDDXB5H2EV+hkEGmaoySHQsEJNFoGGFWrAq98JRhUMX1iMMMqLLEIpK5jCbd4vw9nSt/72lewXiN6jmdjfq8Hdknlk92ZwJnbIMMRM7JBhiFlUFoHd1UWaP1QKsPsHA5mkNB+Smn9JqV3wskatnQAAAABJRU5ErkJggg=="
+                width="120"
+                height="120"
+                src="@/assets/images/noPhoto.png"
               />
               <div class="ml-3">
-                <h5>{{ resume.Name }}</h5>
+                <div class="p-attendResume__basicInfo__name mb-3">
+                  {{ resume.Name }}
+                </div>
 
                 <i class="fas fa-map-marker-alt text-primary"></i>
                 服務地點：{{ resume.servierCity }}
@@ -64,16 +68,18 @@
               </ul>
             </div>
 
-            <div>
+            <!-- 評價與問與答 -->
+
+            <div class="p-evaluationQuiz">
               <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
                   <a
                     class="nav-link active"
-                    id="home-tab"
+                    id="evaluation-tab"
                     data-toggle="tab"
-                    href="#home"
+                    href="#evaluation"
                     role="tab"
-                    aria-controls="home"
+                    aria-controls="evaluation"
                     aria-selected="true"
                     ><i class="fas fa-star"></i> 評價 (
                     {{ allComment.length }} )</a
@@ -82,11 +88,11 @@
                 <li class="nav-item" role="presentation">
                   <a
                     class="nav-link"
-                    id="profile-tab"
+                    id="quiz-tab"
                     data-toggle="tab"
-                    href="#profile"
+                    href="#quiz"
                     role="tab"
-                    aria-controls="profile"
+                    aria-controls="quiz"
                     aria-selected="false"
                     ><i class="fas fa-comment-dots"></i> 問與答 ({{
                       quizs.length
@@ -101,53 +107,48 @@
               >
                 <div
                   class="tab-pane fade show active"
-                  id="home"
+                  id="evaluation"
                   role="tabpanel"
-                  aria-labelledby="home-tab"
+                  aria-labelledby="evaluation-tab"
                 >
-                  <div>
-                    <div
-                      class="card border-0 bg-light rounded m-4"
-                      v-for="(comment, index) in allComment"
-                      :key="index"
-                    >
-                      <div
-                        class="card-body radius-3"
-                        style="background-color: rgb(239 247 247);"
-                      >
-                        <div class="d-flex align-baseline border-bottom mb-2">
-                          <h6>{{ comment.memeber }}</h6>
-                          <div class="rating ml-3">
-                            <star-rating
-                              :max-rating="5"
-                              :increment="0.01"
-                              :read-only="true"
-                              :show-rating="false"
-                              inactive-color="#585851"
-                              active-color="orange"
-                              :rating="comment.star"
-                              :star-size="18"
-                              style="transform: translateY(-5px);"
-                            >
-                            </star-rating>
-                          </div>
+                  <div
+                    class="p-evaluationQuiz__evaluationContext card border-0 rounded m-4"
+                    v-for="(comment, index) in allComment"
+                    :key="index"
+                  >
+                    <div class="p-evaluation__context card-body radius-3">
+                      <div class="d-flex align-baseline border-bottom mb-2">
+                        <h6>{{ comment.memeber }}</h6>
+                        <div class="rating ml-3">
+                          <star-rating
+                            :max-rating="5"
+                            :increment="0.01"
+                            :read-only="true"
+                            :show-rating="false"
+                            inactive-color="#585851"
+                            active-color="orange"
+                            :rating="comment.star"
+                            :star-size="18"
+                            style="transform: translateY(-5px);"
+                          >
+                          </star-rating>
                         </div>
-                        <p class="mb-0">
-                          {{ comment.comment }}
-                        </p>
-                        <small class="float-right">2020-08-17 22:09</small>
                       </div>
+                      <p class="mb-0">
+                        {{ comment.comment }}
+                      </p>
+                      <small class="float-right">2020-08-17 22:09</small>
                     </div>
-                    <div class="my-5" v-if="!allComment.length">
-                      <p>目前尚無評價喔！</p>
-                    </div>
+                  </div>
+                  <div class="my-5" v-if="!allComment.length">
+                    <p>目前尚無評價喔！</p>
                   </div>
                 </div>
                 <div
                   class="tab-pane fade"
-                  id="profile"
+                  id="quiz"
                   role="tabpanel"
-                  aria-labelledby="profile-tab"
+                  aria-labelledby="quiz-tab"
                 >
                   <div class="m-4">
                     <validation-observer
@@ -192,10 +193,9 @@
                     </validation-observer>
                   </div>
                   <div
-                    class="card border-0 rounded m-4"
+                    class="p-evaluationQuiz__quizContext card border-0 rounded m-4"
                     v-for="(quiz, index) in quizs"
                     :key="'quiz' + index"
-                    style="background-color: rgb(239 247 247);"
                   >
                     <div class="card-body">
                       <div class="mb-3">
@@ -276,7 +276,9 @@
             </div>
           </div>
         </div>
-        <div class="col-12 col-md-4 mt-3 mt-md-0">
+        <div
+          class="col-12 col-lg-4 mt-3 mt-lg-0 order-1 order-lg-2 mb-4 mb-lg-0"
+        >
           <div class="bg-white p-4" style="border-radius: 10px">
             <h3>預約服務</h3>
             <p class="h5">{{ resume.Salary | currency }} / 日</p>
@@ -548,16 +550,3 @@ export default {
   }
 };
 </script>
-
-<style lang="scss">
-body {
-  background-color: #f6f3ee;
-}
-.innderBanner {
-  background-color: gray;
-  height: 250px;
-  // background-image: url(images/2886653_s.jpg);
-  background-position: center;
-  background-size: cover;
-}
-</style>

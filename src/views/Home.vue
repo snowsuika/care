@@ -1,197 +1,83 @@
 <template>
-  <div class="home bg-white">
+  <div class="home">
     <!-- banner -->
-
-    <!-- 版本1 -->
-    <!-- <div class="l-banner container-fluid bg-white">
-<div class="l-banner__content container">
- 
-        <div class="l-banner__content__title">
-              <img
-        src="@/assets/images/sun1_0.png"
-        width="70"
-
-        class="l-banner__content__title__sun position-absolute"
-        alt=""
-      />
-          <h1>FIND <span class="text-primary">YOUR</span><br>CARES.</h1>
-          <p>日日照你，快速方便的照服媒合</p>
-          <button class="btn btn-secondary btn-lg text-white radius-4 mt-3">尋找日照服務</button>
-        </div>
-        <div class="l-banner__content__mainBanner">
-          
-    <div
-      id="carouselExampleFade"
-      class="banner carousel slide "
-      data-ride="carousel"
-    >
-      <div class="carousel-inner">
-        <div
-          class="carousel-item active"
-          :style="{
-            backgroundImage:
-              'url(' + require('@/assets/images/banner/2886679_l.jpg') + ')'
-          }"
-        >
-          1
-        </div>
-        <div
-          class="carousel-item"
-          :style="{
-            backgroundImage:
-              'url(' + require('@/assets/images/banner/2886626_m.jpg') + ')'
-          }"
-        >
-          2
-        </div>
-        <div
-          class="carousel-item"
-          :style="{
-            backgroundImage:
-              'url(' + require('@/assets/images/banner/2886668_m.jpg') + ')'
-          }"
-        >
-          2
-        </div>
-      </div>
-   
-
-    </div>
-
-        </div>
-
-    
-    </div>
-<img src="@/assets/images/bg_or.svg" class="bg_or img-fluid position-absolute" alt="" />
-    <img src="@/assets/images/bg_gr.svg" class="bg_gr img-fluid position-absolute" alt="" />
-</div> -->
-
-    <div class="l-banner position-relative version_2">
-      <div class="p-banner__title position-absolute">
+    <div class="l-hero position-relative">
+      <div class="l-hero__copyWrap container">
         <img
           src="@/assets/images/sun1_0.png"
           width="70"
-          class="p-banner__title__sun position-absolute"
+          class="l-hero__copyWrap__sun position-absolute"
           alt=""
         />
-        <!-- 日日照你 -->
-      </div>
-      <!-- <div class="p-banner__copy d-flex align-items-baseline position-absolute">
-        <p
-          class="p-banner__copy__text position-relative"
-          data-aos="fade-down"
-          data-aos-offset="80"
-          data-aos-delay="50"
-          data-aos-duration="2000"
-          data-aos-easing="ease-in-out"
+        <div
+          class="l-hero__copyWrap__content"
+          data-aos="fade-right"
+          data-aos-easing="linear"
+          data-aos-delay="500"
+          data-aos-offset="10"
           data-aos-once="true"
-          style="top:30px"
+          data-aos-duration="1500"
         >
-          解決日照問題，
-        </p>
-
-        <p
-          class="p-banner__copy__text"
-          data-aos="fade-down"
-          data-aos-offset="80"
-          data-aos-delay="1000"
-          data-aos-duration="2000"
-          data-aos-easing="ease-in-out"
-          data-aos-once="true"
-        >
-          快速<span class="text-secondary">方便</span>的日照服務平台
-        </p>
-
-        <p
-          class="p-banner__copy__text position-relative"
-          data-aos="fade-down"
-          data-aos-offset="80"
-          data-aos-delay="1500"
-          data-aos-duration="2000"
-          data-aos-easing="ease-in-out"
-          data-aos-once="true"
-          style="top:30px"
-        >
-          將照顧重擔<span class="text-primary">託付</span>給我們
-        </p>
-      </div> -->
-
-      <div
-        id="carouselExampleFade"
-        class="banner carousel slide carousel-fade"
-        data-ride="carousel"
-      >
-        <div class="carousel-inner">
-          <div
-            class="carousel-item active"
-            :style="{
-              backgroundImage:
-                'url(' + require('@/assets/images/banner/2886679_l.jpg') + ')'
-            }"
-          >
-            1
-          </div>
-          <div
-            class="carousel-item"
-            :style="{
-              backgroundImage:
-                'url(' + require('@/assets/images/banner/2886626_m.jpg') + ')'
-            }"
-          >
-            2
-          </div>
-          <div
-            class="carousel-item"
-            :style="{
-              backgroundImage:
-                'url(' + require('@/assets/images/banner/2886668_m.jpg') + ')'
-            }"
-          >
-            2
-          </div>
+          <h1 class="display-3">Find your cares<br />Care you</h1>
+          <p class="lead">
+            日日照你，讓居家照顧不再是難事。
+          </p>
         </div>
       </div>
 
-      <img
-        src="@/assets/images/bg_l.svg"
-        class="l-banner__hrImg img-fluid position-absolute"
-        alt=""
-        style="bottom:-1px;z-index:1"
-      />
+      <div
+        class="l-hero__bg"
+        :style="{
+          backgroundImage:
+            'url(' + require('@/assets/images/banner/hero18.jpg') + ')'
+        }"
+      ></div>
     </div>
 
-    <!-- 
-<div class="p-search position-relative">
-<div class="container">
-  <div class="p-search__wrap">
-    <form>
-  <div class="form-row align-items-center">
-    <div class="col-sm-3 my-1 mr-0">
-      <select class="form-control">
-  <option>Default select</option>
-</select>
-    </div>
-  <div class="col-sm-3 my-1 mr-0">
-      <select class="form-control">
-  <option>Default select</option>
-</select>
-    </div>
-  <div class="col-sm-3 my-1 mr-0">
-      <input class="form-control" type="text" placeholder="Default input">
-    </div>
+    <section class="p-aboutUs">
+      <div class="container">
+        <div class="p-aboutUs__wrap row bg-white">
+          <div class="p-aboutUs__wrap__photo align-self-lg-center col-md-6">
+            <img
+              class="img-fluid"
+              src="@/assets/images/aboutMeImg.jpg"
+              alt=""
+            />
+          </div>
+          <div
+            class="p-aboutUs__wrap__underContent col-md-6"
+            data-aos="fade-right"
+            data-aos-easing="linear"
+            data-aos-delay="1500"
+            data-aos-once="true"
+            data-aos-duration="1500"
+          >
+            <div class="p-aboutUs__wrap__underContent__title">
+              <h2>關於日日照你</h2>
+              <small>ABOUT US SERVICE</small>
+            </div>
 
+            <div class="p-aboutUs__wrap__underContent__content">
+              <p>想找台籍看護？日日照你來幫您！</p>
+              <p>幫您紀錄家中長輩照護紀錄，讓照護簡單有保障</p>
+              <p>
+                資訊公開透明、雙向溝通無障礙，服務前可先看到照服員的資料及評價，並事先提問，讓您可以安心地將照顧重擔託付給我們。
+              </p>
+              <p>不論是居家照顧、醫院看護，日日照你幫您把關</p>
+            </div>
 
+            <router-link
+              tag="button"
+              class="btn btn-lg btn-primary"
+              to="/searchCares"
+              >尋找適合你的照顧服務員</router-link
+            >
+          </div>
+        </div>
+      </div>
+    </section>
 
-    <div class="col-auto my-1">
-      <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> 搜尋</button>
-    </div>
-  </div>
-</form>
-  </div>
-</div>
-</div> -->
-
-    <section
+    <!-- <section
       class="p-features bg-white"
       data-aos="fade-up"
       data-aos-duration="1500"
@@ -214,32 +100,10 @@
             >。不論是居家照顧、醫院看護，日日照你幫您把關
           </p>
         </div>
-        <img
-          src="@/assets/images/colud.svg"
-          class="bg_colud_1 img-fluid position-absolute"
-          alt=""
-        />
-        <img
-          src="@/assets/images/colud.svg"
-          class="bg_colud_2 img-fluid position-absolute"
-          alt=""
-        />
       </div>
-    </section>
+    </section> -->
 
-    <section class="p-serviceFlow position-relative bg-light">
-      <div class="p-serviceFlow__bg">
-        <img
-          src="@/assets/images/bg_gr_1.svg"
-          class="bg_gr_1 img-fluid position-absolute"
-          alt=""
-        />
-        <img
-          src="@/assets/images/bg_gr_2.svg"
-          class="bg_gr_2 img-fluid position-absolute"
-          alt=""
-        />
-      </div>
+    <!-- <section class="p-serviceFlow position-relative bg-light">
       <div class="container py-5">
         <h2 class="p-serviceFlow__title text-center border-bottom mb-0 p-0">
           平台流程
@@ -311,26 +175,30 @@
           </button>
         </div>
       </div>
-    </section>
+    </section> -->
 
     <section class="p-feedback">
-      <div
+      <!-- <div
         class="p-feedback__bg"
         :style="{
           backgroundImage:
             'url(' + require('@/assets/images/banner/feedback_bg.jpg') + ')'
         }"
-      ></div>
+      ></div> -->
       <div class="p-feedback__content position-relative">
-        <img
+        <!-- <img
           src="@/assets/images/Find_your_cares.svg"
           class="p-feedback__content__textBg img-fluid position-absolute"
           alt=""
-        />
-        <h2 class="p-feedback__content__title text-center mt-3 py-1 text-white">
+        /> -->
+        <div class="c-title text-center">
+          <h2>看看顧客怎麼說</h2>
+          <span>User Feedback</span>
+        </div>
+        <!-- <h2 class="p-feedback__content__title text-center mt-3 py-1">
           看看顧客怎麼說
         </h2>
-        <p class="text-center text-white">User Voice Feedback</p>
+        <p class="text-center">User Feedback</p> -->
         <div class="p-feedback__content__userFeedback position-relative">
           <div class="carousel slide" data-ride="carousel">
             <ul class="carousel-indicators">
@@ -577,135 +445,6 @@
           </div>
         </div>
       </div>
-      <!-- <button class="btn btn-primary btn-lg btn-black radius-5">立即尋找日照服務</button> -->
     </section>
-
-    <div class="常見問與答 container my-4 mb-5">
-      <h2 class="text-center">常見 Q&A</h2>
-      <div class="container">
-        <div class="cos bg-light p-5" style="border-radius: 10px;">
-          <div class="row">
-            <div class="col-md-6">
-              <div class="qablock">
-                <div class="d-flex justify-content-between align-items-center">
-                  家屬是否可中途解僱照服人員？
-                  <a
-                    class="btn btn-primary"
-                    data-toggle="collapse"
-                    role="button"
-                    href="#multiCollapseExample1"
-                    aria-expanded="false"
-                    aria-controls="multiCollapseExample1"
-                    >箭頭</a
-                  >
-                </div>
-                <div class="collapse multi-collapse" id="multiCollapseExample1">
-                  <div class="card card-body border-0">
-                    家屬與照服員雙方於服務期間皆可中途終止服務，但主動提出解約的一方須支付照服員日薪
-                    50% 作為解約金。
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6">
-              若照服員已確認接收訂單，家屬未付款？
-              <a
-                class="btn btn-primary"
-                data-toggle="collapse"
-                href="#multiCollapseExample2"
-                role="button"
-                aria-expanded="false"
-                aria-controls="multiCollapseExample1"
-                >Toggle first element</a
-              >
-              <div class="collapse multi-collapse" id="multiCollapseExample2">
-                <div class="card card-body">
-                  家屬與照服員雙方於服務期間皆可中途終止服務，但主動提出解約的一方須支付照服員日薪
-                  50% 作為解約金。
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6">
-              若照服員已確認接收訂單，家屬未付款？
-              <a
-                class="btn btn-primary"
-                data-toggle="collapse"
-                href="#multiCollapseExample3"
-                role="button"
-                aria-expanded="false"
-                aria-controls="multiCollapseExample1"
-                >Toggle first element</a
-              >
-              <div class="collapse multi-collapse" id="multiCollapseExample3">
-                <div class="card card-body">
-                  Anim pariatur cliche reprehenderit, enim eiusmod high life
-                  accusamus terry richardson ad squid. Nihil anim keffiyeh
-                  helvetica, craft beer labore wes anderson cred nesciunt
-                  sapiente ea proident.
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6">
-              照服員何時會收到薪水？
-              <a
-                class="btn btn-primary"
-                data-toggle="collapse"
-                href="#multiCollapseExample4"
-                role="button"
-                aria-expanded="false"
-                aria-controls="multiCollapseExample1"
-                >Toggle first element</a
-              >
-              <div class="collapse multi-collapse" id="multiCollapseExample4">
-                <div class="card card-body">
-                  Anim pariatur cliche reprehenderit, enim eiusmod high life
-                  accusamus terry richardson ad squid. Nihil anim keffiyeh
-                  helvetica, craft beer labore wes anderson cred nesciunt
-                  sapiente ea proident.
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6">
-              每日的服務時間起迄時間為何？
-              <a
-                class="btn btn-primary"
-                data-toggle="collapse"
-                href="#multiCollapseExampl5"
-                role="button"
-                aria-expanded="false"
-                aria-controls="multiCollapseExample1"
-                >Toggle first element</a
-              >
-              <div class="collapse multi-collapse" id="multiCollapseExample5">
-                <div class="card card-body">
-                  基本上每日服務時間為
-                  09:00-18:00，若欲調整時段，雙方協議可自行作調整。
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6">
-              照服員照服期間是否可中途解約？
-              <a
-                class="btn btn-primary"
-                data-toggle="collapse"
-                href="#multiCollapseExample6"
-                role="button"
-                aria-expanded="false"
-                aria-controls="multiCollapseExample1"
-                >Toggle first element</a
-              >
-              <div class="collapse multi-collapse" id="multiCollapseExample6">
-                <div class="card card-body">
-                  Anim pariatur cliche reprehenderit, enim eiusmod high life
-                  accusamus terry richardson ad squid. Nihil anim keffiyeh
-                  helvetica, craft beer labore wes anderson cred nesciunt
-                  sapiente ea proident.
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 </template>
