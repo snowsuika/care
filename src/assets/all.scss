@@ -3,10 +3,17 @@
 @import "./helpers/vue-multiselect";  //自定義的變數
 @import "~bootstrap/scss/bootstrap";
 
-//page
+//layout
 @import "./scss/layout";
+//元件
+@import "./scss/component";
 //page
-@import "./scss/index";
+@import "./scss/page/index";
+@import "./scss/page/bookingStep";
+@import "./scss/page/searchCares";
+@import "./scss/page/attentandPage";
+@import "./scss/page/question";
+@import "./scss/page/admin";
 
 
 a{
@@ -51,25 +58,9 @@ table{
   border-radius: 1.5rem !important;
 }
 
-.navbar.bg-white-opacity-7{
-background-color:rgba(255,255,255,0.8)!important
-
-}
-
-// index.html
-.qablock{
-  background-color: #fff;
-  border-radius: 10px;
-  padding: 10px;
-  margin-bottom: 10px;
-}
 
 
-.profirePhoto{
-  width: 120px;
-  height: 120px;
-  object-fit: cover;
-}
+
 
 .objectFit{
   object-fit: cover;
