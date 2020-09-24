@@ -1,6 +1,6 @@
 <template>
   <div class="table-responsive-md">
-    <loading :active.sync="isLoading"></loading>
+    <loading :active.sync="isLoading" loader="dots" color="#6A9232"></loading>
     <table class="table table-radius" v-if="orders">
       <tr class="table-light">
         <th class="text-center text-nowrap">被服務對象</th>

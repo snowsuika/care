@@ -5,7 +5,7 @@
         <img
           width="100"
           class="img-fluid"
-          src="@/assets/images/logo.svg"
+          src="@/assets/images/logo_v3.png"
           alt=""
         />
       </router-link>
@@ -45,13 +45,14 @@
             <router-link
               class="nav-link position-relative"
               :to="'/carePage/' + userInfo.userId"
-              ><i class="fas fa-bell"></i> 未回訊息
+              ><i class="fas fa-bell"></i> 問與答
               <span
+                v-if="notification"
                 class="bageReply badge badge-pill badge-secondary text-white"
                 >{{ notification }}</span
               >
               <span class="l-nav__enTitle text-center d-none d-md-block"
-                >NO REPLY</span
+                >MESSAGE</span
               >
             </router-link>
           </li>
@@ -202,6 +203,10 @@ export default {
     vm.$bus.$on('checkLogin', () => {
       vm.checkAuth();
     });
+    vm.$bus.$on('updateUnreply', attendantId => {
+      vm.getQuizQuantity(attendantId);
+      console.log(attendantId);
+    });
   },
   methods: {
     RegisterLoginModal(action) {
@@ -263,7 +268,7 @@ export default {
       vm.$http
         .get(api)
         .then(res => {
-          console.log(res.data);
+          // console.log('NavQuiz', res.data);
           if (!res.data.message) {
             let allQuizs = res.data; // 問與答
             let UnReplayNum = 0;

@@ -6,7 +6,7 @@
     aria-labelledby="staticBackdropLabel"
     aria-hidden="true"
   >
-    <loading :active.sync="isLoading"></loading>
+    <loading :active.sync="isLoading" loader="dots" color="#6A9232"></loading>
     <div class="modal-dialog modal-lg">
       <div class="modal-content radius-2">
         <div class="modal-body p-4">

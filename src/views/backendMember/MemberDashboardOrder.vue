@@ -1,6 +1,6 @@
 <template>
   <div>
-    <loading :active.sync="isLoading"></loading>
+    <loading :active.sync="isLoading" loader="dots" color="#6A9232"></loading>
     <div class="card shadow-sm">
       <div class="card-header">
         <ul class="nav nav-tabs card-header-tabs" id="nav-tab" role="tablist">

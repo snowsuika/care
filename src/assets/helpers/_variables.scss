@@ -47,15 +47,17 @@ $cyan:    #17a2b8 !default;
 $text-default-color:#666666;
 $text-default-gray:#ACACAC;
 
-// $care-green:         #3b751b ;
-$care-green:         #6A9232 ;
-$care-green-gray:    #e3ead8 ;
+$care-green:        #499d66 ; //主色
+// $care-green:         #6A9232 ; //主色-ver1
+// $care-green-gray:    #e6f1ed ; ver2
+$care-green-gray:    #EEF4F0 ;
+// $care-green-gray:    #e3ead8 ;//主色-ver1
 $care-brown:         #735933 ;
 $care-orange:        #FF9C39 ;
 $care-yellow:        #FAE56D ;
-$care-light-yellow:  #F6F3EE ;
+$care-light-yellow:  #f4f4ee ;
 $care-light-blue:    #E5EFEF ;
-$care-light-green:    #EFF3E9 ;
+$care-light-green:    #e9efeb ;
 // $care-green:    #35a44b !default;
 
 $colors: () !default;
@@ -93,7 +95,7 @@ $theme-colors: () !default;
 $theme-colors: map-merge(
   (
     "primary":    $primary,
-    "primary-soft":    $care-green-gray ,
+    "primary-soft":$care-green-gray ,
     "secondary":  $secondary,
     "success":    $success,
     "info":       $info,

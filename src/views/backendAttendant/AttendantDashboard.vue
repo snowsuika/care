@@ -1,11 +1,14 @@
 <template>
   <div class="p-adminPage">
-    <loading :active.sync="isLoading"></loading>
+    <loading :active.sync="isLoading" loader="dots" color="#6A9232"></loading>
     <navbar></navbar>
     <main>
       <div
         class="banner d-flex justify-content-center align-items-center bg-cover text-white"
-        style="height:250px;"
+        :style="{
+          backgroundImage:
+            'url(' + require('@/assets/images/banner/2886653_m.jpg') + ')'
+        }"
       ></div>
       <div class="container py-5" style="margin-top: -120px">
         <div class="row">

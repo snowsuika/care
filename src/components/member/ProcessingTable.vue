@@ -1,6 +1,6 @@
 <template>
   <div class="table-responsive">
-    <loading :active.sync="isLoading"></loading>
+    <loading :active.sync="isLoading" loader="dots" color="#6A9232"></loading>
 
     <!-- 傳送到金流 Form 表單 -->
     <form
@@ -31,8 +31,8 @@
 
       <tbody>
         <tr v-for="(order, index) in orders" :key="index">
-          <td class="text-center">{{ order.x.Elders.Name }}</td>
-          <td class="text-center">
+          <td class="text-center text-nowrap">{{ order.x.Elders.Name }}</td>
+          <td class="text-center text-nowrap">
             <img
               width="40"
               height="40"
@@ -53,15 +53,17 @@
               class="rounded-circle"
             />{{ order.x.Attendants.Name }}
           </td>
-          <td class="text-center">
+          <td class="text-center text-nowrap">
             <p>
               {{ order.startDate }} <br />
               {{ order.endDate }}
             </p>
           </td>
-          <td class="text-center">{{ order.x.Total | currency }}</td>
-          <td class="text-center">{{ order.OrderStatus }}</td>
-          <td class="text-center">
+          <td class="text-center text-nowrap">
+            {{ order.x.Total | currency }}
+          </td>
+          <td class="text-center text-nowrap">{{ order.OrderStatus }}</td>
+          <td class="text-center text-nowrap">
             <button
               type="button"
               class="btn btn-primary"
@@ -71,7 +73,7 @@
               付款
             </button>
           </td>
-          <td class="text-center">
+          <td class="text-center text-nowrap">
             <button
               type="button"
               class="btn btn-primary btn-primary-soft text-primary"
@@ -80,7 +82,7 @@
               取消訂單
             </button>
           </td>
-          <td class="text-center">
+          <td class="text-center text-nowrap">
             <button
               type="button"
               class="btn btn-primary-soft text-primary"

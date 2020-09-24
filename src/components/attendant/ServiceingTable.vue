@@ -1,6 +1,6 @@
 <template>
   <div class="table-responsive">
-    <loading :active.sync="isLoading"></loading>
+    <loading :active.sync="isLoading" loader="dots" color="#6A9232"></loading>
 
     <table class="table table-radius" v-if="orders">
       <tr class="table-light">

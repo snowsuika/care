@@ -1,6 +1,6 @@
 <template>
   <div class="p-QandA">
-    <loading :active.sync="isLoading"></loading>
+    <loading :active.sync="isLoading" loader="dots" color="#6A9232"></loading>
     <div class="p-QandA__content container">
       <div class="c-title text-center">
         <h2>常見 Q&A</h2>

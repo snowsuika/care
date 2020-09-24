@@ -48,9 +48,8 @@
             class="p-aboutUs__wrap__underContent col-md-6"
             data-aos="fade-right"
             data-aos-easing="linear"
-            data-aos-delay="1500"
             data-aos-once="true"
-            data-aos-duration="1500"
+            data-aos-duration="1000"
           >
             <div class="p-aboutUs__wrap__underContent__title">
               <h2>關於日日照你</h2>

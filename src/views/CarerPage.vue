@@ -1,6 +1,6 @@
 <template>
   <div class="p-attendResume">
-    <loading :active.sync="isLoading"></loading>
+    <loading :active.sync="isLoading" loader="dots" color="#6A9232"></loading>
 
     <!-- 照服員 -->
     <div class="container py-5">
@@ -302,11 +302,11 @@
               {{ resume.Salary | currency }} 元 * {{ this.dateDiff }} 日 =
               {{ (resume.Salary * this.dateDiff) | currency }}元
             </p>
-            <a
+            <!-- <a
               class="btn btn-primary-soft text-primary btn-lg btn-block"
               @click="focusQuizBtn()"
               >發出提問 <i class="fas fa-comment-dots"></i
-            ></a>
+            ></a> -->
             <button
               class="btn btn-primary btn-lg btn-block"
               @click="bookingCare()"
@@ -414,12 +414,14 @@ export default {
         .get(api)
         .then(res => {
           console.log('取得Q&A列表', res.data);
+
           // vm.quizs = res.data.filter(element => {
           //   return element.QuestionAnswers.length > 0 &&  !res.data.message;
           // });
 
           if (!res.data.message) {
             vm.quizs = res.data;
+            vm.$bus.$emit('updateUnreply', attendantId); //更新未讀取訊息數量
           }
 
           vm.isLoading = false;
@@ -509,7 +511,6 @@ export default {
       const api = `${process.env.VUE_APP_APIPATH}QuizReply`;
       let postObj = {
         QuestionId: quizId,
-        Attendant: '驚嚇倉鼠',
         Answer: vm.attentandQuizContent,
         Status: '1'
       };
@@ -518,6 +519,7 @@ export default {
         .then(res => {
           console.log('照服員送出回覆', res);
           // vm.$refs.attentandContent.reset();
+          vm.attentandQuizContent = '';
           vm.getQuizData();
         })
         .catch(err => {

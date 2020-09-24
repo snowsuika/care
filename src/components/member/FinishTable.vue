@@ -1,6 +1,6 @@
 <template>
   <div class="table-responsive">
-    <loading :active.sync="isLoading"></loading>
+    <loading :active.sync="isLoading" loader="dots" color="#6A9232"></loading>
     <table class="table table-radius" v-if="orders">
       <tbody>
         <tr class="table-light">
@@ -15,8 +15,8 @@
       </tbody>
       <tbody>
         <tr v-for="(order, index) in orders" :key="index">
-          <td class="text-center">{{ order.x.Elders.Name }}</td>
-          <td>
+          <td class="text-center text-nowrap">{{ order.x.Elders.Name }}</td>
+          <td class="text-center text-nowrap">
             <img
               width="40"
               height="40"
@@ -37,15 +37,17 @@
               class="rounded-circle"
             />{{ order.x.Attendants.Name }}
           </td>
-          <td>
+          <td class="text-center text-nowrap">
             <p>
               {{ order.startTime }} <br />
               {{ order.endTime }}
             </p>
           </td>
-          <td>{{ order.x.Total | currency }}</td>
-          <td>{{ order.status }}</td>
-          <td>
+          <td class="text-center text-nowrap">
+            {{ order.x.Total | currency }}
+          </td>
+          <td class="text-center text-nowrap">{{ order.status }}</td>
+          <td class="text-center text-nowrap">
             <button
               type="button"
               class="btn btn-primary-soft text-primary"
@@ -55,7 +57,7 @@
               照護紀錄
             </button>
           </td>
-          <td>
+          <td class="text-center text-nowrap">
             <button
               type="button"
               class="btn btn-primary-soft text-primary"

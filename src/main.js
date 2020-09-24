@@ -32,16 +32,7 @@ import 'vue-loading-overlay/dist/vue-loading.css';
 
 //vue-loading-overlay
 Vue.component('Loading', Loading);
-Vue.use(Loading, {
-  canCancel: false,
-  color: '#000000',
-  loader: 'dots', //spinner/dots/bars
-  width: 50,
-  height: 50,
-  backgroundColor: '#ffffff',
-  isFullPage: true,
-  opacity: 0.8
-});
+Vue.use(Loading);
 //Multiselect
 import Multiselect from 'vue-multiselect';
 
