@@ -1,5 +1,5 @@
 <template>
-  <ul class="nav flex-md-column justify-content-between">
+  <ul class="l-adminSidebar nav flex-md-column justify-content-between">
     <!-- 家屬端 -->
     <template v-if="this.identity == 'member'">
       <li class="nav-item">

@@ -157,15 +157,6 @@ $wizard-color-complete: #87d37c !default;
 $wizard-step-width-height: 64px !default;
 $wizard-step-font-size: 24px !default;
 
-@import 'https://fonts.googleapis.com/css?family=Roboto';
-
-body {
-  padding: 0;
-  margin: 0;
-  background-color: #fff;
-  font-family: 'Roboto', sans-serif;
-}
-
 .step-wrapper {
   padding: 20px 0;
   display: none;

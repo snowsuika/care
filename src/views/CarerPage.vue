@@ -1,6 +1,6 @@
 <template>
   <div class="p-attendResume">
-    <loading :active.sync="isLoading" loader="dots" color="#6A9232"></loading>
+    <loading :active.sync="isLoading" loader="dots" color="#499d66"></loading>
 
     <!-- 照服員 -->
     <div class="container py-5">
@@ -281,11 +281,15 @@
         >
           <div class="bg-white p-4" style="border-radius: 10px">
             <h3>預約服務</h3>
-            <p class="h5">{{ resume.Salary | currency }} / 日</p>
+            提請您，下單後您可以於「我的訂單」查看已預約訂單進度
+            <!-- <p class="h5 text-right">{{ resume.Salary | currency }} / 日</p> -->
             <form class="mt-4">
               <div class="form-row">
                 <div class="form-group col-12">
-                  <label for="inputEmail4">預約服務期間</label>
+                  <label for="inputEmail4"
+                    ><i class="far fa-calendar-alt text-primary"></i>
+                    預約服務期間</label
+                  >
                   <v-date-picker
                     mode="range"
                     v-model="range"
@@ -293,15 +297,24 @@
                     :min-date="new Date()"
                     :max-date="this.maxDate()"
                     :disabled-dates="this.disabledDates()"
-                    color="yellow"
+                    color="green"
                   />
                 </div>
               </div>
             </form>
-            <p class="text-secondary h5 mb-5">
-              {{ resume.Salary | currency }} 元 * {{ this.dateDiff }} 日 =
+            <div class="text-right mt-4">{{ resume.Salary | currency }} 元</div>
+
+            <div class="text-right border-bottom mb-1">
+              x {{ this.dateDiff }} 日
+            </div>
+
+            <div
+              class="text-secondary text-right mt-1 mb-2"
+              style="font-size:1.5rem"
+            >
               {{ (resume.Salary * this.dateDiff) | currency }}元
-            </p>
+            </div>
+
             <!-- <a
               class="btn btn-primary-soft text-primary btn-lg btn-block"
               @click="focusQuizBtn()"

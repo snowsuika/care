@@ -2,7 +2,7 @@
   <div class="home">
     <!-- banner -->
     <div class="l-hero position-relative">
-      <div class="l-hero__copyWrap container">
+      <div class="l-hero__copyWrap">
         <img
           src="@/assets/images/sun1_0.png"
           width="70"
@@ -226,8 +226,10 @@
                             <span class="fa fa-star text-secondary"></span>
                             <span class="fa fa-star text-secondary"></span>
                           </div>
-                          謝謝許先生幫忙，使我父親在照顧期間心情都很開心，也非常願意繼續做復健。
-                          讓我能夠安心且放心的上班。
+                          <p>
+                            謝謝許先生幫忙，使我父親在照顧期間心情都很開心，也非常願意繼續做復健。
+                            讓我能夠安心且放心的上班。
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -251,8 +253,11 @@
                             <span class="fa fa-star text-secondary"></span>
                             <span class="fa fa-star"></span>
                           </div>
-                          林小姐是非常非常棒的看護，與我媽媽的互動良好，很主動關心，還會提供非常多的專業建議。
-                          我媽媽在林小姐的照顧下，恢復良好丶精神愉快，非常推薦。
+
+                          <p>
+                            林小姐是非常非常棒的看護，與我媽媽的互動良好，很主動關心，還會提供非常多的專業建議。
+                            我媽媽在林小姐的照顧下，恢復良好丶精神愉快，非常推薦。
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -276,7 +281,10 @@
                             <span class="fa fa-star text-secondary"></span>
                             <span class="fa fa-star text-secondary"></span>
                           </div>
-                          非常感謝許先生臨危受命，從北投來到板橋為爸爸服務。許先生非常和善客氣，爸爸得到很好的照顧，真的非常感謝。
+
+                          <p>
+                            非常感謝許先生臨危受命，從北投來到板橋為爸爸服務。許先生非常和善客氣，爸爸得到很好的照顧，真的非常感謝。
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -302,7 +310,10 @@
                             <span class="fa fa-star text-secondary"></span>
                             <span class="fa fa-star text-secondary"></span>
                           </div>
-                          這是我第二次指定由蔡小姐來照顧我母親，這次蔡小姐幫我母親煮了一鍋入口及化的苦瓜雞，解決了我母親沒有牙齒又不能戴假牙享受美食的辛苦，然後回到家後我感受到母親是開心的，我知道因為有人陪她聊天，給了她不同的感觀。
+
+                          <p>
+                            這是我第二次指定由蔡小姐來照顧我母親，這次蔡小姐幫我母親煮了一鍋入口及化的苦瓜雞，解決了我母親沒有牙齒又不能戴假牙享受美食的辛苦，然後回到家後我感受到母親是開心的，我知道因為有人陪她聊天，給了她不同的感觀。
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -326,7 +337,9 @@
                             <span class="fa fa-star text-secondary"></span>
                             <span class="fa fa-star text-secondary"></span>
                           </div>
-                          態度親切、溝通協調優良的照護員，讓我們家庭主要照顧者有彈性能休息，可以把父親安心的交給他，給人很愉快的經驗
+                          <p>
+                            態度親切、溝通協調優良的照護員，讓我們家庭主要照顧者有彈性能休息，可以把父親安心的交給他，給人很愉快的經驗
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -350,8 +363,10 @@
                             <span class="fa fa-star text-secondary"></span>
                             <span class="fa fa-star text-secondary"></span>
                           </div>
-                          嘉玲照顧病人時非常溫柔、細心、貼心、戴口罩、勤洗手而且也會幫病患注意醫護人員的衛教重點。
-                          雖然現在疫情期間家屬的探病時間受限，但嘉玲可以獨當一面的陪伴照護～讓病患與家屬都可以感到安心放心。
+                          <p>
+                            嘉玲照顧病人時非常溫柔、細心、貼心、戴口罩、勤洗手而且也會幫病患注意醫護人員的衛教重點。
+                            雖然現在疫情期間家屬的探病時間受限，但嘉玲可以獨當一面的陪伴照護～讓病患與家屬都可以感到安心放心。
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -377,7 +392,9 @@
                             <span class="fa fa-star text-secondary"></span>
                             <span class="fa fa-star text-secondary"></span>
                           </div>
-                          非常有耐心，不厭其煩的協助母親術後復健，時間彈性都能配合，溝通上無障礙，令人滿意
+                          <p>
+                            非常有耐心，不厭其煩的協助母親術後復健，時間彈性都能配合，溝通上無障礙，令人滿意
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -401,8 +418,9 @@
                             <span class="fa fa-star text-secondary"></span>
                             <span class="fa fa-star text-secondary"></span>
                           </div>
-                          除認真照長輩之外，也會根據長輩的身體狀況循序漸進幫忙長輩做能力可即簡單的自理，非常用心
-                          ！
+                          <p>
+                            除認真照長輩之外，也會根據長輩的身體狀況循序漸進幫忙長輩做能力可即簡單的自理，非常用心！
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -426,7 +444,9 @@
                             <span class="fa fa-star text-secondary"></span>
                             <span class="fa fa-star text-secondary"></span>
                           </div>
-                          小陳專業、聰明，充分協助家屬處理失智長輩複雜的病情，協助出院遷至機構，安撫長輩適應新環境的能力優越，能有效減輕家屬負擔的優質照護員，如果最高五分，我會給他十分，非常推薦
+                          <p>
+                            小陳專業、聰明，充分協助家屬處理失智長輩複雜的病情，協助出院遷至機構，安撫長輩適應新環境的能力優越，能有效減輕家屬負擔的優質照護員，如果最高五分，我會給他十分，非常推薦
+                          </p>
                         </div>
                       </div>
                     </div>

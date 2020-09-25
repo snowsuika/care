@@ -1,6 +1,6 @@
 <template>
   <div>
-    <loading :active.sync="isLoading" loader="dots" color="#6A9232"></loading>
+    <loading :active.sync="isLoading" loader="dots" color="#499d66"></loading>
     <div
       class="modal fade"
       id="bookingCareer"
@@ -134,7 +134,9 @@
                                   v-model="orderInfo.ElderId"
                                   v-if="elders"
                                 >
-                                  <option selected>請選擇欲照護對象</option>
+                                  <option value="0" hidden
+                                    >請選擇欲照護對象</option
+                                  >
                                   <option
                                     v-for="(elder, index) in elders"
                                     :value="elder.x.Id"
@@ -329,10 +331,9 @@
 
                   <div v-show="currentstep == 2">
                     <div class="row mt-4">
-                      <div class="col-md-6">
-                        <h4 class="mb-3">
-                          目前身體狀況
-                        </h4>
+                      <div class="col-md-6 mb-3">
+                        <h5 class="text-primary">目前身體狀況</h5>
+
                         <div class="row">
                           <ul class="row no-gutters ml-4 list-unstyled">
                             <li class="col-12 col-md-6 mb-2">
@@ -435,10 +436,7 @@
                         </div>
                       </div>
                       <div class="col-md-6">
-                        <h4 class="mb-3">
-                          <i class="fas fa-wheelchair text-primary"></i>
-                          已有設備
-                        </h4>
+                        <h5 class="text-primary mb-3">已有設備</h5>
                         <div class="row">
                           <ul class="row no-gutters ml-4 list-unstyled">
                             <li class="col-12 col-md-6 mb-2">
@@ -541,9 +539,11 @@
                         </div>
                       </div>
                     </div>
+                    <hr />
                     <div class="row mt-4">
                       <div class="col-md-12">
-                        <h4 class="mb-3">填寫需服務項目</h4>
+                        <h5 class="text-primary mb-3">填寫需服務項目</h5>
+
                         <div class="row">
                           <ul class="row no-gutters ml-4 list-unstyled">
                             <li class="col-12 col-md-6 mb-2">
@@ -651,6 +651,7 @@
                   <div v-show="currentstep == 3">
                     <div class="row justify-content-center mt-4">
                       <div class="col-8">
+                        <h5 class="text-primary">緊急聯絡人資訊</h5>
                         <form class="row">
                           <div class="col-12 col-md-6 mb-2">
                             <validation-provider
@@ -810,7 +811,7 @@ export default {
       },
 
       orderInfo: {
-        ElderId: '', //當前病患Id
+        ElderId: '0', //當前病患Id
         attendantId: '',
         isManual: true //是否手動輸入
       },
@@ -892,7 +893,7 @@ export default {
       vm.$http
         .get(api)
         .then(res => {
-          console.log(res);
+          // console.log(res);
           vm.isLoading = false;
           vm.elders = res.data.elders;
         })
@@ -909,7 +910,7 @@ export default {
       vm.$http
         .get(api)
         .then(res => {
-          console.log(res);
+          // console.log(res);
           vm.orderInfo.ElderId = res.data.elders.Id;
           vm.elderInfo = {
             MemberId: res.data.elders.MemberId,

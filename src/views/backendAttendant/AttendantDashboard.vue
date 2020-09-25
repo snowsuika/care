@@ -1,6 +1,6 @@
 <template>
   <div class="p-adminPage">
-    <loading :active.sync="isLoading" loader="dots" color="#6A9232"></loading>
+    <loading :active.sync="isLoading" loader="dots" color="#499d66"></loading>
     <navbar></navbar>
     <main>
       <div
@@ -66,11 +66,7 @@ export default {
 </script>
 
 <style lang="scss">
-body {
-  background-color: #f6f3ee;
-}
 .banner {
-  background-color: gray;
   background-position: center;
   background-size: cover;
 }

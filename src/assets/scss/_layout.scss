@@ -1,17 +1,22 @@
-@font-face {
-  font-family: FakePearl-Regular;
-  src: url(https://cdn.jsdelivr.net/gh/max32002/FakePearl@1.1/webfont/FakePearl-Regular.woff2) format("woff2")
-  , url(https://cdn.jsdelivr.net/gh/max32002/FakePearl@1.1/webfont/FakePearl-Regular.woff) format("woff");
-}
+// @font-face {
+//   font-family: FakePearl-Regular;
+//   src: url(https://cdn.jsdelivr.net/gh/max32002/FakePearl@1.1/webfont/FakePearl-Regular.woff2) format("woff2")
+//   , url(https://cdn.jsdelivr.net/gh/max32002/FakePearl@1.1/webfont/FakePearl-Regular.woff) format("woff");
+// }
+
+@font-face {  
+  font-family: jf-openhuninn;  
+  src: url('./assets/font/jf-openhuninn-1.1.ttf')
+ } 
 
 body{
   color:$text-default-color;
 
-  background-color: $care-light-green;
+  background-color: #f5f4ee;
 
-  // font-family: 'FakePearl-Regular',-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-family: 'jf-openhuninn','FakePearl-Regular',-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 
-  font-family: 'FakePearl-Regular', serif;
+  // font-family: 'FakePearl-Regular', serif;
   // font-family: 'Noto Sans', serif;
 }
 
@@ -34,17 +39,17 @@ body{
   .bageReply{
     position: absolute;
     top: 2px;
-    left: 90px;
+    left: 80px;
   }
   .nav-link{
-    font-weight: 500;
+    font-weight: bold;
     .l-nav__enTitle{
       color: $text-default-gray;
       font-weight: 500;
       font-size: 11px;
     }
     &:hover{
-      background-color: $care-green-gray;
+      background-color: rgba($color: $primary, $alpha: 0.1);
     }
   }
 }

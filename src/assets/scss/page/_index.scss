@@ -2,11 +2,10 @@
   overflow: hidden;
   &__copyWrap {
     position: absolute;
-    // max-width: 1200px;
     top: 27%;
     z-index: 1;
     // border: 1px red solid;
-    left: 45%;
+    left: 30%;
     transform: translateX(-50%);
     &__sun {
       top: -58px;
@@ -19,7 +18,7 @@
       color: $white;
       text-shadow: 0 0 20px rgba($black, 0.65);
       .lead {
-        font-family: 'FakePearl-Regular';
+        font-family: 'jf-openhuninn';
         letter-spacing: 2px;
       }
     }
@@ -30,7 +29,7 @@
     background-position: center center;
     background-size: cover;
     animation: scale 13s linear 0s forwards, fade 1.5s ease-in 6s forwards;
-    height: 830px;
+    height: 700px;
     @media (max-width: 1200px) {
       height: 500px;
     }
@@ -164,6 +163,16 @@
     }
     &__userFeedback {
       margin-bottom: -150px;
+      .media-body{
+        p{
+          display: block;
+          display: -webkit-box;
+          -webkit-line-clamp: 3;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      }
       .carousel-indicators {
         bottom: 0;
 

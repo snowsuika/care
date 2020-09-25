@@ -5,7 +5,7 @@
         <img
           width="100"
           class="img-fluid"
-          src="@/assets/images/logo_v3.png"
+          src="@/assets/images/logo.svg"
           alt=""
         />
       </router-link>
