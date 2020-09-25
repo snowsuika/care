@@ -504,7 +504,7 @@ export default {
       vm.$http
         .patch(api, postForms, config)
         .then(res => {
-          console.log(res);
+          // console.log(res);
           let alertIcon =
             res.data.message == '更新資料成功' ? 'success' : 'error';
           vm.$swal({

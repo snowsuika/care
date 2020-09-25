@@ -731,7 +731,7 @@
                                 class="form-control"
                                 name=""
                                 id="remark"
-                                v-model="elderInfo.Remark"
+                                v-model="elderInfo.Remarks"
                                 rows="3"
                               ></textarea>
                             </div>
@@ -807,7 +807,7 @@ export default {
         Urgent: '',
         Relationship: '',
         Phone: '',
-        Remark: ''
+        Remarks: ''
       },
 
       orderInfo: {
@@ -879,7 +879,7 @@ export default {
           Urgent: '',
           Relationship: '',
           Phone: '',
-          Remark: ''
+          Remarks: ''
         };
       }
     },
@@ -926,7 +926,8 @@ export default {
             ServiceItems: res.data.elders.ServiceItems.split(','),
             Urgent: res.data.elders.Urgent,
             Relationship: res.data.elders.Relationship,
-            Phone: res.data.elders.Phone
+            Phone: res.data.elders.Phone,
+            Remarks: res.data.elders.Remarks
           };
           vm.isLoading = false;
         })
@@ -948,7 +949,7 @@ export default {
         Equipment: vm.elderInfo.Equipment.toString(), //後端要字串
         ServiceItems: vm.elderInfo.ServiceItems.toString() //後端要字串
       };
-
+      // console.log('postElder', postAddElder);
       let postData = '';
       if (vm.orderInfo.isManual) {
         postData = postAddElder;
@@ -959,13 +960,13 @@ export default {
           ...postAddElder
         };
       }
-      console.log(postData);
+      // console.log(postData);
       const api = `${process.env.VUE_APP_APIPATH}${apiAction}`;
 
       vm.isLoading = true;
       vm.$http[method](api, postData)
         .then(res => {
-          console.log(res);
+          // console.log(res);
           if (vm.orderInfo.isManual) {
             vm.orderInfo.ElderId = res.data.elder.Id;
           }
@@ -984,14 +985,14 @@ export default {
         StartDate: vm.bookingstart,
         EndDate: vm.bookingend
       };
-      console.log(orderDate);
+      // console.log(orderDate);
       const api = `${process.env.VUE_APP_APIPATH}AddOrder`;
       vm.isLoading = true;
 
       vm.$http
         .post(api, orderDate)
         .then(res => {
-          console.log(res);
+          // console.log(res);
           vm.$swal({
             toast: true,
             position: 'top-end',

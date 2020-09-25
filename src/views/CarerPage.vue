@@ -395,7 +395,7 @@ export default {
       vm.$http
         .get(api)
         .then(res => {
-          console.log('照服員個人頁面', res);
+          // console.log('照服員個人頁面', res);
           vm.resume = res.data.attendantDetails;
           vm.resume.servierCity =
             res.data.attendantDetails.Locationses[0].Cities.City;
@@ -426,7 +426,7 @@ export default {
       vm.$http
         .get(api)
         .then(res => {
-          console.log('取得Q&A列表', res.data);
+          // console.log('取得Q&A列表', res.data);
 
           // vm.quizs = res.data.filter(element => {
           //   return element.QuestionAnswers.length > 0 &&  !res.data.message;
@@ -529,8 +529,8 @@ export default {
       };
       vm.$http
         .post(api, postObj)
-        .then(res => {
-          console.log('照服員送出回覆', res);
+        .then(() => {
+          // console.log('照服員送出回覆', res);
           // vm.$refs.attentandContent.reset();
           vm.attentandQuizContent = '';
           vm.getQuizData();

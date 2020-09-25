@@ -205,7 +205,7 @@ export default {
     });
     vm.$bus.$on('updateUnreply', attendantId => {
       vm.getQuizQuantity(attendantId);
-      console.log(attendantId);
+      // console.log(attendantId);
     });
   },
   methods: {

@@ -97,7 +97,7 @@ export default {
       vm.$http
         .get(api)
         .then(res => {
-          console.log('未確認訂單', res);
+          // console.log('未確認訂單', res);
           vm.statusCount = res.data.count;
           vm.$emit('updateStatusCount', vm.statusCount); //更新未處理筆數數量
           vm.orders = res.data.orders;
@@ -118,8 +118,8 @@ export default {
       const api = `${process.env.VUE_APP_APIPATH}OrderAccept?id=${orderId}`;
       vm.$http
         .patch(api)
-        .then(res => {
-          console.log(res);
+        .then(() => {
+          // console.log(res);
           vm.$swal({
             toast: true,
             position: 'top-end',

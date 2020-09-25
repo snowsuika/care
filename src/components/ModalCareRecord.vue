@@ -101,11 +101,11 @@ export default {
       vm.$http
         .get(api)
         .then(res => {
-          console.log(res);
+          // console.log(res);
           vm.orderCardRecords = res.data;
           $('#orderCareRecord').modal('show');
           vm.orderId = orderId;
-          console.log(vm.orderId);
+          // console.log(vm.orderId);
           vm.isLoading = false;
         })
         .catch(err => {
@@ -124,7 +124,7 @@ export default {
           Remark: vm.Remark
         })
         .then(res => {
-          console.log(res.data);
+          // console.log(res.data);
 
           vm.$swal({
             toast: true,

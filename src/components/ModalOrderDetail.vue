@@ -75,7 +75,7 @@
               <tr>
                 <th class="bg-light text-nowrap">訂單備註</th>
                 <td colspan="3">
-                  {{ orderData.Remark }}
+                  {{ elderData.Remarks }}
                 </td>
               </tr>
             </tbody>
@@ -164,7 +164,7 @@ export default {
       vm.$http
         .get(api)
         .then(res => {
-          console.log('res.data', res.data);
+          // console.log('res.data', res.data);
           //訂單資訊
           vm.orderData = {
             OrderStatus: res.data.OrderStatus,

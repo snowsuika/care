@@ -172,7 +172,7 @@ export default {
       vm.$http
         .get(api)
         .then(res => {
-          console.log('已完成', res);
+          // console.log('已完成', res);
 
           vm.orders = res.data.order;
           vm.statusCount = res.data.count;

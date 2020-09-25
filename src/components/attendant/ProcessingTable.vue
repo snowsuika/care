@@ -72,7 +72,7 @@ export default {
       vm.$http
         .get(api)
         .then(res => {
-          console.log('處理中', res);
+          // console.log('處理中', res);
           vm.orders = res.data.orders;
           vm.statusCount = res.data.count;
           vm.$emit('updateStatusCount', vm.statusCount); //更新未處理筆數數量

@@ -148,7 +148,7 @@ export default {
       vm.$http
         .get(api)
         .then(res => {
-          console.log('待收款', res);
+          // console.log('待收款', res);
           vm.orders = res.data.order;
           vm.statusCount = res.data.count;
           vm.$emit('updateStatusCount', vm.statusCount); //更新未處理筆數數量

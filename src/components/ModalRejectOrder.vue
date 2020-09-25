@@ -92,7 +92,7 @@ export default {
           Cancel: vm.rejectReson
         })
         .then(res => {
-          console.log(res);
+          // console.log(res);
           vm.$swal({
             toast: true,
             position: 'top-end',

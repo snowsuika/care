@@ -98,7 +98,7 @@ export default {
       vm.$http
         .get(api)
         .then(res => {
-          console.log('家屬等待確認中', res);
+          // console.log('家屬等待確認中', res);
           vm.statusCount = res.data.count;
           vm.$emit('updateStatusCount', vm.statusCount); //更新未處理筆數數量
           vm.orders = res.data.orders;
@@ -112,12 +112,12 @@ export default {
     cancelOrder(orderId) {
       const vm = this;
       vm.isLoading = true;
-      console.log(orderId);
+      // console.log(orderId);
       const api = `${process.env.VUE_APP_APIPATH}CancelOrder?Id=${orderId}`; //參數是訂單Id
       vm.$http
         .patch(api)
-        .then(res => {
-          console.log(res);
+        .then(() => {
+          // console.log(res);
           vm.$swal({
             toast: true,
             position: 'top-end',

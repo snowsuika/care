@@ -83,7 +83,7 @@ export default {
   },
   methods: {
     getCardRecordData(orderId) {
-      console.log(orderId);
+      // console.log(orderId);
       const vm = this;
       vm.isLoading = true;
       vm.orderId = orderId;
@@ -93,7 +93,7 @@ export default {
       vm.$http
         .get(api)
         .then(res => {
-          console.log(res);
+          // console.log(res);
           vm.orderCardRecords = res.data;
           $('#orderCareRecord').modal('show');
           vm.isLoading = false;

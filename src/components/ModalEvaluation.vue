@@ -137,8 +137,8 @@ export default {
           Comment: vm.comment,
           isLoading: false
         })
-        .then(res => {
-          console.log(res);
+        .then(() => {
+          // console.log(res);
           vm.$swal({
             toast: true,
             position: 'top-end',

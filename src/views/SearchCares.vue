@@ -144,7 +144,7 @@ export default {
       vm.$http
         .get(api)
         .then(res => {
-          console.log(res);
+          // console.log(res);
           vm.attendants = res.data.attendants;
           vm.cities = res.data.cities;
           vm.selectedCity = res.data.locationses[0].CityId; //預設高雄

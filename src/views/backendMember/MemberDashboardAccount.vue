@@ -127,7 +127,7 @@ export default {
         .then(res => {
           vm.account = res.data.result;
           vm.isLoading = false;
-          console.log(res);
+          // console.log(res);
         })
         .catch(err => {
           console.log(err);
@@ -143,7 +143,7 @@ export default {
           Password: vm.password
         })
         .then(res => {
-          console.log(res);
+          // console.log(res);
           vm.$swal({
             toast: true,
             position: 'top-end',
