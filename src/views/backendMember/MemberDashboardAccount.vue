@@ -142,7 +142,7 @@ export default {
           Id: vm.userId,
           Password: vm.password
         })
-        .then(res => {
+        .then(() => {
           // console.log(res);
           vm.$swal({
             toast: true,

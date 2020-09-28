@@ -6,7 +6,7 @@
         class="banner d-flex justify-content-center align-items-center bg-cover text-white"
         :style="{
           backgroundImage:
-            'url(' + require('@/assets/images/banner/3698637_s.jpg') + ')'
+            'url(' + require('@/assets/images/banner/2886653_m.jpg') + ')'
         }"
       ></div>
       <!-- 照服員 -->

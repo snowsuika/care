@@ -11,10 +11,9 @@
     <!-- 照服員 -->
     <div class="container py-5">
       <div class="p-searchPage__serachBar p-2 mb-3">
-        <form class="form-inline">
-          <label class="sr-only" for="inlineFormInputName2">Name</label>
+        <form class="form-inline d-flex">
           <select
-            id="my-select"
+            id="ctiySelect"
             class="form-control mb-2 mr-sm-2"
             v-model="selectedCity"
             @change="useCitySearch(selectedCity)"
@@ -28,7 +27,7 @@
             >
           </select>
           <select
-            id="my-select"
+            id="areaSelect"
             class="form-control mb-2 mr-sm-2"
             name=""
             v-model="selectedArea"
@@ -39,6 +38,26 @@
               {{ area.Area }}</option
             >
           </select>
+          <div class="dropdown ml-auto">
+            <button
+              class="btn bg-white form-control dropdown-toggle mb-2 mr-sm-2"
+              type="button"
+              id="sortBtn"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              <i class="fas fa-filter"></i> 排序
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" href="#" @click.prevent="sort('inc')"
+                >評價由低到高</a
+              >
+              <a class="dropdown-item" href="#" @click.prevent="sort('dec')"
+                >評價由高到低</a
+              >
+            </div>
+          </div>
         </form>
       </div>
       <div v-if="!attendants">
@@ -124,7 +143,7 @@ export default {
   data() {
     return {
       isLoading: false,
-      attendants: {},
+      attendants: [],
       cities: [],
       areas: [],
       selectedCity: '',
@@ -135,6 +154,7 @@ export default {
   created() {
     this.getAttendantData();
   },
+
   methods: {
     getAttendantData() {
       const vm = this;
@@ -199,6 +219,16 @@ export default {
         .catch(err => {
           console.log(err);
         });
+    },
+    sort(sortMethod) {
+      let sortStartMethod = sortMethod == 'dec' ? 1 : -1;
+      function compare(a, b) {
+        if (a.star < b.star) return sortStartMethod;
+        if (a.star > b.star) return -sortStartMethod;
+        return 0;
+      }
+
+      this.attendants.sort(compare);
     }
   }
 };

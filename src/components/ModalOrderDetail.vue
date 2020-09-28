@@ -67,9 +67,11 @@
                 <th class="bg-light text-nowrap">雇用照服員</th>
                 <td>
                   {{ attendantsData.Name }}
-                  <router-link to="/carePage/Attendants.Id"
-                    >檢視照服員個人資料</router-link
-                  >
+                  <!-- <a
+                    href="#"
+                    @click.prevent="gotoAttendantPage(attendantsData.Id)"
+                    >檢視照服員個人資料</a
+                  > -->
                 </td>
               </tr>
               <tr>
@@ -144,6 +146,7 @@
 </template>
 
 <script>
+/* global $ */
 export default {
   data() {
     return {
@@ -191,6 +194,10 @@ export default {
         .catch(err => {
           console.log(err);
         });
+    },
+    gotoAttendantPage(attendantId) {
+      $('#orderDetail').modal('hide');
+      this.$router.push(`/carePage/${attendantId}`);
     }
   }
 };
