@@ -469,7 +469,7 @@ export default {
     },
     saveResume() {
       const api = `${process.env.VUE_APP_APIPATH}EditAttendantDetails`;
-      // const api = `https://ac5c70e2abec.ngrok.io/EditAttendantDetails`;
+      // const api = ` http://af28250ad7b4.ngrok.io/EditAttendantDetails`;
       const vm = this;
       vm.isLoading = true;
       let cityArray = vm.resume.city.map(element => {

@@ -98,7 +98,7 @@ export default {
       vm.$http
         .get(api)
         .then(res => {
-          // console.log('家屬等待確認中', res);
+          console.log('家屬等待確認中', res);
           vm.statusCount = res.data.count;
           vm.$emit('updateStatusCount', vm.statusCount); //更新未處理筆數數量
           vm.orders = res.data.orders;

@@ -47,7 +47,7 @@
             />
           </div>
           <div
-            class="p-aboutUs__wrap__underContent col-12 col-md-6"
+            class="p-aboutUs__wrap__underContent col-12 col-lg-6"
             data-aos="fade-right"
             data-aos-easing="linear"
             data-aos-once="true"
@@ -325,6 +325,7 @@
                             <span class="fa fa-star text-secondary"></span>
                             <span class="fa fa-star text-secondary"></span>
                           </div>
+
                           <p>
                             嘉玲照顧病人時非常溫柔、細心、貼心、戴口罩、勤洗手而且也會幫病患注意醫護人員的衛教重點。
                             雖然現在疫情期間家屬的探病時間受限，但嘉玲可以獨當一面的陪伴照護～讓病患與家屬都可以感到安心放心。

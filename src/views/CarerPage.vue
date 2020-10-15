@@ -532,6 +532,7 @@ export default {
         .then(() => {
           // console.log('照服員送出回覆', res);
           // vm.$refs.attentandContent.reset();
+
           vm.attentandQuizContent = '';
           vm.getQuizData();
         })

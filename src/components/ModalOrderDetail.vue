@@ -67,11 +67,11 @@
                 <th class="bg-light text-nowrap">雇用照服員</th>
                 <td>
                   {{ attendantsData.Name }}
-                  <!-- <a
+                  <a
                     href="#"
                     @click.prevent="gotoAttendantPage(attendantsData.Id)"
                     >檢視照服員個人資料</a
-                  > -->
+                  >
                 </td>
               </tr>
               <tr>

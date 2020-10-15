@@ -36,7 +36,9 @@ body{
 a{
   cursor: pointer;
 }
-
+a.nounderline {
+  text-decoration: none !important
+}
 //nav
 a.nav-link.active {
   background-color: #ecf3e2;

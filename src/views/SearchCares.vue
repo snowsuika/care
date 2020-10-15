@@ -33,7 +33,7 @@
             v-model="selectedArea"
             @change="useAreaSearch(selectedArea)"
           >
-            <option value="0">全部地區</option>
+            <option value="allArea">全部地區</option>
             <option v-for="area in areas" :key="area.Id" :value="`${area.Id}`">
               {{ area.Area }}</option
             >
@@ -63,13 +63,14 @@
       <div v-if="!attendants">
         目前這個縣市沒有任何照服員，請選擇其他縣市
       </div>
+
       <ul class="row list-unstyled">
         <router-link
           tag="li"
           class="col-12 col-lg-4 col-md-6 mb-4"
           v-for="attendant in attendants"
           :key="attendant.Id"
-          :to="`/carePage/${attendant.attendantId}`"
+          :to="`/carePage/${attendant.Id}`"
         >
           <div
             class="p-attendantCard d-flex flex-column justify-content-between bg-white radius-2 p-3 h-100"
@@ -80,10 +81,10 @@
                   width="120"
                   height="120"
                   class="p-attendantCard__photo rounded-circle "
-                  v-if="attendant.photo"
+                  v-if="attendant.Photo"
                   :src="
                     `http://careup.rocket-coding.com/Uploads/` +
-                      `${attendant.photo}`
+                      `${attendant.Photo}`
                   "
                 />
                 <img
@@ -95,12 +96,12 @@
                 />
                 <div class="ml-3">
                   <div class="p-attendantCard__name font-weight-bold">
-                    {{ attendant.name }}
+                    {{ attendant.Name }}
                   </div>
                   <div>{{ attendant.服務時段 }}</div>
 
                   <div class="p-attendantCard__salary text-primary mt-2">
-                    {{ attendant.salary | currency }}
+                    {{ attendant.Salary | currency }}
                     <span style="font-size:.85rem">元/日</span>
                   </div>
                 </div>
@@ -114,7 +115,7 @@
                 >
               </div>
               <p class="p-attendantCard__content p-2 mb-0">
-                {{ attendant.experience }}
+                {{ attendant.Experience }}
               </p>
             </div>
             <div class="rating d-flex justify-content-end">
@@ -147,7 +148,7 @@ export default {
       cities: [],
       areas: [],
       selectedCity: '',
-      selectedArea: 0,
+      selectedArea: 'allArea',
       rating: 0
     };
   },
@@ -159,32 +160,16 @@ export default {
     getAttendantData() {
       const vm = this;
       vm.isLoading = true;
-
-      const api = `${process.env.VUE_APP_APIPATH}SearchAttendant`;
+      const api = `${process.env.VUE_APP_APIPATH}City?Id=15`;
       vm.$http
         .get(api)
         .then(res => {
           // console.log(res);
           vm.attendants = res.data.attendants;
-          vm.cities = res.data.cities;
+          vm.cities = res.data.cityList;
           vm.selectedCity = res.data.locationses[0].CityId; //預設高雄
           vm.areas = res.data.locationses;
           vm.isLoading = false;
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    },
-    getArea() {
-      const vm = this;
-
-      const api = `${process.env.VUE_APP_APIPATH}City?Id=${vm.selectedCity}`;
-      vm.isLoading = true;
-      vm.$http
-        .get(api)
-        .then(res => {
-          vm.isLoading = false;
-          vm.areas = res.data.locationses;
         })
         .catch(err => {
           console.log(err);
@@ -199,6 +184,10 @@ export default {
         .then(res => {
           // console.log(res);
           vm.attendants = res.data.attendants;
+          if (res.data.locationses) {
+            vm.areas = res.data.locationses;
+            vm.selectedArea = 'allArea';
+          }
           vm.isLoading = false;
         })
         .catch(err => {
@@ -208,17 +197,21 @@ export default {
     useAreaSearch(areaId) {
       const vm = this;
       vm.isLoading = true;
-      const api = `${process.env.VUE_APP_APIPATH}Location?Id=${areaId}`;
-      vm.$http
-        .get(api)
-        .then(res => {
-          // console.log(res);
-          vm.attendants = res.data.attendants;
-          vm.isLoading = false;
-        })
-        .catch(err => {
-          console.log(err);
-        });
+      if (areaId == 'allArea') {
+        vm.useCitySearch(vm.selectedCity);
+      } else {
+        const api = `${process.env.VUE_APP_APIPATH}Location?Id=${areaId}`;
+        vm.$http
+          .get(api)
+          .then(res => {
+            // console.log('useAreaSearch', res);
+            vm.attendants = res.data.attendants;
+            vm.isLoading = false;
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      }
     },
     sort(sortMethod) {
       let sortStartMethod = sortMethod == 'dec' ? 1 : -1;

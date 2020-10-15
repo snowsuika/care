@@ -57,6 +57,9 @@
     min-height: 550px;
     position: relative;
     box-shadow: 0 0 20px 1px rgba(111, 111, 111, 0.2);
+    @media (max-width: 768px) {
+      min-height: 300px;
+    }
     &__photo {
       img {
         margin-left: -50px;
