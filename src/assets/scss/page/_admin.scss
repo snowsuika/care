@@ -1,5 +1,14 @@
 .p-adminPage{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
   .banner{
     height: 250px;
+  }
+}
+
+.l-adminSidebar{
+  a.nav-link.active{
+    background-color:$care-green-gray;
   }
 }

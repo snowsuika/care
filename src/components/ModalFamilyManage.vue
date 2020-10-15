@@ -8,7 +8,7 @@
     aria-labelledby="staticBackdropLabel"
     aria-hidden="true"
   >
-    <loading :active.sync="isLoading" loader="dots" color="#6A9232"></loading>
+    <loading :active.sync="isLoading" loader="dots" color="#499d66"></loading>
     <div class="modal-dialog modal-lg">
       <div class="modal-content radius-4">
         <div class="modal-body">
@@ -583,7 +583,7 @@
                           class="form-control"
                           name=""
                           id="remark"
-                          v-model="familyInfo.remark"
+                          v-model="familyInfo.Remarks"
                           rows="3"
                         ></textarea>
                       </div>
@@ -627,8 +627,8 @@ export default {
         ServiceItems: [], //後端要字串
         Urgent: '',
         Relationship: '',
-        Phone: ''
-        // remark: ''
+        Phone: '',
+        Remarks: ''
       },
       isLoading: false,
       editElderId: ''
@@ -713,7 +713,8 @@ export default {
             ServiceItems: res.data.elders.ServiceItems.split(','),
             Urgent: res.data.elders.Urgent,
             Relationship: res.data.elders.Relationship,
-            Phone: res.data.elders.Phone
+            Phone: res.data.elders.Phone,
+            Remarks: res.data.elders.Remarks
           };
 
           vm.isLoading = false;
@@ -750,8 +751,8 @@ export default {
       vm.isLoading = true;
 
       vm.$http[method](api, postData)
-        .then(res => {
-          console.log(res);
+        .then(() => {
+          // console.log(res);
           vm.$swal({
             toast: true,
             position: 'top-end',

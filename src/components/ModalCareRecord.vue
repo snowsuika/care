@@ -8,7 +8,7 @@
     aria-labelledby="staticBackdropLabel"
     aria-hidden="true"
   >
-    <loading :active.sync="isLoading" loader="dots" color="#6A9232"></loading>
+    <loading :active.sync="isLoading" loader="dots" color="#499d66"></loading>
     <div class="modal-dialog modal-lg">
       <div class="modal-content radius-2">
         <div class="modal-body p-4">
@@ -57,16 +57,16 @@
           <table class="table table-bordered">
             <tbody>
               <tr>
-                <th>服務日期</th>
+                <th width="130" class="text-center align-middle">服務日期</th>
                 <th>照服對象心情狀況</th>
-                <th>填寫時間</th>
+                <th width="130" class="text-center align-middle">填寫時間</th>
                 <th>備註</th>
               </tr>
               <tr v-for="(careRecord, index) in orderCardRecords" :key="index">
-                <td>{{ careRecord.date }}</td>
-                <td>{{ careRecord.mood }}</td>
-                <td>{{ careRecord.time }}</td>
-                <td>{{ careRecord.null }}</td>
+                <td class="text-center align-middle">{{ careRecord.date }}</td>
+                <td class="align-middle">{{ careRecord.mood }}</td>
+                <td class="align-middle">{{ careRecord.time }}</td>
+                <td class="text-center align-middle">{{ careRecord.null }}</td>
               </tr>
             </tbody>
           </table>
@@ -97,15 +97,14 @@ export default {
 
       const api = `${process.env.VUE_APP_APIPATH}GetLog?id=${orderId}`; //參數是訂單的id
       // const api = `${process.env.VUE_APP_APIPATH}GetLog?id=27`; //參數是訂單的id
-
       vm.$http
         .get(api)
         .then(res => {
-          console.log(res);
+          // console.log(res);
           vm.orderCardRecords = res.data;
           $('#orderCareRecord').modal('show');
           vm.orderId = orderId;
-          console.log(vm.orderId);
+          // console.log(vm.orderId);
           vm.isLoading = false;
         })
         .catch(err => {
@@ -124,7 +123,7 @@ export default {
           Remark: vm.Remark
         })
         .then(res => {
-          console.log(res.data);
+          // console.log(res.data);
 
           vm.$swal({
             toast: true,

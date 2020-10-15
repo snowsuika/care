@@ -1,6 +1,6 @@
 <template>
   <div>
-    <loading :active.sync="isLoading"></loading>
+    <loading :active.sync="isLoading" loader="dots" color="#499d66"></loading>
     <div
       class="modal fade"
       id="bookingCareer"
@@ -564,7 +564,7 @@ export default {
     validateOnBack: Boolean,
     color: {
       type: String,
-      default: '#6A9232'
+      default: '#499d66'
     },
 
     startIndex: {
@@ -589,7 +589,7 @@ export default {
       vm.$http
         .post(api, orderDate)
         .then(res => {
-          console.log(res);
+          // console.log(res);
           vm.$swal({
             toast: true,
             position: 'top-end',

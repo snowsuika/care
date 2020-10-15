@@ -3,7 +3,7 @@
     class="bg-white shadow-sm
                         radius-3 p-4"
   >
-    <loading :active.sync="isLoading" loader="dots" color="#6A9232"></loading>
+    <loading :active.sync="isLoading" loader="dots" color="#499d66"></loading>
     <div class="text-right mb-4">
       <button
         type="button"
@@ -89,7 +89,7 @@ export default {
       vm.$http
         .get(api)
         .then(res => {
-          console.log('家屬管理', res);
+          // console.log('家屬管理', res);
           vm.isLoading = false;
           vm.elders = res.data.elders;
         })

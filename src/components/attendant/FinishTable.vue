@@ -1,6 +1,6 @@
 <template>
   <div class="table-responsive">
-    <loading :active.sync="isLoading" loader="dots" color="#6A9232"></loading>
+    <loading :active.sync="isLoading" loader="dots" color="#499d66"></loading>
     <table class="table table-radius" v-if="orders">
       <tr class="table-light">
         <th class="text-center text-nowrap">家屬姓名</th>
@@ -29,7 +29,7 @@
               type="button"
               class="btn btn-primary-soft text-primary"
               data-toggle="modal"
-              @click="showCardRecord(order.x.Id)"
+              @click="showCareDetail(order.x.Id)"
             >
               照護紀錄
             </button>
@@ -146,13 +146,16 @@
     </table>
     <p v-else>目前尚無已完成訂單</p>
     <modal-order-detail ref="orderDetailModal"></modal-order-detail>
-    <modal-care-record ref="orderCardRecordModal"></modal-care-record>
+    <!-- <modal-care-record ref="orderCardRecordModal"></modal-care-record> -->
+    <modal-care-record-detail
+      ref="orderCareDetailModal"
+    ></modal-care-record-detail>
   </div>
 </template>
 
 <script>
 import ModalOrderDetail from '@/components/ModalOrderDetail.vue';
-import ModalCareRecord from '@/components/ModalCareRecord.vue';
+import ModalCareRecordDetail from '@/components/ModalCareRecordDetail.vue';
 export default {
   data() {
     return {
@@ -164,7 +167,7 @@ export default {
   props: ['user-id', 'identity'],
   components: {
     ModalOrderDetail,
-    ModalCareRecord
+    ModalCareRecordDetail
   },
   created() {
     this.getFinishData();
@@ -179,7 +182,7 @@ export default {
       vm.$http
         .get(api)
         .then(res => {
-          console.log('已完成', res);
+          // console.log('已完成', res);
           vm.orders = res.data.order;
           vm.statusCount = res.data.count;
           vm.$emit('updateStatusCount', vm.statusCount); //更新未處理筆數數量
@@ -192,8 +195,8 @@ export default {
     showOrderDetail(orderId) {
       this.$refs.orderDetailModal.getOrderData(orderId, this.identity);
     },
-    showCardRecord(orderId) {
-      this.$refs.orderCardRecordModal.getCardRecordData(orderId);
+    showCareDetail(orderId) {
+      this.$refs.orderCareDetailModal.getCardRecordData(orderId);
     }
   }
 };

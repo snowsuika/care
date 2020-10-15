@@ -1,6 +1,6 @@
 <template>
   <div class="p-searchPage">
-    <loading :active.sync="isLoading" loader="dots" color="#6A9232"></loading>
+    <loading :active.sync="isLoading" loader="dots" color="#499d66"></loading>
     <div
       class="p-searchPage__banner d-flex justify-content-center align-items-center text-white"
       :style="{
@@ -11,10 +11,9 @@
     <!-- 照服員 -->
     <div class="container py-5">
       <div class="p-searchPage__serachBar p-2 mb-3">
-        <form class="form-inline">
-          <label class="sr-only" for="inlineFormInputName2">Name</label>
+        <form class="form-inline d-flex">
           <select
-            id="my-select"
+            id="ctiySelect"
             class="form-control mb-2 mr-sm-2"
             v-model="selectedCity"
             @change="useCitySearch(selectedCity)"
@@ -28,29 +27,50 @@
             >
           </select>
           <select
-            id="my-select"
+            id="areaSelect"
             class="form-control mb-2 mr-sm-2"
             name=""
             v-model="selectedArea"
             @change="useAreaSearch(selectedArea)"
           >
-            <option value="0">全部地區</option>
+            <option value="allArea">全部地區</option>
             <option v-for="area in areas" :key="area.Id" :value="`${area.Id}`">
               {{ area.Area }}</option
             >
           </select>
+          <div class="dropdown ml-auto">
+            <button
+              class="btn bg-white form-control dropdown-toggle mb-2 mr-sm-2"
+              type="button"
+              id="sortBtn"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              <i class="fas fa-filter"></i> 排序
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" href="#" @click.prevent="sort('inc')"
+                >評價由低到高</a
+              >
+              <a class="dropdown-item" href="#" @click.prevent="sort('dec')"
+                >評價由高到低</a
+              >
+            </div>
+          </div>
         </form>
       </div>
       <div v-if="!attendants">
         目前這個縣市沒有任何照服員，請選擇其他縣市
       </div>
+
       <ul class="row list-unstyled">
         <router-link
           tag="li"
           class="col-12 col-lg-4 col-md-6 mb-4"
           v-for="attendant in attendants"
           :key="attendant.Id"
-          :to="`/carePage/${attendant.attendantId}`"
+          :to="`/carePage/${attendant.Id}`"
         >
           <div
             class="p-attendantCard d-flex flex-column justify-content-between bg-white radius-2 p-3 h-100"
@@ -61,10 +81,10 @@
                   width="120"
                   height="120"
                   class="p-attendantCard__photo rounded-circle "
-                  v-if="attendant.photo"
+                  v-if="attendant.Photo"
                   :src="
                     `http://careup.rocket-coding.com/Uploads/` +
-                      `${attendant.photo}`
+                      `${attendant.Photo}`
                   "
                 />
                 <img
@@ -76,12 +96,12 @@
                 />
                 <div class="ml-3">
                   <div class="p-attendantCard__name font-weight-bold">
-                    {{ attendant.name }}
+                    {{ attendant.Name }}
                   </div>
                   <div>{{ attendant.服務時段 }}</div>
 
                   <div class="p-attendantCard__salary text-primary mt-2">
-                    {{ attendant.salary | currency }}
+                    {{ attendant.Salary | currency }}
                     <span style="font-size:.85rem">元/日</span>
                   </div>
                 </div>
@@ -95,7 +115,7 @@
                 >
               </div>
               <p class="p-attendantCard__content p-2 mb-0">
-                {{ attendant.experience }}
+                {{ attendant.Experience }}
               </p>
             </div>
             <div class="rating d-flex justify-content-end">
@@ -124,47 +144,32 @@ export default {
   data() {
     return {
       isLoading: false,
-      attendants: {},
+      attendants: [],
       cities: [],
       areas: [],
       selectedCity: '',
-      selectedArea: 0,
+      selectedArea: 'allArea',
       rating: 0
     };
   },
   created() {
     this.getAttendantData();
   },
+
   methods: {
     getAttendantData() {
       const vm = this;
       vm.isLoading = true;
-
-      const api = `${process.env.VUE_APP_APIPATH}SearchAttendant`;
+      const api = `${process.env.VUE_APP_APIPATH}City?Id=15`;
       vm.$http
         .get(api)
         .then(res => {
-          console.log(res);
+          // console.log(res);
           vm.attendants = res.data.attendants;
-          vm.cities = res.data.cities;
+          vm.cities = res.data.cityList;
           vm.selectedCity = res.data.locationses[0].CityId; //預設高雄
           vm.areas = res.data.locationses;
           vm.isLoading = false;
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    },
-    getArea() {
-      const vm = this;
-
-      const api = `${process.env.VUE_APP_APIPATH}City?Id=${vm.selectedCity}`;
-      vm.isLoading = true;
-      vm.$http
-        .get(api)
-        .then(res => {
-          vm.isLoading = false;
-          vm.areas = res.data.locationses;
         })
         .catch(err => {
           console.log(err);
@@ -179,6 +184,10 @@ export default {
         .then(res => {
           // console.log(res);
           vm.attendants = res.data.attendants;
+          if (res.data.locationses) {
+            vm.areas = res.data.locationses;
+            vm.selectedArea = 'allArea';
+          }
           vm.isLoading = false;
         })
         .catch(err => {
@@ -188,17 +197,31 @@ export default {
     useAreaSearch(areaId) {
       const vm = this;
       vm.isLoading = true;
-      const api = `${process.env.VUE_APP_APIPATH}Location?Id=${areaId}`;
-      vm.$http
-        .get(api)
-        .then(res => {
-          // console.log(res);
-          vm.attendants = res.data.attendants;
-          vm.isLoading = false;
-        })
-        .catch(err => {
-          console.log(err);
-        });
+      if (areaId == 'allArea') {
+        vm.useCitySearch(vm.selectedCity);
+      } else {
+        const api = `${process.env.VUE_APP_APIPATH}Location?Id=${areaId}`;
+        vm.$http
+          .get(api)
+          .then(res => {
+            // console.log('useAreaSearch', res);
+            vm.attendants = res.data.attendants;
+            vm.isLoading = false;
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      }
+    },
+    sort(sortMethod) {
+      let sortStartMethod = sortMethod == 'dec' ? 1 : -1;
+      function compare(a, b) {
+        if (a.star < b.star) return sortStartMethod;
+        if (a.star > b.star) return -sortStartMethod;
+        return 0;
+      }
+
+      this.attendants.sort(compare);
     }
   }
 };

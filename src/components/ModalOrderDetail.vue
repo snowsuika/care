@@ -6,7 +6,7 @@
     aria-labelledby="staticBackdropLabel"
     aria-hidden="true"
   >
-    <loading :active.sync="isLoading" loader="dots" color="#6A9232"></loading>
+    <loading :active.sync="isLoading" loader="dots" color="#499d66"></loading>
     <div class="modal-dialog modal-lg">
       <div class="modal-content radius-2">
         <div class="modal-body p-4">
@@ -67,15 +67,17 @@
                 <th class="bg-light text-nowrap">雇用照服員</th>
                 <td>
                   {{ attendantsData.Name }}
-                  <router-link to="/carePage/Attendants.Id"
-                    >檢視照服員個人資料</router-link
+                  <a
+                    href="#"
+                    @click.prevent="gotoAttendantPage(attendantsData.Id)"
+                    >檢視照服員個人資料</a
                   >
                 </td>
               </tr>
               <tr>
                 <th class="bg-light text-nowrap">訂單備註</th>
                 <td colspan="3">
-                  {{ orderData.Remark }}
+                  {{ elderData.Remarks }}
                 </td>
               </tr>
             </tbody>
@@ -144,6 +146,7 @@
 </template>
 
 <script>
+/* global $ */
 export default {
   data() {
     return {
@@ -164,7 +167,7 @@ export default {
       vm.$http
         .get(api)
         .then(res => {
-          console.log('res.data', res.data);
+          // console.log('res.data', res.data);
           //訂單資訊
           vm.orderData = {
             OrderStatus: res.data.OrderStatus,
@@ -191,6 +194,10 @@ export default {
         .catch(err => {
           console.log(err);
         });
+    },
+    gotoAttendantPage(attendantId) {
+      $('#orderDetail').modal('hide');
+      this.$router.push(`/carePage/${attendantId}`);
     }
   }
 };

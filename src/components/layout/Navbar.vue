@@ -5,7 +5,7 @@
         <img
           width="100"
           class="img-fluid"
-          src="@/assets/images/logo_v3.png"
+          src="@/assets/images/logo.svg"
           alt=""
         />
       </router-link>
@@ -25,7 +25,7 @@
           <li class="nav-item">
             <router-link class="nav-link" to="/searchCares"
               >尋找日照服務
-              <span class="l-nav__enTitle text-center d-none d-md-block"
+              <span class="l-nav__enTitle text-center d-none d-lg-block"
                 >FIND CARES</span
               >
             </router-link>
@@ -33,7 +33,7 @@
           <li class="nav-item">
             <router-link class="nav-link" to="/question"
               >常見問題
-              <span class="l-nav__enTitle text-center d-none d-md-block"
+              <span class="l-nav__enTitle text-center d-none d-lg-block"
                 >Q&A</span
               >
             </router-link>
@@ -51,7 +51,7 @@
                 class="bageReply badge badge-pill badge-secondary text-white"
                 >{{ notification }}</span
               >
-              <span class="l-nav__enTitle text-center d-none d-md-block"
+              <span class="l-nav__enTitle text-center d-none d-lg-block"
                 >MESSAGE</span
               >
             </router-link>
@@ -60,7 +60,7 @@
           <li class="nav-item" v-if="!userInfo.token">
             <a class="nav-link" @click="RegisterLoginModal('register')"
               >註冊新帳號
-              <span class="l-nav__enTitle text-center d-none d-md-block"
+              <span class="l-nav__enTitle text-center d-none d-lg-block"
                 >SIGN IN</span
               ></a
             >
@@ -71,7 +71,7 @@
               @click="RegisterLoginModal('login')"
             >
               會員登入
-              <span class="l-nav__enTitle text-center d-none d-md-block"
+              <span class="l-nav__enTitle text-center d-none d-lg-block"
                 >LOGIN IN</span
               >
             </a>
@@ -205,7 +205,7 @@ export default {
     });
     vm.$bus.$on('updateUnreply', attendantId => {
       vm.getQuizQuantity(attendantId);
-      console.log(attendantId);
+      // console.log(attendantId);
     });
   },
   methods: {

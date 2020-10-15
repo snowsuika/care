@@ -1,6 +1,6 @@
 <template>
   <div class="table-responsive">
-    <loading :active.sync="isLoading" loader="dots" color="#6A9232"></loading>
+    <loading :active.sync="isLoading" loader="dots" color="#499d66"></loading>
 
     <!-- 傳送到金流 Form 表單 -->
     <form
@@ -129,7 +129,7 @@ export default {
       vm.$http
         .get(api)
         .then(res => {
-          console.log('家屬處理中', res);
+          // console.log('家屬處理中', res);
           vm.orders = res.data.orders;
           vm.statusCount = res.data.count;
           vm.$emit('updateStatusCount', vm.statusCount); //更新未處理筆數數量
@@ -143,7 +143,7 @@ export default {
       this.$refs.orderDetailModal.getOrderData(orderId, this.identity);
     },
     payInfoToBack(orderId) {
-      console.log(orderId);
+      // console.log(orderId);
       const vm = this;
       // const api = `http://36b2fa41bb08.ngrok.io/SpgatewayPayBill`;
       const api = `http://careup.rocket-coding.com/SpgatewayPayBill`;
@@ -152,7 +152,7 @@ export default {
           OrderId: orderId
         })
         .then(res => {
-          console.log(res);
+          // console.log(res);
           vm.NewebpayData = res.data;
           setTimeout(() => {
             $('#toNewebpayFrom').trigger('submit');
@@ -165,12 +165,12 @@ export default {
     cancelOrder(orderId) {
       const vm = this;
       vm.isLoading = true;
-      console.log(orderId);
+      // console.log(orderId);
       const api = `${process.env.VUE_APP_APIPATH}CancelOrder?Id=${orderId}`; //參數是訂單Id
       vm.$http
         .patch(api)
-        .then(res => {
-          console.log(res);
+        .then(() => {
+          // console.log(res);
           vm.$swal({
             toast: true,
             position: 'top-end',

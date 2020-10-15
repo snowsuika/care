@@ -1,6 +1,6 @@
 <template>
   <div>
-    <loading :active.sync="isLoading" loader="dots" color="#6A9232"></loading>
+    <loading :active.sync="isLoading" loader="dots" color="#499d66"></loading>
     <div
       class="modal fade"
       id="evaluation"
@@ -137,8 +137,8 @@ export default {
           Comment: vm.comment,
           isLoading: false
         })
-        .then(res => {
-          console.log(res);
+        .then(() => {
+          // console.log(res);
           vm.$swal({
             toast: true,
             position: 'top-end',

@@ -3,7 +3,7 @@
     class="bg-white shadow-sm
                         radius-3 p-4"
   >
-    <loading :active.sync="isLoading" loader="dots" color="#6A9232"></loading>
+    <loading :active.sync="isLoading" loader="dots" color="#499d66"></loading>
     <h4 class="mb-3">修改會員密碼</h4>
 
     <validation-observer ref="observer" v-slot="{ invalid }">
@@ -127,7 +127,7 @@ export default {
         .then(res => {
           vm.account = res.data.result;
           vm.isLoading = false;
-          console.log(res);
+          // console.log(res);
         })
         .catch(err => {
           console.log(err);
@@ -142,8 +142,8 @@ export default {
           Id: vm.userId,
           Password: vm.password
         })
-        .then(res => {
-          console.log(res);
+        .then(() => {
+          // console.log(res);
           vm.$swal({
             toast: true,
             position: 'top-end',

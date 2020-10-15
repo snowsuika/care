@@ -1,6 +1,6 @@
 <template>
   <div class="table-responsive">
-    <loading :active.sync="isLoading" loader="dots" color="#6A9232"></loading>
+    <loading :active.sync="isLoading" loader="dots" color="#499d66"></loading>
     <table class="table table-radius" v-if="orders">
       <tr class="table-light">
         <th class="text-center text-nowrap">家屬姓名</th>
@@ -148,7 +148,7 @@ export default {
       vm.$http
         .get(api)
         .then(res => {
-          console.log('待收款', res);
+          // console.log('待收款', res);
           vm.orders = res.data.order;
           vm.statusCount = res.data.count;
           vm.$emit('updateStatusCount', vm.statusCount); //更新未處理筆數數量

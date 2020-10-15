@@ -3,7 +3,7 @@
     class="bg-white shadow-sm
                         radius-3 p-4"
   >
-    <loading :active.sync="isLoading" loader="dots" color="#6A9232"></loading>
+    <loading :active.sync="isLoading" loader="dots" color="#499d66"></loading>
     <h4 class="mb-3">照服員基本資料</h4>
     <validation-observer ref="observer" v-slot="{ invalid }">
       <form class="mx-auto" style="max-width:600px">
@@ -14,7 +14,7 @@
               alt="照服員照片"
               width="150"
               height="150"
-              class="rounded-circle profirePhoto"
+              class="rounded-circle objectFit"
             />
           </div>
           <div class="col-md-8">
@@ -124,7 +124,7 @@
           ><span class="text-danger">*</span> 服務地區</label
         >
         <div class="row mb-3">
-          <div class="col-6">
+          <div class="col-3">
             <select
               v-model="resume.servicePlaceSelected"
               class="custom-select"
@@ -141,7 +141,7 @@
               >
             </select>
           </div>
-          <div class="col-6 mb-3">
+          <div class="col-9">
             <multiselect
               v-model="resume.city"
               placeholder="請搜尋地區"
@@ -194,7 +194,7 @@
                 type="radio"
                 id="serviceTime01"
                 v-model="resume.serviceTime"
-                value="01"
+                value="1"
                 name="服務時段"
                 class="custom-control-input"
                 checked
@@ -208,7 +208,7 @@
                 type="radio"
                 id="serviceTime02"
                 v-model="resume.serviceTime"
-                value="02"
+                value="2"
                 name="服務時段"
                 class="custom-control-input"
               />
@@ -221,7 +221,7 @@
                 type="radio"
                 id="serviceTime03"
                 v-model="resume.serviceTime"
-                value="03"
+                value="3"
                 name="服務時段"
                 class="custom-control-input"
               />
@@ -431,6 +431,7 @@ export default {
       vm.$http
         .get(api)
         .then(res => {
+          // console.log('resume', res.data);
           const resUserData = res.data.attendant;
           vm.serviceAllPlace = res.data.cities; //後端給全部縣市下拉
           if (resUserData.Name) {
@@ -468,6 +469,7 @@ export default {
     },
     saveResume() {
       const api = `${process.env.VUE_APP_APIPATH}EditAttendantDetails`;
+      // const api = ` http://af28250ad7b4.ngrok.io/EditAttendantDetails`;
       const vm = this;
       vm.isLoading = true;
       let cityArray = vm.resume.city.map(element => {
@@ -503,7 +505,7 @@ export default {
       vm.$http
         .patch(api, postForms, config)
         .then(res => {
-          console.log(res);
+          // console.log(res);
           let alertIcon =
             res.data.message == '更新資料成功' ? 'success' : 'error';
           vm.$swal({

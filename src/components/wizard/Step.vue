@@ -5,7 +5,7 @@
         type="button"
         class="btn btn-primary-soft text-primary"
         @click="lastStep"
-        :class="{invisible:firststep}"
+        :class="{ invisible: firststep }"
         :disabled="firststep"
       >
         上一步
@@ -13,13 +13,12 @@
       <button
         type="button"
         class="btn btn-primary-soft text-primary"
-        :class="{invisible:laststep}"
+        :class="{ invisible: laststep }"
         @click="nextStep"
         :disabled="laststep"
       >
         下一步
       </button>
-
     </div>
   </div>
 </template>

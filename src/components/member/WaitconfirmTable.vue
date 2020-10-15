@@ -1,6 +1,6 @@
 <template>
   <div class="table-responsive-md">
-    <loading :active.sync="isLoading" loader="dots" color="#6A9232"></loading>
+    <loading :active.sync="isLoading" loader="dots" color="#499d66"></loading>
     <table class="table table-radius" v-if="orders">
       <tr class="table-light">
         <th class="text-center text-nowrap">被服務對象</th>
@@ -112,12 +112,12 @@ export default {
     cancelOrder(orderId) {
       const vm = this;
       vm.isLoading = true;
-      console.log(orderId);
+      // console.log(orderId);
       const api = `${process.env.VUE_APP_APIPATH}CancelOrder?Id=${orderId}`; //參數是訂單Id
       vm.$http
         .patch(api)
-        .then(res => {
-          console.log(res);
+        .then(() => {
+          // console.log(res);
           vm.$swal({
             toast: true,
             position: 'top-end',

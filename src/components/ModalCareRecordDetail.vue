@@ -1,6 +1,6 @@
 <template>
   <div>
-    <loading :active.sync="isLoading" loader="dots" color="#6A9232"></loading>
+    <loading :active.sync="isLoading" loader="dots" color="#499d66"></loading>
     <div
       class="modal fade"
       id="orderCareRecord"
@@ -23,16 +23,16 @@
             <table class="table table-bordered" v-if="orderCardRecords.length">
               <tbody>
                 <tr>
-                  <th>服務日期</th>
+                  <th width="130" class="text-center align-middle">服務日期</th>
                   <th>照服對象心情狀況</th>
-                  <th>填寫時間</th>
+                  <th width="130" class="text-center align-middle">填寫時間</th>
                   <th>備註</th>
                 </tr>
                 <tr v-for="(record, index) in orderCardRecords" :key="index">
-                  <td>{{ record.date }}</td>
-                  <td>{{ record.mood }}</td>
-                  <td>{{ record.time }}</td>
-                  <td>{{ record.remark }}</td>
+                  <td class="text-center align-middle">{{ record.date }}</td>
+                  <td class="align-middle">{{ record.mood }}</td>
+                  <td class="align-middle">{{ record.time }}</td>
+                  <td class="text-center align-middle">{{ record.remark }}</td>
                 </tr>
                 <!-- <tr>
                 <td>2020-08-11</td>
@@ -83,7 +83,7 @@ export default {
   },
   methods: {
     getCardRecordData(orderId) {
-      console.log(orderId);
+      // console.log(orderId);
       const vm = this;
       vm.isLoading = true;
       vm.orderId = orderId;
@@ -93,7 +93,7 @@ export default {
       vm.$http
         .get(api)
         .then(res => {
-          console.log(res);
+          // console.log(res);
           vm.orderCardRecords = res.data;
           $('#orderCareRecord').modal('show');
           vm.isLoading = false;
